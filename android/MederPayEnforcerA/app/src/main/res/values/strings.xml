@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MederPay Enforcer A</string>
+    <string name="enforcement_title">Device Locked</string>
+    <string name="enforcement_message">This device is locked due to payment issues. Please contact your agent.</string>
+    <string name="device_admin_description">Required for payment enforcement and device security</string>
+</resources>
