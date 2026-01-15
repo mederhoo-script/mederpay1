@@ -4,27 +4,27 @@ from .models import AgentStaff, Customer, Phone, Sale
 
 @admin.register(AgentStaff)
 class AgentStaffAdmin(admin.ModelAdmin):
-    list_display = ['user', 'agent', 'role', 'commission_rate', 'is_active']
-    list_filter = ['role', 'is_active']
-    search_fields = ['user__username', 'agent__business_name']
+    list_display = ['full_name', 'agent', 'role', 'status']
+    list_filter = ['role', 'status']
+    search_fields = ['full_name', 'agent__business_name']
 
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ['full_name', 'phone_number', 'agent', 'created_at']
-    search_fields = ['full_name', 'phone_number', 'id_number']
+    search_fields = ['full_name', 'phone_number']
     list_filter = ['created_at']
 
 
 @admin.register(Phone)
 class PhoneAdmin(admin.ModelAdmin):
-    list_display = ['imei', 'brand', 'model', 'agent', 'status', 'is_locked']
-    list_filter = ['status', 'is_locked', 'brand']
-    search_fields = ['imei', 'serial_number']
+    list_display = ['imei', 'model', 'agent', 'lifecycle_status', 'locking_app_installed']
+    list_filter = ['lifecycle_status', 'locking_app_installed']
+    search_fields = ['imei']
 
 
 @admin.register(Sale)
 class SaleAdmin(admin.ModelAdmin):
-    list_display = ['id', 'customer', 'phone', 'agent', 'sale_price', 'balance_remaining', 'status', 'sale_date']
-    list_filter = ['status', 'installment_frequency', 'sale_date']
+    list_display = ['id', 'customer', 'phone', 'agent', 'sale_price', 'balance_remaining', 'status', 'created_at']
+    list_filter = ['status', 'created_at']
     search_fields = ['customer__full_name', 'phone__imei']
