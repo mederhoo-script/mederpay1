@@ -218,27 +218,31 @@ class EnforcementService : Service() {
      */
     private suspend fun checkWeeklySettlement(imei: String) {
         try {
-            // TODO: Implement backend API call to check settlement status
-            // val settlementStatus = ApiClient.service.getWeeklySettlement(imei)
-            // 
-            // if (settlementStatus.is_due || settlementStatus.is_overdue) {
-            //     // Show payment overlay
-            //     val intent = Intent(this, PaymentOverlay::class.java).apply {
-            //         flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            //         putExtra("settlement_amount", settlementStatus.amount)
-            //         putExtra("settlement_id", settlementStatus.id)
-            //         putExtra("due_date", settlementStatus.due_date)
-            //         putExtra("is_overdue", settlementStatus.is_overdue)
-            //     }
-            //     startActivity(intent)
-            //     
-            //     logAuditEvent("settlement_enforcement_triggered", mapOf(
-            //         "amount" to settlementStatus.amount.toString(),
-            //         "is_overdue" to settlementStatus.is_overdue.toString()
-            //     ))
-            // }
+            // Call backend API to check settlement status
+            val settlementStatus = ApiClient.service.getWeeklySettlement(imei)
             
-            android.util.Log.d("EnforcementService", "Weekly settlement check completed")
+            if (settlementStatus.has_settlement && (settlementStatus.is_due || settlementStatus.is_overdue)) {
+                // Show payment overlay
+                val intent = Intent(this, PaymentOverlay::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    putExtra("settlement_amount", settlementStatus.amount_due ?: 0.0)
+                    putExtra("settlement_id", settlementStatus.settlement_id ?: "")
+                    putExtra("due_date", settlementStatus.due_date ?: "")
+                    putExtra("is_overdue", settlementStatus.is_overdue)
+                }
+                startActivity(intent)
+                
+                logAuditEvent("settlement_enforcement_triggered", mapOf(
+                    "amount" to (settlementStatus.amount_due?.toString() ?: "0"),
+                    "is_overdue" to settlementStatus.is_overdue.toString(),
+                    "settlement_id" to (settlementStatus.settlement_id ?: "unknown")
+                ))
+                
+                android.util.Log.i("EnforcementService", "Settlement enforcement triggered - Due: ${settlementStatus.amount_due}")
+            } else {
+                android.util.Log.d("EnforcementService", "No settlement due - Status: ${settlementStatus.message}")
+            }
+            
         } catch (e: Exception) {
             android.util.Log.e("EnforcementService", "Failed to check weekly settlement", e)
         }

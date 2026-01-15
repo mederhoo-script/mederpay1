@@ -163,26 +163,34 @@ object MonnifyPaymentManager {
             try {
                 Log.i(TAG, "Confirming payment with backend - Ref: $paymentReference")
                 
-                // TODO: Implement API call to confirm payment
-                // val response = ApiClient.confirmSettlementPayment(
-                //     settlementId = settlementId,
-                //     paymentReference = paymentReference,
-                //     amount = amount,
-                //     provider = "monnify"
-                // )
-                //
-                // if (response.isSuccessful) {
-                //     Log.i(TAG, "Payment confirmed with backend")
-                //     // Backend will unlock device via DeviceCommand
-                // } else {
-                //     Log.e(TAG, "Failed to confirm payment with backend")
-                // }
+                // Get device IMEI
+                val imei = android.provider.Settings.Secure.getString(
+                    context.contentResolver,
+                    android.provider.Settings.Secure.ANDROID_ID
+                )
+                
+                // Call backend API to confirm payment
+                val request = ConfirmSettlementPaymentRequest(
+                    payment_reference = paymentReference,
+                    amount = amount,
+                    imei = imei
+                )
+                
+                val response = ApiClient.service.confirmSettlementPayment(settlementId, request)
+                
+                if (response.success) {
+                    Log.i(TAG, "Payment confirmed with backend: ${response.message}")
+                    Log.i(TAG, "Billing status: ${response.billing_status}, Remaining: ${response.remaining_balance}")
+                } else {
+                    Log.e(TAG, "Failed to confirm payment: ${response.message}")
+                }
                 
                 // Log audit event
                 AuditLogger.log(context, "payment_backend_confirmation", mapOf(
                     "settlement_id" to settlementId,
                     "payment_reference" to paymentReference,
-                    "amount" to amount.toString()
+                    "amount" to amount.toString(),
+                    "success" to response.success.toString()
                 ))
                 
             } catch (e: Exception) {
