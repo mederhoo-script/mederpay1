@@ -56,10 +56,13 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model with email as username"""
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, max_length=255)
     role = models.CharField(max_length=30, choices=UserRole.choices)
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    
+    # Additional useful fields
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    is_staff = models.BooleanField(default=False)  # Required for admin
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -82,7 +85,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Agent(models.Model):
     """Agent business profile"""
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='agent_profile')
     business_name = models.CharField(max_length=255)
     
     risk_score = models.IntegerField(default=0)
@@ -98,6 +101,11 @@ class Agent(models.Model):
         max_length=20, choices=AgentStatus.choices, default=AgentStatus.ACTIVE
     )
     
+    # Additional useful fields (KEEP THESE)
+    business_address = models.TextField(blank=True)
+    registration_number = models.CharField(max_length=100, unique=True, null=True, blank=True)
+    credit_used = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -105,6 +113,7 @@ class Agent(models.Model):
         db_table = 'agents'
         indexes = [
             models.Index(fields=['status']),
+            models.Index(fields=['risk_score']),
             models.Index(fields=['created_at']),
         ]
     
@@ -128,18 +137,22 @@ class Agent(models.Model):
 
 class PlatformPhoneRegistry(models.Model):
     """Global IMEI tracking and blacklist (MANDATORY)"""
-    imei = models.CharField(max_length=20, unique=True)
+    imei = models.CharField(max_length=20, unique=True, db_index=True)
     
     first_registered_agent = models.ForeignKey(
         Agent, related_name="first_registrations",
-        on_delete=models.SET_NULL, null=True
+        on_delete=models.SET_NULL, null=True, blank=True
     )
     current_agent = models.ForeignKey(
         Agent, related_name="current_phones",
-        on_delete=models.SET_NULL, null=True
+        on_delete=models.SET_NULL, null=True, blank=True
     )
     
     is_blacklisted = models.BooleanField(default=False)
+    
+    # Additional useful fields (KEEP THESE)
+    blacklist_reason = models.TextField(null=True, blank=True)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
@@ -147,15 +160,17 @@ class PlatformPhoneRegistry(models.Model):
         indexes = [
             models.Index(fields=['imei']),
             models.Index(fields=['is_blacklisted']),
+            models.Index(fields=['current_agent']),
         ]
     
     def __str__(self):
-        return self.imei
+        return f"{self.imei} - {'Blacklisted' if self.is_blacklisted else 'Active'}"
 
 
 class AgentBilling(models.Model):
     """Weekly/monthly agent billing records"""
-    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='billing_records')
+    
     billing_period_start = models.DateField()
     billing_period_end = models.DateField()
     
@@ -165,7 +180,7 @@ class AgentBilling(models.Model):
     total_amount_due = models.DecimalField(max_digits=12, decimal_places=2)
     amount_paid = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     
-    status = models.CharField(max_length=20)  # Flexible field as per spec
+    status = models.CharField(max_length=20)
     invoice_number = models.CharField(max_length=50, unique=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
@@ -175,7 +190,8 @@ class AgentBilling(models.Model):
         db_table = 'agent_billing'
         indexes = [
             models.Index(fields=['agent', 'status']),
-            models.Index(fields=['billing_period_start']),
+            models.Index(fields=['billing_period_end']),
+            models.Index(fields=['invoice_number']),
         ]
     
     def __str__(self):
