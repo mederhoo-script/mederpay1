@@ -61,6 +61,9 @@ class EnforcementService : Service() {
             while (isActive) {
                 try {
                     performEnforcementCheck()
+                    
+                    // Process queued audit logs periodically
+                    AuditLogger.processQueuedLogs(this@EnforcementService)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -210,8 +213,9 @@ class EnforcementService : Service() {
     private fun logAuditEvent(event: String, data: Map<String, String> = emptyMap()) {
         serviceScope.launch {
             try {
-                android.util.Log.i("EnforcementService", "Audit event: $event, data: $data")
-                // TODO: Send to backend audit API
+                val imei = getDeviceImei()
+                AuditLogger.logEvent(this@EnforcementService, imei, event, data)
+                android.util.Log.i("EnforcementService", "Audit event logged: $event")
             } catch (e: Exception) {
                 android.util.Log.e("EnforcementService", "Failed to log audit event", e)
             }
@@ -220,6 +224,16 @@ class EnforcementService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        
+        // Process any queued audit logs before shutting down
+        serviceScope.launch {
+            try {
+                AuditLogger.processQueuedLogs(this@EnforcementService)
+            } catch (e: Exception) {
+                android.util.Log.e("EnforcementService", "Failed to process queued logs on destroy", e)
+            }
+        }
+        
         serviceScope.cancel()
     }
 }
