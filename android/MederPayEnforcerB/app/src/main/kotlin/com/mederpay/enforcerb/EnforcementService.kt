@@ -78,43 +78,89 @@ class EnforcementService : Service() {
         val isDeviceAdminEnabled = devicePolicyManager.isAdminActive(adminComponent)
         
         if (!isDeviceAdminEnabled) {
-            showEnforcementOverlay("Device Admin Disabled", 
-                "Please enable Device Administrator to continue.")
+            OverlayManager.showOverlay(
+                this,
+                OverlayManager.OverlayType.DEVICE_ADMIN_DISABLED,
+                "Device Admin Disabled",
+                "Please enable Device Administrator to continue."
+            )
+            logAuditEvent("device_admin_disabled")
             return
         }
 
-        // Check companion app
-        val isCompanionInstalled = CompanionMonitor.isCompanionAppInstalled(this)
-        if (!isCompanionInstalled) {
-            showEnforcementOverlay("Companion App Missing", 
-                "Required companion app is not installed.")
+        // Comprehensive companion health check
+        val companionHealth = CompanionMonitor.performHealthCheck(this)
+        
+        if (!companionHealth.isHealthy) {
+            val overlayType = when {
+                !companionHealth.isInstalled -> OverlayManager.OverlayType.COMPANION_MISSING
+                !companionHealth.isEnabled -> OverlayManager.OverlayType.COMPANION_DISABLED
+                !companionHealth.signatureValid -> OverlayManager.OverlayType.COMPANION_TAMPERED
+                !companionHealth.isDeviceAdminActive -> OverlayManager.OverlayType.COMPANION_DISABLED
+                else -> OverlayManager.OverlayType.COMPANION_MISSING
+            }
+            
+            val reason = when {
+                !companionHealth.isInstalled -> "Companion App Missing"
+                !companionHealth.isEnabled -> "Companion App Disabled"
+                !companionHealth.signatureValid -> "Companion App Tampered"
+                !companionHealth.isDeviceAdminActive -> "Companion Security Disabled"
+                else -> "Companion App Unhealthy"
+            }
+            
+            val message = when {
+                !companionHealth.isInstalled -> "Required security companion app is not installed. Restoring..."
+                !companionHealth.isEnabled -> "Companion app has been disabled. Please enable it."
+                !companionHealth.signatureValid -> "Companion app integrity check failed."
+                else -> "Companion app is not functioning properly."
+            }
+            
+            OverlayManager.showOverlay(this, overlayType, reason, message)
+            logAuditEvent("companion_unhealthy", mapOf(
+                "installed" to companionHealth.isInstalled.toString(),
+                "enabled" to companionHealth.isEnabled.toString(),
+                "signature_valid" to companionHealth.signatureValid.toString()
+            ))
+            
+            // Trigger recovery if needed
+            CompanionMonitor.triggerRecoveryIfNeeded(this)
+            return
         }
 
         // Send health check
-        sendHealthCheck(imei, isDeviceAdminEnabled, isCompanionInstalled)
+        sendHealthCheck(imei, isDeviceAdminEnabled, companionHealth)
 
         // Get enforcement status from backend
         try {
             val status = ApiClient.service.getEnforcementStatus(imei)
             if (status.should_lock) {
-                showEnforcementOverlay("Payment Overdue", 
-                    "Your payment is overdue. Balance: ${status.balance}")
+                OverlayManager.showOverlay(
+                    this,
+                    OverlayManager.OverlayType.PAYMENT_OVERDUE,
+                    "Payment Overdue",
+                    "Your payment is overdue. Balance: ${status.balance}",
+                    mapOf("balance" to status.balance.toString())
+                )
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            android.util.Log.e("EnforcementService", "Failed to get enforcement status", e)
         }
 
         // Check for pending commands
         checkPendingCommands(imei)
     }
 
-    private suspend fun sendHealthCheck(imei: String, isDeviceAdminEnabled: Boolean, isCompanionInstalled: Boolean) {
+    private suspend fun sendHealthCheck(
+        imei: String, 
+        isDeviceAdminEnabled: Boolean, 
+        companionHealth: CompanionHealth
+    ) {
         try {
             val healthCheck = HealthCheckRequest(
                 imei = imei,
                 is_device_admin_enabled = isDeviceAdminEnabled,
-                is_companion_app_installed = isCompanionInstalled,
-                companion_app_version = if (isCompanionInstalled) "1.0" else null,
+                is_companion_app_installed = companionHealth.isInstalled,
+                companion_app_version = companionHealth.version,
                 android_version = Build.VERSION.RELEASE,
                 app_version = BuildConfig.VERSION_NAME,
                 battery_level = null,
@@ -123,7 +169,7 @@ class EnforcementService : Service() {
             )
             ApiClient.service.sendHealthCheck(healthCheck)
         } catch (e: Exception) {
-            e.printStackTrace()
+            android.util.Log.e("EnforcementService", "Failed to send health check", e)
         }
     }
 
@@ -135,33 +181,41 @@ class EnforcementService : Service() {
                 
                 when (command.command_type) {
                     "lock" -> {
-                        showEnforcementOverlay("Device Locked", command.reason)
+                        OverlayManager.showOverlay(
+                            this,
+                            OverlayManager.OverlayType.DEVICE_LOCKED,
+                            "Device Locked",
+                            command.reason
+                        )
                     }
                     "unlock" -> {
                         // Dismiss overlay if shown
+                        OverlayManager.dismissOverlay(this, OverlayManager.OverlayType.DEVICE_LOCKED)
                     }
                 }
                 
                 ApiClient.service.executeCommand(command.id, mapOf("response" to "executed"))
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            android.util.Log.e("EnforcementService", "Failed to check pending commands", e)
         }
-    }
-
-    private fun showEnforcementOverlay(reason: String, message: String) {
-        val intent = Intent(this, OverlayActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra("reason", reason)
-            putExtra("message", message)
-        }
-        startActivity(intent)
     }
 
     private fun getDeviceImei(): String {
         // In production, retrieve actual IMEI
         // For demo purposes, using Android ID
         return Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+    }
+
+    private fun logAuditEvent(event: String, data: Map<String, String> = emptyMap()) {
+        serviceScope.launch {
+            try {
+                android.util.Log.i("EnforcementService", "Audit event: $event, data: $data")
+                // TODO: Send to backend audit API
+            } catch (e: Exception) {
+                android.util.Log.e("EnforcementService", "Failed to log audit event", e)
+            }
+        }
     }
 
     override fun onDestroy() {
