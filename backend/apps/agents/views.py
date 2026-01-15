@@ -41,8 +41,8 @@ class PhoneViewSet(viewsets.ModelViewSet):
     """Phone inventory management"""
     serializer_class = PhoneSerializer
     permission_classes = [permissions.IsAuthenticated]
-    filterset_fields = ['status', 'brand', 'is_locked']
-    search_fields = ['imei', 'brand', 'model', 'serial_number']
+    filterset_fields = ['lifecycle_status', 'locking_app_installed']
+    search_fields = ['imei', 'model']
     
     def get_queryset(self):
         agent = Agent.objects.get(user=self.request.user)
@@ -62,13 +62,12 @@ class PhoneViewSet(viewsets.ModelViewSet):
         
         return Response({
             'imei': phone.imei,
-            'is_locked': phone.is_locked,
-            'status': phone.status,
-            'last_check': phone.last_enforcement_check,
+            'lifecycle_status': phone.lifecycle_status,
+            'locking_app_installed': phone.locking_app_installed,
             'latest_command': {
-                'type': latest_command.command_type if latest_command else None,
+                'type': latest_command.command if latest_command else None,
                 'status': latest_command.status if latest_command else None,
-                'issued_at': latest_command.issued_at if latest_command else None,
+                'created_at': latest_command.created_at if latest_command else None,
             } if latest_command else None
         })
 
