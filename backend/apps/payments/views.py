@@ -43,13 +43,20 @@ class PaymentRecordViewSet(viewsets.ModelViewSet):
             
             # Issue unlock command
             from apps.enforcement.models import DeviceCommand
+            import hashlib
+            from django.utils import timezone as tz
+            
+            # Generate secure token hash
+            token = f"{sale.id}-{tz.now().timestamp()}"
+            token_hash = hashlib.sha256(token.encode()).hexdigest()
+            
             DeviceCommand.objects.create(
                 phone=sale.phone,
                 agent=agent,
                 sale=sale,
                 command='unlock',
                 reason='Payment completed',
-                auth_token_hash='',  # Generate appropriate hash
+                auth_token_hash=token_hash,
                 expires_at=timezone.now() + timezone.timedelta(days=1)
             )
         

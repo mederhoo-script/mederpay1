@@ -165,7 +165,7 @@ class AgentBilling(models.Model):
     total_amount_due = models.DecimalField(max_digits=12, decimal_places=2)
     amount_paid = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     
-    status = models.CharField(max_length=20)
+    status = models.CharField(max_length=20)  # Flexible field as per spec
     invoice_number = models.CharField(max_length=50, unique=True)
     
     created_at = models.DateTimeField(auto_now_add=True)

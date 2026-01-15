@@ -29,7 +29,7 @@ class InstallmentSchedule(models.Model):
     due_date = models.DateField()
     amount_due = models.DecimalField(max_digits=12, decimal_places=2)
     paid_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0)
-    status = models.CharField(max_length=20, default='pending')
+    status = models.CharField(max_length=20, default='pending')  # Flexible field as per spec
     
     class Meta:
         db_table = 'installment_schedules'

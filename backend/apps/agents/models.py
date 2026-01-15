@@ -21,8 +21,8 @@ class AgentStaff(models.Model):
     """Sub-agents and sales staff"""
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=255)
-    role = models.CharField(max_length=50)
-    status = models.CharField(max_length=20, default="active")
+    role = models.CharField(max_length=50)  # Flexible field as per spec
+    status = models.CharField(max_length=20, default="active")  # Flexible field as per spec
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
@@ -67,7 +67,7 @@ class Phone(models.Model):
     model = models.CharField(max_length=100)
     
     locking_app_installed = models.BooleanField(default=False)
-    lifecycle_status = models.CharField(max_length=30)
+    lifecycle_status = models.CharField(max_length=30)  # Flexible field as per spec
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

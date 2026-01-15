@@ -45,6 +45,7 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
     
     def validate(self, data):
+        # Django's authenticate expects 'username' parameter even if USERNAME_FIELD is 'email'
         user = authenticate(username=data['email'], password=data['password'])
         if not user:
             raise serializers.ValidationError('Invalid credentials')
