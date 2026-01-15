@@ -1,4 +1,4 @@
-package com.mederpay.enforcerb
+package com.mederpay.enforcera
 
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
@@ -9,14 +9,19 @@ import android.os.Build
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.security.MessageDigest
 
 /**
  * CompanionMonitor provides comprehensive monitoring and health checking
- * for the companion app (Enforcer A).
+ * for the companion app (Enforcer B).
  */
 object CompanionMonitor {
     private const val COMPANION_PACKAGE = "com.mederpay.enforcera"
     private const val TAG = "CompanionMonitor"
+    
+    // Expected SHA-256 signature hash of the companion app
+    // In production, this should be configured securely or fetched from backend
+    private const val EXPECTED_SIGNATURE_HASH = ""  // Set during build/deployment
 
     /**
      * Comprehensive health check of companion app
@@ -77,7 +82,7 @@ object CompanionMonitor {
     }
 
     /**
-     * Verify companion app signature
+     * Verify companion app signature with SHA-256 cryptographic comparison
      */
     fun verifyCompanionSignature(context: Context): Boolean {
         return try {
@@ -101,10 +106,81 @@ object CompanionMonitor {
                 packageInfo.signatures
             }
             
-            signatures != null && signatures.isNotEmpty()
+            if (signatures == null || signatures.isEmpty()) {
+                Log.w(TAG, "No signatures found for companion app")
+                return false
+            }
+
+            // If expected hash is configured, perform cryptographic verification
+            if (EXPECTED_SIGNATURE_HASH.isNotEmpty()) {
+                val actualHash = computeSignatureHash(signatures[0].toByteArray())
+                val isValid = actualHash.equals(EXPECTED_SIGNATURE_HASH, ignoreCase = true)
+                
+                if (!isValid) {
+                    Log.e(TAG, "Signature hash mismatch! Expected: $EXPECTED_SIGNATURE_HASH, Got: $actualHash")
+                }
+                
+                return isValid
+            }
+            
+            // Fallback: basic signature existence check
+            Log.w(TAG, "Expected signature hash not configured, using basic verification")
+            return true
+            
         } catch (e: Exception) {
             Log.e(TAG, "Signature verification failed", e)
             false
+        }
+    }
+
+    /**
+     * Compute SHA-256 hash of signature bytes
+     */
+    private fun computeSignatureHash(signatureBytes: ByteArray): String {
+        return try {
+            val digest = MessageDigest.getInstance("SHA-256")
+            val hashBytes = digest.digest(signatureBytes)
+            hashBytes.joinToString("") { "%02x".format(it) }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to compute signature hash", e)
+            ""
+        }
+    }
+
+    /**
+     * Get the actual signature hash of companion app for configuration
+     * Use this during initial setup to determine the expected hash
+     */
+    fun getCompanionSignatureHash(context: Context): String? {
+        return try {
+            val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                context.packageManager.getPackageInfo(
+                    COMPANION_PACKAGE,
+                    PackageManager.PackageInfoFlags.of(PackageManager.GET_SIGNING_CERTIFICATES.toLong())
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                context.packageManager.getPackageInfo(
+                    COMPANION_PACKAGE,
+                    PackageManager.GET_SIGNATURES
+                )
+            }
+            
+            val signatures = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                packageInfo.signingInfo?.apkContentsSigners
+            } else {
+                @Suppress("DEPRECATION")
+                packageInfo.signatures
+            }
+            
+            if (signatures != null && signatures.isNotEmpty()) {
+                computeSignatureHash(signatures[0].toByteArray())
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to get signature hash", e)
+            null
         }
     }
 

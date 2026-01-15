@@ -30,6 +30,19 @@ data class DeviceCommand(
     val expires_at: String
 )
 
+data class AuditLogEntry(
+    val imei: String,
+    val event_type: String,
+    val event_data: Map<String, String>,
+    val timestamp: String,
+    val app_version: String
+)
+
+data class AuditLogResponse(
+    val success: Boolean,
+    val message: String?
+)
+
 interface ApiService {
     @GET("enforcement/status/{imei}/")
     suspend fun getEnforcementStatus(@Path("imei") imei: String): EnforcementStatus
@@ -45,6 +58,12 @@ interface ApiService {
 
     @POST("device-commands/{id}/execute/")
     suspend fun executeCommand(@Path("id") commandId: Int, @Body response: Map<String, String>)
+
+    @POST("enforcement/audit-log/")
+    suspend fun sendAuditLog(@Body log: AuditLogEntry): AuditLogResponse
+
+    @POST("enforcement/audit-logs/batch/")
+    suspend fun sendAuditLogBatch(@Body logs: List<AuditLogEntry>): AuditLogResponse
 }
 
 object ApiClient {
