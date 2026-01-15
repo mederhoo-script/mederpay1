@@ -69,7 +69,7 @@ class PaymentRecord(models.Model):
     
     # Additional useful fields (KEEP THESE)
     customer = models.ForeignKey('agents.Customer', on_delete=models.PROTECT, related_name='payments', null=True, blank=True)
-    payment_date = models.DateTimeField(auto_now_add=True)
+    payment_date = models.DateTimeField(null=True, blank=True)
     confirmed_at = models.DateTimeField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     recorded_by = models.ForeignKey('platform.User', on_delete=models.PROTECT, related_name='recorded_payments', null=True, blank=True)
@@ -86,7 +86,7 @@ class PaymentRecord(models.Model):
         ]
         constraints = [
             models.CheckConstraint(
-                check=models.Q(amount__gt=0),
+                condition=models.Q(amount__gt=0),
                 name='positive_payment_amount'
             ),
         ]

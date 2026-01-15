@@ -52,7 +52,7 @@ class DeviceCommand(models.Model):
     )
     
     # Additional useful fields (KEEP THESE)
-    issued_at = models.DateTimeField(auto_now_add=True)
+    issued_at = models.DateTimeField(null=True, blank=True)
     acknowledged_at = models.DateTimeField(null=True, blank=True)
     device_response = models.TextField(null=True, blank=True)
     error_message = models.TextField(null=True, blank=True)

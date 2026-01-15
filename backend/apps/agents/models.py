@@ -145,7 +145,7 @@ class Sale(models.Model):
     installment_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     installment_frequency = models.CharField(max_length=20, default='weekly', blank=True)
     number_of_installments = models.IntegerField(null=True, blank=True)
-    sale_date = models.DateTimeField(auto_now_add=True)
+    sale_date = models.DateTimeField(null=True, blank=True)
     completion_date = models.DateTimeField(null=True, blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
@@ -159,13 +159,13 @@ class Sale(models.Model):
                 name='one_active_sale_per_phone'
             ),
             models.CheckConstraint(
-                check=models.Q(sale_price__gt=0) & 
+                condition=models.Q(sale_price__gt=0) & 
                       models.Q(down_payment__gte=0) & 
                       models.Q(total_payable__gt=0),
                 name='positive_sale_amounts'
             ),
             models.CheckConstraint(
-                check=models.Q(balance_remaining__gte=0) & 
+                condition=models.Q(balance_remaining__gte=0) & 
                       models.Q(balance_remaining__lte=models.F('total_payable')),
                 name='valid_balance'
             ),
