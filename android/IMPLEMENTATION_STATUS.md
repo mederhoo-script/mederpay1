@@ -196,43 +196,94 @@ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
 
 ---
 
-### 9. Overlay Activity ⚠️
-**Status: BASIC IMPLEMENTATION**
+### 9. Overlay Activity ✅
+**Status: COMPLETE**
 
 Current implementation:
 - ✅ Non-dismissible overlay (back button blocked)
 - ✅ Full-screen activity
 - ✅ Basic UI (reason + message + action button)
-- ❌ OverlayManager integration
-- ❌ Broadcast receiver for dismissal
-- ❌ Enhanced hardened mode (Android 13+)
-- ❌ Multiple action buttons based on overlay type
-- ❌ Payment UI (App A specific)
+- ✅ OverlayManager integration
+- ✅ Broadcast receiver for dismissal
+- ✅ Enhanced hardened mode (Android 13+)
+- ✅ Multiple action buttons based on overlay type
+- ✅ Payment UI (App A specific - via PaymentOverlay)
 
-**TODO:**
-- Integrate with OverlayManager state
-- Add broadcast receiver for `DISMISS_OVERLAY` intent
-- Implement hardened mode controls
-- Add overlay type-specific UI
-- Create payment overlay variant (App A)
+**COMPLETED in this update**
+
+---
+
+## ✅ NEWLY IMPLEMENTED
+
+### 10. Payment Settlement Enforcement (App A) ✅
+**Status: FRAMEWORK COMPLETE**
+
+**Implemented Components:**
+1. ✅ **PaymentOverlay.kt** - Dedicated payment settlement UI
+   - Non-dismissible fullscreen overlay
+   - Settlement amount display with Naira formatting
+   - "Pay Now" button with Monnify integration
+   - Overdue indicator and warnings
+   - Broadcast receiver for payment confirmation
+   - Audit logging for all payment events
+   
+2. ✅ **MonnifyPaymentManager.kt** - Payment SDK integration
+   - One-time dynamic payment initiation
+   - Payment success/failure/cancellation callbacks
+   - Backend payment confirmation
+   - Configuration fetching from backend
+   - Stub implementation for testing (ready for real SDK)
+   - Payment reference generation
+   
+3. ✅ **EnforcementService updates** - Settlement checking
+   - Weekly settlement check logic in enforcement loop
+   - Payment overlay trigger on settlement due
+   - Audit event logging for settlement enforcement
+   
+4. ✅ **AndroidManifest updates**
+   - PaymentOverlay activity registered
+
+**Remaining for Production:**
+- Add Monnify SDK dependency (gradle)
+- Replace stub methods with real Monnify SDK calls
+- Backend API endpoints:
+  - GET /api/settlements/weekly/{imei}
+  - POST /api/settlements/{id}/confirm-payment
+- Fetch agent Monnify credentials from backend
+- Handle network failures gracefully
+- Implement partial payment tracking
+
+**Files:**
+- `PaymentOverlay.kt` (App A only) ✅
+- `MonnifyPaymentManager.kt` (App A only) ✅
+- Updated `EnforcementService.kt` ✅
+- Updated `AndroidManifest.xml` ✅
 
 ---
 
 ## ❌ NOT YET IMPLEMENTED
 
-### 10. Embedded APK Build Process ❌
-**Status: NOT IMPLEMENTED**
+### 11. Embedded APK Build Process ✅
+**Status: READY FOR BUILD**
+
+**Completed:**
+- ✅ Build script exists (`build-dual-apps.sh`)
+- ✅ Gradle wrapper created for both apps
+- ✅ Build configurations fixed
+- ✅ Asset directories will be created automatically
 
 **Required:**
-- Build script to copy signed APKs to assets
-- Gradle task to embed App B APK in App A
-- Gradle task to embed App A APK in App B
-- Circular build dependency handling
-- Automated signing and embedding pipeline
+- Execute `./build-dual-apps.sh release` to:
+  - Build App B APK
+  - Embed in App A assets
+  - Build App A APK
+  - Embed in App B assets
+  - Rebuild both with embedded APKs
+- Test APK embedding verification
 
 **Location:**
-- App A: `app/src/main/assets/enforcerb.apk`
-- App B: `app/src/main/assets/enforcera.apk`
+- App A: `app/src/main/assets/enforcerb.apk` (auto-created)
+- App B: `app/src/main/assets/enforcera.apk` (auto-created)
 
 ---
 
@@ -349,36 +400,37 @@ Current status:
 | **Device Admin Enforcement** | Complete | 100% |
 | **Companion Monitoring** | Complete | 100% |
 | **Package Monitoring** | Complete | 100% |
-| **Overlay System** | Framework Ready | 70% |
+| **Overlay System** | Complete | 100% |
 | **Version-Specific Logic** | Implemented | 90% |
 | **Boot Persistence** | Complete | 100% |
-| **Payment Enforcement** | Not Started | 0% |
+| **Payment Enforcement** | Framework Complete | 85% |
 | **Audit Logging** | Framework Only | 40% |
 | **Backend Integration** | Partial | 60% |
 | **Security Hardening** | Not Started | 0% |
 
-**Overall Implementation: ~65%**
+**Overall Implementation: ~78%**
 
 ---
 
 ## 🎯 PRIORITY TASKS (Next Steps)
 
 ### High Priority
-1. **Embedded APK Build Process** (Critical for self-healing)
-2. **Enhanced OverlayActivity** (Integrate OverlayManager)
-3. **Audit Log Backend Integration** (Compliance requirement)
-4. **Payment Settlement Enforcement** (App A core feature)
+1. ✅ **Payment Settlement Enforcement** (App A core feature) - COMPLETED
+2. **Build and Test APKs** - Execute build-dual-apps.sh and test
+3. **Monnify SDK Integration** - Add real SDK and replace stub methods
+4. **Backend Settlement API** - Add settlement endpoints
+5. **Audit Log Backend Integration** (Compliance requirement)
 
 ### Medium Priority
-5. **Signature Verification Hardening**
-6. **OEM-Specific Permission Handling**
-7. **Work Manager Integration**
-8. **Battery Optimization Exclusion UI**
+6. **Signature Verification Hardening**
+7. **OEM-Specific Permission Handling**
+8. **Work Manager Integration**
+9. **Battery Optimization Exclusion UI**
 
 ### Low Priority
-9. **Security Hardening** (Root/emulator detection)
-10. **Code Obfuscation**
-11. **SafetyNet/Play Integrity**
+10. **Security Hardening** (Root/emulator detection)
+11. **Code Obfuscation**
+12. **SafetyNet/Play Integrity**
 
 ---
 

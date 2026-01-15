@@ -43,6 +43,33 @@ data class AuditLogResponse(
     val message: String?
 )
 
+data class WeeklySettlementResponse(
+    val has_settlement: Boolean,
+    val is_due: Boolean,
+    val is_overdue: Boolean,
+    val settlement_id: String?,
+    val amount_due: Double?,
+    val total_amount: Double?,
+    val amount_paid: Double?,
+    val due_date: String?,
+    val invoice_number: String?,
+    val message: String?
+)
+
+data class ConfirmSettlementPaymentRequest(
+    val payment_reference: String,
+    val amount: Double,
+    val imei: String
+)
+
+data class ConfirmSettlementPaymentResponse(
+    val success: Boolean,
+    val message: String,
+    val payment_id: Int?,
+    val billing_status: String?,
+    val remaining_balance: Double?
+)
+
 interface ApiService {
     @GET("enforcement/status/{imei}/")
     suspend fun getEnforcementStatus(@Path("imei") imei: String): EnforcementStatus
@@ -64,6 +91,16 @@ interface ApiService {
 
     @POST("enforcement/audit-logs/batch/")
     suspend fun sendAuditLogBatch(@Body logs: List<AuditLogEntry>): AuditLogResponse
+    
+    // Settlement endpoints
+    @GET("settlements/weekly/{imei}/")
+    suspend fun getWeeklySettlement(@Path("imei") imei: String): WeeklySettlementResponse
+    
+    @POST("settlements/{settlement_id}/confirm/")
+    suspend fun confirmSettlementPayment(
+        @Path("settlement_id") settlementId: String,
+        @Body request: ConfirmSettlementPaymentRequest
+    ): ConfirmSettlementPaymentResponse
 }
 
 object ApiClient {
