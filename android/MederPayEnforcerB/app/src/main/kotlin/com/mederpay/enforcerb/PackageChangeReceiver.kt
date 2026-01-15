@@ -54,16 +54,24 @@ class PackageChangeReceiver : BroadcastReceiver() {
                 logAuditEvent(context, "companion_installed")
             } else {
                 Log.w(TAG, "Companion app verification failed")
-                showEnforcementOverlay(context, "Companion Installation Failed", 
-                    "The companion app installation could not be verified.")
+                OverlayManager.showOverlay(
+                    context,
+                    OverlayManager.OverlayType.COMPANION_TAMPERED,
+                    "Companion Installation Failed",
+                    "The companion app installation could not be verified."
+                )
             }
         }
     }
 
     private fun handleCompanionRemoved(context: Context) {
         // Immediately show enforcement overlay
-        showEnforcementOverlay(context, "Security App Removed", 
-            "Required security companion app has been removed. System will restore it.")
+        OverlayManager.showOverlay(
+            context,
+            OverlayManager.OverlayType.COMPANION_MISSING,
+            "Security App Removed",
+            "Required security companion app has been removed. System will restore it."
+        )
         
         // Log critical event to backend
         logAuditEvent(context, "companion_removed")
@@ -84,23 +92,18 @@ class PackageChangeReceiver : BroadcastReceiver() {
         scope.launch {
             if (!RecoveryInstaller.verifyPostInstallation(context)) {
                 Log.w(TAG, "Companion app replacement verification failed")
-                showEnforcementOverlay(context, "Invalid App Update", 
-                    "The companion app update is not authorized.")
+                OverlayManager.showOverlay(
+                    context,
+                    OverlayManager.OverlayType.COMPANION_TAMPERED,
+                    "Invalid App Update",
+                    "The companion app update is not authorized."
+                )
                 logAuditEvent(context, "companion_tamper_detected")
             } else {
                 Log.i(TAG, "Companion app update verified")
                 logAuditEvent(context, "companion_updated")
             }
         }
-    }
-
-    private fun showEnforcementOverlay(context: Context, reason: String, message: String) {
-        val intent = Intent(context, OverlayActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra("reason", reason)
-            putExtra("message", message)
-        }
-        context.startActivity(intent)
     }
 
     private fun logAuditEvent(context: Context, event: String) {

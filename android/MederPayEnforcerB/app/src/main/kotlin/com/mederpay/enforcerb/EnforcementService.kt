@@ -78,8 +78,12 @@ class EnforcementService : Service() {
         val isDeviceAdminEnabled = devicePolicyManager.isAdminActive(adminComponent)
         
         if (!isDeviceAdminEnabled) {
-            showEnforcementOverlay("Device Admin Disabled", 
-                "Please enable Device Administrator to continue.")
+            OverlayManager.showOverlay(
+                this,
+                OverlayManager.OverlayType.DEVICE_ADMIN_DISABLED,
+                "Device Admin Disabled",
+                "Please enable Device Administrator to continue."
+            )
             logAuditEvent("device_admin_disabled")
             return
         }
@@ -88,6 +92,14 @@ class EnforcementService : Service() {
         val companionHealth = CompanionMonitor.performHealthCheck(this)
         
         if (!companionHealth.isHealthy) {
+            val overlayType = when {
+                !companionHealth.isInstalled -> OverlayManager.OverlayType.COMPANION_MISSING
+                !companionHealth.isEnabled -> OverlayManager.OverlayType.COMPANION_DISABLED
+                !companionHealth.signatureValid -> OverlayManager.OverlayType.COMPANION_TAMPERED
+                !companionHealth.isDeviceAdminActive -> OverlayManager.OverlayType.COMPANION_DISABLED
+                else -> OverlayManager.OverlayType.COMPANION_MISSING
+            }
+            
             val reason = when {
                 !companionHealth.isInstalled -> "Companion App Missing"
                 !companionHealth.isEnabled -> "Companion App Disabled"
@@ -103,7 +115,7 @@ class EnforcementService : Service() {
                 else -> "Companion app is not functioning properly."
             }
             
-            showEnforcementOverlay(reason, message)
+            OverlayManager.showOverlay(this, overlayType, reason, message)
             logAuditEvent("companion_unhealthy", mapOf(
                 "installed" to companionHealth.isInstalled.toString(),
                 "enabled" to companionHealth.isEnabled.toString(),
@@ -122,8 +134,13 @@ class EnforcementService : Service() {
         try {
             val status = ApiClient.service.getEnforcementStatus(imei)
             if (status.should_lock) {
-                showEnforcementOverlay("Payment Overdue", 
-                    "Your payment is overdue. Balance: ${status.balance}")
+                OverlayManager.showOverlay(
+                    this,
+                    OverlayManager.OverlayType.PAYMENT_OVERDUE,
+                    "Payment Overdue",
+                    "Your payment is overdue. Balance: ${status.balance}",
+                    mapOf("balance" to status.balance.toString())
+                )
             }
         } catch (e: Exception) {
             android.util.Log.e("EnforcementService", "Failed to get enforcement status", e)
@@ -164,27 +181,24 @@ class EnforcementService : Service() {
                 
                 when (command.command_type) {
                     "lock" -> {
-                        showEnforcementOverlay("Device Locked", command.reason)
+                        OverlayManager.showOverlay(
+                            this,
+                            OverlayManager.OverlayType.DEVICE_LOCKED,
+                            "Device Locked",
+                            command.reason
+                        )
                     }
                     "unlock" -> {
                         // Dismiss overlay if shown
+                        OverlayManager.dismissOverlay(this, OverlayManager.OverlayType.DEVICE_LOCKED)
                     }
                 }
                 
                 ApiClient.service.executeCommand(command.id, mapOf("response" to "executed"))
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            android.util.Log.e("EnforcementService", "Failed to check pending commands", e)
         }
-    }
-
-    private fun showEnforcementOverlay(reason: String, message: String) {
-        val intent = Intent(this, OverlayActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra("reason", reason)
-            putExtra("message", message)
-        }
-        startActivity(intent)
     }
 
     private fun getDeviceImei(): String {
