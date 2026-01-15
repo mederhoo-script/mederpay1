@@ -34,6 +34,14 @@
             android:launchMode="singleInstance"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
+        <!-- Payment Overlay Activity -->
+        <activity
+            android:name=".PaymentOverlay"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
         <!-- Enforcement Service -->
         <service
             android:name=".EnforcementService"
