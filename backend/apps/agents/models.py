@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from apps.platform.models import Agent, User
+from apps.platform.models import Agent, User, PlatformPhoneRegistry
 
 
 # ========================================
@@ -19,10 +19,21 @@ class SaleStatus(models.TextChoices):
 
 class AgentStaff(models.Model):
     """Sub-agents and sales staff"""
-    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='staff_members')
     full_name = models.CharField(max_length=255)
-    role = models.CharField(max_length=50)  # Flexible field as per spec
-    status = models.CharField(max_length=20, default="active")  # Flexible field as per spec
+    role = models.CharField(max_length=50)
+    status = models.CharField(max_length=20, default="active")
+    
+    # Additional useful fields (KEEP THESE)
+    user = models.OneToOneField(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name='staff_profile',
+        null=True,
+        blank=True
+    )  # Make optional
+    commission_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0, null=True, blank=True)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
@@ -37,7 +48,7 @@ class AgentStaff(models.Model):
 
 class Customer(models.Model):
     """Customer profiles"""
-    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='customers')
     full_name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=20)
     email = models.EmailField(null=True, blank=True)
@@ -58,16 +69,26 @@ class Customer(models.Model):
 
 class Phone(models.Model):
     """Device inventory with lifecycle tracking"""
-    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='phones')
     platform_registry = models.ForeignKey(
-        'platform.PlatformPhoneRegistry', on_delete=models.CASCADE
+        'platform.PlatformPhoneRegistry', 
+        on_delete=models.CASCADE,
+        related_name='phones'
     )
     
-    imei = models.CharField(max_length=20, unique=True)
+    imei = models.CharField(max_length=20, unique=True, db_index=True)
     model = models.CharField(max_length=100)
     
     locking_app_installed = models.BooleanField(default=False)
-    lifecycle_status = models.CharField(max_length=30)  # Flexible field as per spec
+    lifecycle_status = models.CharField(max_length=30)
+    
+    # Additional useful fields (KEEP THESE)
+    brand = models.CharField(max_length=100, blank=True)
+    serial_number = models.CharField(max_length=100, null=True, blank=True)
+    purchase_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    selling_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    is_locked = models.BooleanField(default=False)
+    last_enforcement_check = models.DateTimeField(null=True, blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -75,22 +96,41 @@ class Phone(models.Model):
     class Meta:
         db_table = 'phones'
         indexes = [
-            models.Index(fields=['agent']),
+            models.Index(fields=['agent', 'lifecycle_status']),
             models.Index(fields=['imei']),
-            models.Index(fields=['lifecycle_status']),
+            models.Index(fields=['platform_registry']),
         ]
     
     def __str__(self):
-        return f"{self.model} - {self.imei}"
+        return f"{self.brand} {self.model} - {self.imei}"
+    
+    def save(self, *args, **kwargs):
+        # Auto-create/link PlatformPhoneRegistry
+        if not self.platform_registry_id:
+            registry, created = PlatformPhoneRegistry.objects.get_or_create(
+                imei=self.imei,
+                defaults={
+                    'first_registered_agent': self.agent,
+                    'current_agent': self.agent
+                }
+            )
+            self.platform_registry = registry
+            if not created and registry.current_agent != self.agent:
+                registry.current_agent = self.agent
+                registry.save()
+        super().save(*args, **kwargs)
 
 
 class Sale(models.Model):
     """Sales with constraint: ONE ACTIVE SALE PER PHONE (MANDATORY)"""
-    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    phone = models.ForeignKey(Phone, on_delete=models.CASCADE)
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='sales')
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='sales')
+    phone = models.ForeignKey(Phone, on_delete=models.CASCADE, related_name='sales')
     sold_by = models.ForeignKey(
-        AgentStaff, null=True, on_delete=models.SET_NULL
+        AgentStaff, 
+        null=True, 
+        on_delete=models.SET_NULL,
+        related_name='sales'
     )
     
     sale_price = models.DecimalField(max_digits=12, decimal_places=2)
@@ -99,26 +139,48 @@ class Sale(models.Model):
     balance_remaining = models.DecimalField(max_digits=12, decimal_places=2)
     
     status = models.CharField(max_length=20, choices=SaleStatus.choices)
+    
+    # Additional useful fields (KEEP THESE)
+    installment_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    installment_frequency = models.CharField(max_length=20, default='weekly', blank=True)
+    number_of_installments = models.IntegerField(null=True, blank=True)
+    sale_date = models.DateTimeField(null=True, blank=True)
+    completion_date = models.DateTimeField(null=True, blank=True)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
         db_table = 'sales'
-        indexes = [
-            models.Index(fields=['agent', 'status']),
-            models.Index(fields=['customer']),
-            models.Index(fields=['phone']),
-            models.Index(fields=['status']),
-        ]
         constraints = [
             models.UniqueConstraint(
                 fields=['phone'],
                 condition=models.Q(status='active'),
                 name='one_active_sale_per_phone'
             ),
+            models.CheckConstraint(
+                condition=(
+                    models.Q(sale_price__gt=0) & 
+                    models.Q(down_payment__gte=0) & 
+                    models.Q(total_payable__gt=0)
+                ),
+                name='positive_sale_amounts'
+            ),
+            models.CheckConstraint(
+                condition=(
+                    models.Q(balance_remaining__gte=0) & 
+                    models.Q(balance_remaining__lte=models.F('total_payable'))
+                ),
+                name='valid_balance'
+            ),
+        ]
+        indexes = [
+            models.Index(fields=['agent', 'status']),
+            models.Index(fields=['customer']),
+            models.Index(fields=['phone']),
         ]
     
     def __str__(self):
-        return f"Sale #{self.id} - {self.customer.full_name}"
+        return f"Sale #{self.id} - {self.customer.full_name} - {self.phone.brand} {self.phone.model}"
     
     def clean(self):
         """Validate sale business rules"""
