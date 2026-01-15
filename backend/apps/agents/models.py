@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from apps.platform.models import Agent, User
+from apps.platform.models import Agent, User, PlatformPhoneRegistry
 
 
 # ========================================
@@ -107,7 +107,6 @@ class Phone(models.Model):
     def save(self, *args, **kwargs):
         # Auto-create/link PlatformPhoneRegistry
         if not self.platform_registry_id:
-            from apps.platform.models import PlatformPhoneRegistry
             registry, created = PlatformPhoneRegistry.objects.get_or_create(
                 imei=self.imei,
                 defaults={
@@ -159,14 +158,18 @@ class Sale(models.Model):
                 name='one_active_sale_per_phone'
             ),
             models.CheckConstraint(
-                condition=models.Q(sale_price__gt=0) & 
-                      models.Q(down_payment__gte=0) & 
-                      models.Q(total_payable__gt=0),
+                condition=(
+                    models.Q(sale_price__gt=0) & 
+                    models.Q(down_payment__gte=0) & 
+                    models.Q(total_payable__gt=0)
+                ),
                 name='positive_sale_amounts'
             ),
             models.CheckConstraint(
-                condition=models.Q(balance_remaining__gte=0) & 
-                      models.Q(balance_remaining__lte=models.F('total_payable')),
+                condition=(
+                    models.Q(balance_remaining__gte=0) & 
+                    models.Q(balance_remaining__lte=models.F('total_payable'))
+                ),
                 name='valid_balance'
             ),
         ]

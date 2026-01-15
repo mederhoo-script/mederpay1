@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
+import secrets
+import hashlib
 from apps.agents.models import Phone, AgentStaff, Sale
 from apps.platform.models import Agent
 
@@ -41,7 +43,7 @@ class DeviceCommand(models.Model):
     status = models.CharField(
         max_length=20, 
         choices=DeviceCommandStatus.choices, 
-        default=DeviceCommandStatus.PENDING
+        default='pending'
     )
     
     issued_by = models.ForeignKey(
@@ -75,8 +77,6 @@ class DeviceCommand(models.Model):
     def save(self, *args, **kwargs):
         # Auto-generate auth_token_hash if not set
         if not self.auth_token_hash:
-            import secrets
-            import hashlib
             token = secrets.token_urlsafe(32)
             self.auth_token_hash = hashlib.sha256(token.encode()).hexdigest()
         
