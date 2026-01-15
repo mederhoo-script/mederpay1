@@ -1,48 +1,55 @@
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
-from apps.agents.models import Phone
+from apps.agents.models import Phone, AgentStaff, Sale
 from apps.platform.models import Agent
 
 
+# ========================================
+# ENUM CHOICES
+# ========================================
+
+class DeviceCommandType(models.TextChoices):
+    LOCK = "lock", "Lock"
+    UNLOCK = "unlock", "Unlock"
+
+
+class DeviceCommandStatus(models.TextChoices):
+    PENDING = "pending", "Pending"
+    SENT = "sent", "Sent"
+    ACKNOWLEDGED = "acknowledged", "Acknowledged"
+    EXECUTED = "executed", "Executed"
+    FAILED = "failed", "Failed"
+
+
+# ========================================
+# ENFORCEMENT DOMAIN MODELS
+# ========================================
+
 class DeviceCommand(models.Model):
-    """Tamper-proof device lock/unlock commands"""
-    COMMAND_CHOICES = [
-        ('lock', 'Lock'),
-        ('unlock', 'Unlock'),
-    ]
+    """Tamper-proof device lock/unlock commands (MANDATORY)"""
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    phone = models.ForeignKey(Phone, on_delete=models.CASCADE)
+    sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
     
-    STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('sent', 'Sent'),
-        ('acknowledged', 'Acknowledged'),
-        ('executed', 'Executed'),
-        ('failed', 'Failed'),
-        ('expired', 'Expired'),
-    ]
+    command = models.CharField(
+        max_length=10, choices=DeviceCommandType.choices
+    )
+    reason = models.CharField(max_length=50)
     
-    phone = models.ForeignKey(Phone, on_delete=models.CASCADE, related_name='commands')
-    agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='device_commands')
-    
-    command_type = models.CharField(max_length=10, choices=COMMAND_CHOICES)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    
-    # Command metadata
-    reason = models.TextField()
-    issued_by = models.ForeignKey('platform.User', on_delete=models.PROTECT, related_name='issued_commands')
-    
-    # Execution tracking
-    issued_at = models.DateTimeField(auto_now_add=True)
-    acknowledged_at = models.DateTimeField(null=True, blank=True)
-    executed_at = models.DateTimeField(null=True, blank=True)
+    auth_token_hash = models.TextField()
     expires_at = models.DateTimeField()
     
-    # Device response
-    device_response = models.TextField(null=True, blank=True)
-    error_message = models.TextField(null=True, blank=True)
+    status = models.CharField(
+        max_length=20, choices=DeviceCommandStatus.choices, default='pending'
+    )
+    
+    issued_by = models.ForeignKey(
+        AgentStaff, null=True, on_delete=models.SET_NULL
+    )
     
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    executed_at = models.DateTimeField(null=True, blank=True)
     
     class Meta:
         db_table = 'device_commands'
@@ -54,7 +61,7 @@ class DeviceCommand(models.Model):
         ordering = ['-created_at']
     
     def __str__(self):
-        return f"{self.command_type.upper()} - {self.phone.imei} - {self.status}"
+        return f"{self.command.upper()} - {self.phone.imei} - {self.status}"
     
     def save(self, *args, **kwargs):
         """Set expiration time if not set"""
@@ -65,35 +72,3 @@ class DeviceCommand(models.Model):
     def is_expired(self):
         """Check if command has expired"""
         return timezone.now() > self.expires_at and self.status in ['pending', 'sent']
-
-
-class DeviceHealthCheck(models.Model):
-    """Device health check records"""
-    phone = models.ForeignKey(Phone, on_delete=models.CASCADE, related_name='health_checks')
-    
-    # Device status
-    is_device_admin_enabled = models.BooleanField(default=False)
-    is_companion_app_installed = models.BooleanField(default=False)
-    companion_app_version = models.CharField(max_length=20, null=True, blank=True)
-    
-    # System info
-    android_version = models.CharField(max_length=10)
-    app_version = models.CharField(max_length=20)
-    battery_level = models.IntegerField(null=True, blank=True)
-    
-    # Enforcement status
-    is_locked = models.BooleanField(default=False)
-    lock_reason = models.TextField(null=True, blank=True)
-    
-    checked_at = models.DateTimeField(auto_now_add=True)
-    
-    class Meta:
-        db_table = 'device_health_checks'
-        indexes = [
-            models.Index(fields=['phone', 'checked_at']),
-            models.Index(fields=['checked_at']),
-        ]
-        ordering = ['-checked_at']
-    
-    def __str__(self):
-        return f"Health Check - {self.phone.imei} - {self.checked_at}"

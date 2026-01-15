@@ -17,7 +17,7 @@ class PaymentRecordViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         agent = Agent.objects.get(user=self.request.user)
-        return PaymentRecord.objects.filter(agent=agent).select_related('sale', 'customer')
+        return PaymentRecord.objects.filter(agent=agent).select_related('sale')
     
     def perform_create(self, serializer):
         agent = Agent.objects.get(user=self.request.user)
@@ -30,11 +30,9 @@ class PaymentRecordViewSet(viewsets.ModelViewSet):
         
         payment = serializer.save(
             agent=agent,
-            recorded_by=self.request.user,
-            customer=sale.customer,
             balance_before=balance_before,
             balance_after=balance_after,
-            status='completed'
+            status='confirmed'
         )
         
         # Update sale balance
@@ -45,12 +43,21 @@ class PaymentRecordViewSet(viewsets.ModelViewSet):
             
             # Issue unlock command
             from apps.enforcement.models import DeviceCommand
+            import hashlib
+            from django.utils import timezone as tz
+            
+            # Generate secure token hash
+            token = f"{sale.id}-{tz.now().timestamp()}"
+            token_hash = hashlib.sha256(token.encode()).hexdigest()
+            
             DeviceCommand.objects.create(
                 phone=sale.phone,
                 agent=agent,
-                command_type='unlock',
+                sale=sale,
+                command='unlock',
                 reason='Payment completed',
-                issued_by=self.request.user
+                auth_token_hash=token_hash,
+                expires_at=timezone.now() + timezone.timedelta(days=1)
             )
         
         sale.save()

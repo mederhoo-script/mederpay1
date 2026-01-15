@@ -3,8 +3,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.utils import timezone
-from .models import DeviceCommand, DeviceHealthCheck
-from .serializers import DeviceCommandSerializer, DeviceHealthCheckSerializer
+from .models import DeviceCommand
+from .serializers import DeviceCommandSerializer
 from apps.platform.models import Agent
 from apps.agents.models import Phone
 
@@ -13,7 +13,7 @@ class DeviceCommandViewSet(viewsets.ModelViewSet):
     """Device command management"""
     serializer_class = DeviceCommandSerializer
     permission_classes = [permissions.IsAuthenticated]
-    filterset_fields = ['status', 'command_type', 'phone']
+    filterset_fields = ['status', 'command', 'phone']
     
     def get_queryset(self):
         agent = Agent.objects.get(user=self.request.user)
@@ -21,7 +21,7 @@ class DeviceCommandViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         agent = Agent.objects.get(user=self.request.user)
-        serializer.save(agent=agent, issued_by=self.request.user)
+        serializer.save(agent=agent)
     
     @action(detail=False, methods=['get'])
     def pending(self, request):
@@ -49,7 +49,6 @@ class DeviceCommandViewSet(viewsets.ModelViewSet):
         """Acknowledge command received (Android API)"""
         command = self.get_object()
         command.status = 'acknowledged'
-        command.acknowledged_at = timezone.now()
         command.save()
         
         return Response({'status': 'acknowledged'})
@@ -60,15 +59,7 @@ class DeviceCommandViewSet(viewsets.ModelViewSet):
         command = self.get_object()
         command.status = 'executed'
         command.executed_at = timezone.now()
-        command.device_response = request.data.get('response', '')
         command.save()
-        
-        # Update phone lock status
-        if command.command_type == 'lock':
-            command.phone.is_locked = True
-        elif command.command_type == 'unlock':
-            command.phone.is_locked = False
-        command.phone.save()
         
         return Response({'status': 'executed'})
 
@@ -80,7 +71,8 @@ class EnforcementStatusView(APIView):
     def get(self, request, imei):
         try:
             phone = Phone.objects.get(imei=imei)
-            sale = phone.sales.filter(status='active').first()
+            from apps.agents.models import Sale
+            sale = Sale.objects.filter(phone=phone, status='active').first()
             
             if not sale:
                 return Response({
@@ -106,37 +98,5 @@ class EnforcementStatusView(APIView):
                 'balance': float(sale.balance_remaining),
                 'overdue_count': overdue_installments.count()
             })
-        except Phone.DoesNotExist:
-            return Response({'error': 'Phone not found'}, status=404)
-
-
-class HealthCheckView(APIView):
-    """Device health check endpoint"""
-    permission_classes = [permissions.AllowAny]  # Android API
-    
-    def post(self, request):
-        imei = request.data.get('imei')
-        if not imei:
-            return Response({'error': 'IMEI required'}, status=400)
-        
-        try:
-            phone = Phone.objects.get(imei=imei)
-            
-            health_check = DeviceHealthCheck.objects.create(
-                phone=phone,
-                is_device_admin_enabled=request.data.get('is_device_admin_enabled', False),
-                is_companion_app_installed=request.data.get('is_companion_app_installed', False),
-                companion_app_version=request.data.get('companion_app_version'),
-                android_version=request.data.get('android_version', 'unknown'),
-                app_version=request.data.get('app_version', 'unknown'),
-                battery_level=request.data.get('battery_level'),
-                is_locked=request.data.get('is_locked', False),
-                lock_reason=request.data.get('lock_reason')
-            )
-            
-            phone.last_enforcement_check = timezone.now()
-            phone.save()
-            
-            return Response(DeviceHealthCheckSerializer(health_check).data)
         except Phone.DoesNotExist:
             return Response({'error': 'Phone not found'}, status=404)
