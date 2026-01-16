@@ -31,6 +31,7 @@ export default function DashboardLayout({
     { href: '/dashboard/staff', label: 'Staff', icon: '👥' },
     { href: '/dashboard/customers', label: 'Customers', icon: '👤' },
     { href: '/dashboard/payments', label: 'Payments', icon: '💳' },
+    { href: '/dashboard/settings', label: 'Settings', icon: '⚙️' },
   ];
 
   return (
