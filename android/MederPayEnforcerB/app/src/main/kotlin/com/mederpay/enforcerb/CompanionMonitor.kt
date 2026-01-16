@@ -1,4 +1,4 @@
-package com.mederpay.enforcera
+package com.mederpay.enforcerb
 
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
@@ -13,7 +13,7 @@ import java.security.MessageDigest
 
 /**
  * CompanionMonitor provides comprehensive monitoring and health checking
- * for the companion app (Enforcer B).
+ * for the companion app (Enforcer A).
  */
 object CompanionMonitor {
     private const val COMPANION_PACKAGE = "com.mederpay.enforcera"

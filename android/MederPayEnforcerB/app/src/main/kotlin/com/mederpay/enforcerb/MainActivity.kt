@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "MederPay Enforcer A",
+                text = "MederPay Enforcer B",
                 style = MaterialTheme.typography.headlineMedium
             )
 
