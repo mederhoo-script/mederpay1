@@ -109,9 +109,11 @@ class PackageChangeReceiver : BroadcastReceiver() {
     private fun logAuditEvent(context: Context, event: String) {
         scope.launch(Dispatchers.IO) {
             try {
-                // Send audit event to backend
-                Log.i(TAG, "Logging audit event: $event")
-                // TODO: Implement backend API call
+                // Send audit event to backend via AuditLogger
+                AuditLogger.log(context, event, mapOf(
+                    "companion_package" to COMPANION_PACKAGE
+                ))
+                Log.i(TAG, "Logged audit event: $event")
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to log audit event", e)
             }

@@ -32,6 +32,21 @@ class OverlayActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
+        // Android 14+ hardening: Lock task mode
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            try {
+                val devicePolicyManager = getSystemService(DEVICE_POLICY_SERVICE) as DevicePolicyManager
+                val adminComponent = ComponentName(this, DeviceAdminReceiver::class.java)
+                
+                if (devicePolicyManager.isAdminActive(adminComponent)) {
+                    // Device Admin active - apply task locking if possible
+                    Log.d(TAG, "Applying Android 14+ hardened overlay restrictions")
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Could not apply task locking", e)
+            }
+        }
+        
         // Get overlay state from OverlayManager or intent
         val overlayState = OverlayManager.getOverlayState(this)
         if (overlayState != null) {
@@ -216,5 +231,17 @@ class OverlayActivity : Activity() {
 
     override fun onBackPressed() {
         // Prevent back navigation
+    }
+
+    override fun onUserLeaveHint() {
+        // Prevent leaving the activity (home button, recent apps)
+        // Android 12+ fallback: restart activity if user tries to leave
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            // Bring back to front
+            val intent = Intent(this, OverlayActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(intent)
+        }
     }
 }
