@@ -2,427 +2,369 @@
 
 ## Overview
 
-The MederPay Enforcer A app integrates with Monnify payment gateway for weekly settlement enforcement. This document explains the integration, API usage, and deployment considerations.
+The MederPay Enforcer A app integrates with Monnify payment gateway for weekly settlement enforcement. **All Monnify API operations are handled securely by the backend** - the mobile app never directly communicates with Monnify or handles API credentials.
+
+## Security Architecture
+
+### ✅ Correct Implementation (Current)
+
+```
+Mobile App → Backend API → Monnify API
+```
+
+**Mobile App Responsibilities:**
+- Request reserved account details from backend
+- Display account information to user
+- Poll backend for payment confirmation
+- Handle UI and user interaction
+
+**Backend Responsibilities:**
+- Store Monnify API credentials securely (never exposed to app)
+- Authenticate with Monnify API
+- Create and manage reserved accounts
+- Handle Monnify webhooks for payment notifications
+- Validate and confirm payments
+
+### ❌ Security Anti-Pattern (What NOT to Do)
+
+```
+Mobile App → Monnify API (INSECURE - credentials exposed)
+```
+
+**Why this is wrong:**
+- API credentials would be embedded in the app (easily decompiled)
+- Users could extract credentials and abuse the API
+- Credentials could be stolen and used maliciously
+- No centralized control over payment flows
+- Violates PCI compliance requirements
 
 ## Monnify Configuration
 
-### Test Credentials (Sandbox)
+### Test Credentials (Backend Only)
 ```
 API Key: MK_TEST_7M5NZ5HX39
 Secret Key: 0VCQQYWR4GLTLYDX1WYZDJABANLX6RVB
 Contract Code: 2570907178
 Base URL: https://sandbox.monnify.com
-Wallet Account: 8415475129
 ```
 
-### Production Credentials
-Production credentials should be:
-1. Fetched from the backend API per agent
-2. Never hardcoded in the app
-3. Stored securely using SecureStorage (encrypted)
+**⚠️ CRITICAL:** These credentials must ONLY be stored on the backend server in environment variables, never in the mobile app code or configuration files.
 
-## Integration Architecture
-
-### 1. Authentication Flow
-
-The app uses Monnify's REST API for authentication:
-
-```kotlin
-POST /api/v1/auth/login
-Authorization: Basic base64(apiKey:secretKey)
-
-Response:
-{
-  "requestSuccessful": true,
-  "responseCode": 0,
-  "responseBody": {
-    "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
-    "expiresIn": 3600
-  }
-}
-```
-
-**Implementation:**
-- Authentication happens automatically when needed
-- Access tokens are cached with 5-minute buffer before expiration
-- Re-authentication is transparent to the caller
-
-### 2. Payment Methods
-
-#### Option A: Reserved Accounts (Recommended for MederPay)
-
-Create a reserved account for each agent:
-
-```kotlin
-POST /api/v2/bank-transfer/reserved-accounts
-Authorization: Bearer {accessToken}
-
-{
-  "accountReference": "agent-{agent_id}",
-  "accountName": "MederPay Agent {name}",
-  "currencyCode": "NGN",
-  "contractCode": "2570907178",
-  "customerEmail": "agent@email.com",
-  "customerName": "Agent Name",
-  "getAllAvailableBanks": true
-}
-
-Response:
-{
-  "requestSuccessful": true,
-  "responseBody": {
-    "accountNumber": "6254727989",
-    "bankName": "Moniepoint Microfinance Bank",
-    "bankCode": "50515",
-    "reservationReference": "NWA7DMJ0W2UDK1KN5SLF",
-    "status": "ACTIVE"
-  }
-}
-```
-
-**Benefits:**
-- Agent gets a dedicated bank account number
-- Customers can make transfers 24/7
-- Automatic webhook notifications on payment
-- No SDK integration required
-- Works with all banks
-
-**Flow:**
-1. Create reserved account during agent onboarding
-2. Store account details in backend
-3. Display account number when settlement is due
-4. User makes bank transfer manually
-5. Monnify sends webhook to backend
-6. Backend confirms payment and updates settlement
-
-#### Option B: Checkout SDK (Alternative)
-
-Use Monnify Android SDK for in-app checkout:
-
-**Add Dependency:**
-```kotlin
-implementation("com.monnify.android:monnify-sdk:1.0.0")
-```
-
-**Initialize:**
-```kotlin
-Monnify.initialize(
-    applicationContext = context,
-    apiKey = apiKey,
-    contractCode = contractCode,
-    environment = ENVIRONMENT_TEST
-)
-```
-
-**Initiate Payment:**
-```kotlin
-val transaction = TransactionDetails.Builder()
-    .amount(BigDecimal.valueOf(amount))
-    .customerName("Agent Name")
-    .customerEmail("agent@email.com")
-    .paymentReference(reference)
-    .paymentDescription("Weekly Settlement")
-    .currencyCode("NGN")
-    .paymentMethods(listOf(PaymentMethod.CARD, PaymentMethod.BANK_TRANSFER))
-    .build()
-
-Monnify.getInstance().initializePayment(
-    activity = activity,
-    transactionDetails = transaction,
-    paymentCallback = object : PaymentCallback {
-        override fun onPaymentCompleted(response: TransactionResponse) {
-            // Payment successful
-        }
-        override fun onPaymentFailed(response: TransactionResponse) {
-            // Payment failed
-        }
-        override fun onPaymentCancelled() {
-            // User cancelled
-        }
-    }
-)
-```
-
-## Current Implementation
+## Mobile App Implementation
 
 ### MonnifyPaymentManager.kt
 
-The current implementation in `MonnifyPaymentManager.kt`:
-
-1. **Initialization:**
-   - Automatically uses test credentials in debug mode
-   - Production credentials should come from backend
-   - Authenticates on first use
-
-2. **Authentication:**
-   - Basic Auth with base64(apiKey:secretKey)
-   - Token caching with automatic renewal
-   - 5-minute expiration buffer
-
-3. **Reserved Account Creation:**
-   - `createReservedAccount()` method implemented
-   - Returns account number, bank name, bank code
-   - Can be used during agent onboarding
-
-4. **Payment Initiation:**
-   - Currently uses simulation dialog for testing
-   - Should be replaced with one of:
-     - Display reserved account for manual transfer
-     - Monnify Checkout SDK for in-app payment
-
-5. **Payment Confirmation:**
-   - `confirmPaymentWithBackend()` sends payment details to backend
-   - Backend validates with Monnify
-   - Updates settlement status
-
-## Backend Integration Requirements
-
-### 1. Agent Monnify Configuration API
-
-Create endpoint to provide agent's Monnify credentials:
+The app implements a secure payment coordinator that communicates only with the backend:
 
 ```kotlin
-GET /api/agents/{agent_id}/monnify-config
-
-Response:
-{
-  "api_key": "MK_PROD_...",
-  "secret_key": "...",
-  "contract_code": "...",
-  "reserved_account_number": "1234567890",
-  "reserved_account_bank": "Moniepoint",
-  "reserved_account_name": "Agent Name"
+/**
+ * MonnifyPaymentManager - Secure payment coordinator
+ * 
+ * This manager does NOT communicate with Monnify directly.
+ * All Monnify operations are handled by the backend for security.
+ */
+object MonnifyPaymentManager {
+    
+    /**
+     * Get reserved account details from backend
+     */
+    suspend fun getReservedAccountInfo(context: Context): ReservedAccountInfo? {
+        val imei = getDeviceIMEI(context)
+        
+        // Backend handles Monnify authentication and account retrieval
+        val response = ApiClient.service.getReservedAccount(imei)
+        
+        if (response.success) {
+            return ReservedAccountInfo(
+                accountNumber = response.account_number,
+                accountName = response.account_name,
+                bankName = response.bank_name,
+                bankCode = response.bank_code
+            )
+        }
+        return null
+    }
+    
+    /**
+     * Initiate payment flow
+     * 1. Get account details
+     * 2. Display to user
+     * 3. Poll for confirmation
+     */
+    fun initiatePayment(
+        activity: Activity,
+        amount: Double,
+        settlementId: String,
+        onSuccess: (String) -> Unit,
+        onFailure: (String) -> Unit,
+        onCancelled: () -> Unit
+    ) {
+        // Get account info from backend
+        val accountInfo = getReservedAccountInfo(activity)
+        
+        // Display account details to user
+        showPaymentDialog(activity, accountInfo, amount)
+        
+        // Start polling backend for payment confirmation
+        startPaymentPolling(settlementId, onSuccess, onFailure)
+    }
 }
 ```
 
-### 2. Reserved Account Creation
+### Payment Flow
 
-Backend should:
-1. Call Monnify API to create reserved account during agent onboarding
-2. Store account details in Agent model
-3. Provide account details to app via API
+1. **Request Account Details**
+   ```kotlin
+   GET /api/monnify/reserved-account/{imei}
+   ```
 
-### 3. Webhook Handling
+2. **Display to User**
+   - Show bank name, account number, amount
+   - Provide "Copy Account" button
+   - User makes transfer via their banking app
 
-Backend must implement webhook endpoint to receive payment notifications:
+3. **Poll for Confirmation**
+   ```kotlin
+   GET /api/settlements/weekly/{imei}
+   // Poll every 5 seconds for up to 5 minutes
+   // Then continue in background for up to 30 minutes
+   ```
+
+4. **Handle Success**
+   - Backend confirms via webhook
+   - App receives payment confirmation
+   - Dismiss overlay, show success
+
+## Backend Implementation
+
+### Required Components
+
+#### 1. Environment Variables
+```bash
+MONNIFY_API_KEY=MK_TEST_7M5NZ5HX39
+MONNIFY_SECRET_KEY=0VCQQYWR4GLTLYDX1WYZDJABANLX6RVB
+MONNIFY_CONTRACT_CODE=2570907178
+MONNIFY_BASE_URL=https://sandbox.monnify.com
+```
+
+#### 2. Monnify Authentication
 
 ```python
-POST /webhooks/monnify/
+import base64
+import requests
+from django.conf import settings
 
-{
-  "eventType": "SUCCESSFUL_TRANSACTION",
-  "transactionReference": "MNFY|...",
-  "paymentReference": "MEDERPAY-...",
-  "amountPaid": 5000.00,
-  "paidOn": "2024-01-15T10:30:00",
-  "accountNumber": "6254727989",
-  "customerName": "Customer Name"
-}
+def authenticate_monnify():
+    """Authenticate with Monnify API"""
+    credentials = f"{settings.MONNIFY_API_KEY}:{settings.MONNIFY_SECRET_KEY}"
+    base64_creds = base64.b64encode(credentials.encode()).decode()
+    
+    response = requests.post(
+        f"{settings.MONNIFY_BASE_URL}/api/v1/auth/login",
+        headers={"Authorization": f"Basic {base64_creds}"}
+    )
+    
+    data = response.json()
+    return data['responseBody']['accessToken']
 ```
 
-**Backend Actions:**
-1. Verify webhook signature (Monnify provides signature)
-2. Extract payment reference to identify settlement
-3. Update settlement status to PAID
-4. Update agent billing record
-5. Send push notification to app (optional)
-6. Return 200 OK to Monnify
+#### 3. Create Reserved Account
 
-### 4. Settlement Status API
-
-App polls this endpoint to check if payment was confirmed:
-
-```kotlin
-GET /api/settlements/weekly/{imei}/
-
-Response:
-{
-  "has_settlement": true,
-  "is_due": false,  // Changed to false after payment
-  "is_paid": true,
-  "amount_due": 0.0,
-  "payment_date": "2024-01-15T10:30:00",
-  "payment_reference": "MEDERPAY-..."
-}
-```
-
-## Production Deployment Steps
-
-### 1. Backend Setup
-
-1. Register for Monnify production account
-2. Get production API keys and contract code
-3. Store in environment variables (never in code)
-4. Implement webhook endpoint with signature verification
-5. Create reserved accounts for agents during onboarding
-6. Store account details in database
-
-### 2. App Configuration
-
-1. Update `MonnifyPaymentManager.initialize()` call in `EnforcementService`
-2. Fetch credentials from backend API
-3. Remove test credentials from code
-4. Test with production credentials in sandbox first
-5. Switch to production base URL
-
-### 3. Testing Checklist
-
-- [ ] Authentication with production credentials
-- [ ] Reserved account creation
-- [ ] Payment webhook reception
-- [ ] Settlement status update after payment
-- [ ] Overlay dismissal after payment confirmation
-- [ ] Audit logging of payment events
-- [ ] Error handling for failed payments
-- [ ] Network retry logic
-
-## Security Considerations
-
-### 1. Credentials Storage
-
-- ✅ Never hardcode production credentials
-- ✅ Fetch from backend API
-- ✅ Store in SecureStorage (encrypted)
-- ✅ Clear credentials on logout
-
-### 2. API Communication
-
-- ✅ Use HTTPS only
-- ✅ Implement certificate pinning (recommended)
-- ✅ Validate webhook signatures
-- ✅ Log all payment events for audit
-
-### 3. Payment Validation
-
-- ✅ Always confirm payments with backend
-- ✅ Never trust client-side payment status alone
-- ✅ Implement duplicate payment detection
-- ✅ Handle partial payments correctly
-
-## Code Examples
-
-### Initialize Monnify (Production)
-
-```kotlin
-// In Application onCreate or EnforcementService
-lifecycleScope.launch {
-    try {
-        // Fetch configuration from backend
-        val config = ApiClient.service.getAgentMonnifyConfig()
-        
-        // Initialize Monnify
-        MonnifyPaymentManager.initialize(
-            context = applicationContext,
-            apiKey = config.api_key,
-            secretKey = config.secret_key,
-            contractCode = config.contract_code,
-            useSandbox = false  // Production mode
-        )
-        
-        // Authenticate
-        MonnifyPaymentManager.fetchConfiguration(applicationContext)
-        
-    } catch (e: Exception) {
-        Log.e(TAG, "Failed to initialize Monnify", e)
-    }
-}
-```
-
-### Display Reserved Account for Payment
-
-```kotlin
-// In PaymentOverlay when "Pay Now" is clicked
-val accountInfo = ApiClient.service.getReservedAccountInfo()
-
-val dialog = AlertDialog.Builder(this)
-    .setTitle("Make Payment")
-    .setMessage("""
-        Transfer ₦${String.format("%,.2f", amount)} to:
-        
-        Bank: ${accountInfo.bank_name}
-        Account Number: ${accountInfo.account_number}
-        Account Name: ${accountInfo.account_name}
-        
-        Payment will be confirmed automatically.
-    """.trimIndent())
-    .setPositiveButton("I've Made Transfer") { _, _ ->
-        // Start polling for payment confirmation
-        startPaymentPolling(settlementId)
-    }
-    .setNegativeButton("Copy Account") { _, _ ->
-        copyToClipboard(accountInfo.account_number)
-        // Show dialog again
-    }
-    .setCancelable(false)
-    .create()
-
-dialog.show()
-```
-
-### Poll for Payment Confirmation
-
-```kotlin
-private fun startPaymentPolling(settlementId: String) {
-    lifecycleScope.launch {
-        var attempts = 0
-        val maxAttempts = 60  // 5 minutes with 5-second intervals
-        
-        while (attempts < maxAttempts) {
-            delay(5000)  // Wait 5 seconds
-            
-            val status = ApiClient.service.getWeeklySettlement(imei)
-            
-            if (status.is_paid) {
-                // Payment confirmed!
-                onSuccess(status.payment_reference ?: "")
-                break
-            }
-            
-            attempts++
+```python
+def create_reserved_account(agent):
+    """Create Monnify reserved account for agent during onboarding"""
+    access_token = authenticate_monnify()
+    
+    response = requests.post(
+        f"{settings.MONNIFY_BASE_URL}/api/v2/bank-transfer/reserved-accounts",
+        headers={
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        },
+        json={
+            "accountReference": f"agent-{agent.id}",
+            "accountName": agent.business_name[:40],  # Max 40 chars
+            "currencyCode": "NGN",
+            "contractCode": settings.MONNIFY_CONTRACT_CODE,
+            "customerEmail": agent.email,
+            "customerName": agent.business_name,
+            "getAllAvailableBanks": True
         }
-        
-        if (attempts >= maxAttempts) {
-            // Timeout - payment not confirmed
-            showTimeoutMessage()
-        }
-    }
-}
+    )
+    
+    data = response.json()['responseBody']
+    account = data['accounts'][0]
+    
+    # Save to database
+    agent.monnify_account_number = account['accountNumber']
+    agent.monnify_account_name = account['accountName']
+    agent.monnify_bank_name = account['bankName']
+    agent.monnify_bank_code = account['bankCode']
+    agent.monnify_reservation_ref = data['reservationReference']
+    agent.save()
+    
+    return account
 ```
+
+#### 4. Webhook Handler
+
+```python
+@csrf_exempt
+def monnify_webhook(request):
+    """Handle payment notifications from Monnify"""
+    # Verify signature
+    signature = request.headers.get('Monnify-Signature')
+    if not verify_monnify_signature(signature, request.body):
+        return JsonResponse({'error': 'Invalid signature'}, status=401)
+    
+    data = json.loads(request.body)
+    
+    if data['eventType'] == 'SUCCESSFUL_TRANSACTION':
+        account_number = data['accountNumber']
+        amount_paid = Decimal(data['amountPaid'])
+        payment_ref = data['transactionReference']
+        paid_on = datetime.fromisoformat(data['paidOn'])
+        
+        try:
+            agent = Agent.objects.get(monnify_account_number=account_number)
+            
+            # Find pending settlement
+            settlement = WeeklySettlement.objects.filter(
+                agent=agent,
+                status='PENDING'
+            ).order_by('-week_ending').first()
+            
+            if settlement:
+                # Create payment record
+                payment = SettlementPayment.objects.create(
+                    settlement=settlement,
+                    amount=amount_paid,
+                    payment_reference=payment_ref,
+                    payment_method='BANK_TRANSFER',
+                    payment_date=paid_on,
+                    status='CONFIRMED'
+                )
+                
+                # Update settlement
+                settlement.amount_paid += amount_paid
+                if settlement.amount_paid >= settlement.total_amount:
+                    settlement.status = 'PAID'
+                    settlement.paid_date = paid_on
+                settlement.save()
+                
+                logger.info(f"Payment confirmed: {payment_ref} for agent {agent.id}")
+                
+                return JsonResponse({'status': 'success'})
+        
+        except Agent.DoesNotExist:
+            logger.error(f"Agent not found for account: {account_number}")
+    
+    return JsonResponse({'status': 'ignored'})
+```
+
+#### 5. API Endpoints
+
+```python
+# urls.py
+urlpatterns = [
+    path('api/monnify/reserved-account/<str:imei>/', get_reserved_account),
+    path('webhooks/monnify/', monnify_webhook),
+]
+
+# views.py
+@api_view(['GET'])
+def get_reserved_account(request, imei):
+    """Get reserved account details for mobile app"""
+    try:
+        phone = Phone.objects.get(imei=imei)
+        agent = phone.agent
+        
+        # Create account if doesn't exist
+        if not agent.monnify_account_number:
+            create_reserved_account(agent)
+        
+        return Response({
+            'success': True,
+            'account_number': agent.monnify_account_number,
+            'account_name': agent.monnify_account_name,
+            'bank_name': agent.monnify_bank_name,
+            'bank_code': agent.monnify_bank_code
+        })
+    
+    except Phone.DoesNotExist:
+        return Response({
+            'success': False,
+            'message': 'Device not found'
+        }, status=404)
+```
+
+## Production Deployment
+
+### Backend Checklist
+
+- [ ] Store credentials in environment variables
+- [ ] Register webhook URL with Monnify
+- [ ] Implement signature verification
+- [ ] Create reserved accounts during agent onboarding
+- [ ] Test webhook reception in staging
+- [ ] Monitor webhook logs
+- [ ] Implement retry logic for failed webhook processing
+
+### Mobile App Checklist
+
+- [ ] Verify no Monnify credentials in code
+- [ ] Test payment flow with sandbox
+- [ ] Test polling timeout handling
+- [ ] Test network error scenarios
+- [ ] Add payment confirmation notifications
+- [ ] Test on multiple Android versions
+
+## Testing
+
+### Sandbox Testing
+
+1. **Create Test Reserved Account**
+   ```bash
+   # Via backend admin or management command
+   python manage.py create_monnify_account --agent-id=1
+   ```
+
+2. **Test Payment Flow**
+   - Open app, trigger settlement overlay
+   - Note account number displayed
+   - Make test transfer via Monnify sandbox
+   - Verify webhook received
+   - Confirm payment in app
+
+3. **Test Edge Cases**
+   - Partial payments
+   - Multiple payments
+   - Timeout scenarios
+   - Network failures
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Authentication Fails**
-   - Check API key and secret key are correct
-   - Verify base URL (sandbox vs production)
-   - Ensure Basic Auth header is properly formatted
+**Issue:** "Device not found" error
+- **Cause:** IMEI not registered in backend
+- **Solution:** Ensure phone is registered to an agent
 
-2. **Reserved Account Creation Fails**
-   - Verify contract code is correct
-   - Ensure all required fields are provided
-   - Check email format is valid
-   - Verify BVN/NIN format if provided
+**Issue:** Payment not confirmed after transfer
+- **Cause:** Webhook not received or processed
+- **Solution:** Check backend logs, verify webhook URL configured in Monnify dashboard
 
-3. **Webhook Not Received**
-   - Verify webhook URL is publicly accessible
-   - Check webhook signature validation
-   - Ensure 200 OK response is returned
-   - Check Monnify dashboard for webhook logs
-
-4. **Payment Not Confirmed**
-   - Verify payment was made to correct account
-   - Check payment amount matches settlement amount
-   - Ensure payment reference is included in transfer
-   - Check backend logs for webhook reception
+**Issue:** Account creation fails
+- **Cause:** Invalid email, missing required fields
+- **Solution:** Check agent profile has valid email and business name
 
 ## Support
 
 - **Monnify Documentation:** https://docs.monnify.com/
 - **Monnify Support:** support@monnify.com
-- **MederPay Backend API:** See backend/README.md
+- **Backend API:** See `backend/README.md`
 
 ---
 
 **Last Updated:** January 2026  
-**Version:** 1.0.0
+**Version:** 2.0 (Secure Backend Architecture)

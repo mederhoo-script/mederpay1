@@ -70,6 +70,30 @@ data class ConfirmSettlementPaymentResponse(
     val remaining_balance: Double?
 )
 
+data class ReservedAccountResponse(
+    val success: Boolean,
+    val message: String?,
+    val account_number: String,
+    val account_name: String,
+    val bank_name: String,
+    val bank_code: String
+)
+
+data class WeeklySettlementResponse(
+    val has_settlement: Boolean,
+    val is_due: Boolean,
+    val is_overdue: Boolean,
+    val is_paid: Boolean = false,
+    val payment_reference: String? = null,
+    val settlement_id: String?,
+    val amount_due: Double?,
+    val total_amount: Double?,
+    val amount_paid: Double?,
+    val due_date: String?,
+    val invoice_number: String?,
+    val message: String?
+)
+
 interface ApiService {
     @GET("enforcement/status/{imei}/")
     suspend fun getEnforcementStatus(@Path("imei") imei: String): EnforcementStatus
@@ -101,6 +125,11 @@ interface ApiService {
         @Path("settlement_id") settlementId: String,
         @Body request: ConfirmSettlementPaymentRequest
     ): ConfirmSettlementPaymentResponse
+    
+    // Monnify reserved account endpoint
+    // Backend handles Monnify API communication securely
+    @GET("monnify/reserved-account/{imei}/")
+    suspend fun getReservedAccount(@Path("imei") imei: String): ReservedAccountResponse
 }
 
 object ApiClient {
