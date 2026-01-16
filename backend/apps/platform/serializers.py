@@ -64,12 +64,15 @@ class AgentSerializer(serializers.ModelSerializer):
                   'credit_limit', 'status', 'created_at',
                   'monnify_public_key', 'monnify_secret_key', 
                   'monnify_contract_code', 'monnify_webhook_secret',
-                  'has_monnify_configured', 'business_address']
+                  'has_monnify_configured', 'business_address',
+                  'nin', 'bvn']
         read_only_fields = ['id', 'created_at', 'risk_score', 'credit_limit', 'status']
         extra_kwargs = {
             'monnify_public_key': {'required': False, 'allow_blank': True},
             'monnify_contract_code': {'required': False, 'allow_blank': True},
             'monnify_webhook_secret': {'required': False, 'allow_blank': True},
+            'nin': {'required': False, 'allow_blank': True},
+            'bvn': {'required': False, 'allow_blank': True},
         }
     
     def get_has_monnify_configured(self, obj):

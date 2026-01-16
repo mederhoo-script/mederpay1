@@ -7,6 +7,8 @@ interface AgentProfile {
   id: number;
   business_name: string;
   business_address: string;
+  nin: string;
+  bvn: string;
   monnify_public_key: string;
   monnify_contract_code: string;
   monnify_webhook_secret: string;
@@ -20,6 +22,8 @@ export default function SettingsPage() {
   const [formData, setFormData] = useState({
     business_name: '',
     business_address: '',
+    nin: '',
+    bvn: '',
     monnify_public_key: '',
     monnify_secret_key: '',
     monnify_contract_code: '',
@@ -38,6 +42,8 @@ export default function SettingsPage() {
       setFormData({
         business_name: data.business_name || '',
         business_address: data.business_address || '',
+        nin: data.nin || '',
+        bvn: data.bvn || '',
         monnify_public_key: data.monnify_public_key || '',
         monnify_secret_key: '', // Never send back the secret key
         monnify_contract_code: data.monnify_contract_code || '',
@@ -123,6 +129,52 @@ export default function SettingsPage() {
                 }
                 className="mt-1 w-full rounded border px-3 py-2"
               />
+            </div>
+          </div>
+
+          {/* KYC Information */}
+          <div className="mt-6 border-t pt-6">
+            <h3 className="mb-4 text-lg font-semibold">KYC Information</h3>
+            <p className="mb-4 text-sm text-gray-600">
+              Required for generating virtual dedicated bank accounts for your clients
+            </p>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium">
+                  NIN (National Identification Number)
+                </label>
+                <input
+                  type="text"
+                  maxLength={11}
+                  placeholder="12345678901"
+                  value={formData.nin}
+                  onChange={(e) =>
+                    setFormData({ ...formData, nin: e.target.value.replace(/\D/g, '') })
+                  }
+                  className="mt-1 w-full rounded border px-3 py-2"
+                />
+                <p className="mt-1 text-xs text-gray-500">
+                  11-digit National Identification Number
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium">
+                  BVN (Bank Verification Number)
+                </label>
+                <input
+                  type="text"
+                  maxLength={11}
+                  placeholder="12345678901"
+                  value={formData.bvn}
+                  onChange={(e) =>
+                    setFormData({ ...formData, bvn: e.target.value.replace(/\D/g, '') })
+                  }
+                  className="mt-1 w-full rounded border px-3 py-2"
+                />
+                <p className="mt-1 text-xs text-gray-500">
+                  11-digit Bank Verification Number
+                </p>
+              </div>
             </div>
           </div>
 

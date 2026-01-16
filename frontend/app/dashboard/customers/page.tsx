@@ -9,6 +9,8 @@ interface Customer {
   phone_number: string;
   email?: string;
   address: string;
+  nin?: string;
+  bvn?: string;
   created_at: string;
 }
 
@@ -22,6 +24,8 @@ export default function CustomersPage() {
     phone_number: '',
     email: '',
     address: '',
+    nin: '',
+    bvn: '',
   });
 
   useEffect(() => {
@@ -54,6 +58,8 @@ export default function CustomersPage() {
         phone_number: '',
         email: '',
         address: '',
+        nin: '',
+        bvn: '',
       });
       fetchCustomers();
     } catch (error: any) {
@@ -68,6 +74,8 @@ export default function CustomersPage() {
       phone_number: customer.phone_number,
       email: customer.email || '',
       address: customer.address,
+      nin: customer.nin || '',
+      bvn: customer.bvn || '',
     });
     setShowForm(true);
   };
@@ -100,6 +108,8 @@ export default function CustomersPage() {
               phone_number: '',
               email: '',
               address: '',
+              nin: '',
+              bvn: '',
             });
           }}
           className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
@@ -144,6 +154,34 @@ export default function CustomersPage() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="mt-1 w-full rounded border px-3 py-2"
                 />
+              </div>
+              <div>
+                <label className="block text-sm font-medium">NIN (Optional)</label>
+                <input
+                  type="text"
+                  maxLength={11}
+                  placeholder="12345678901"
+                  value={formData.nin}
+                  onChange={(e) => setFormData({ ...formData, nin: e.target.value.replace(/\D/g, '') })}
+                  className="mt-1 w-full rounded border px-3 py-2"
+                />
+                <p className="mt-1 text-xs text-gray-500">
+                  National Identification Number (11 digits)
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium">BVN (Optional)</label>
+                <input
+                  type="text"
+                  maxLength={11}
+                  placeholder="12345678901"
+                  value={formData.bvn}
+                  onChange={(e) => setFormData({ ...formData, bvn: e.target.value.replace(/\D/g, '') })}
+                  className="mt-1 w-full rounded border px-3 py-2"
+                />
+                <p className="mt-1 text-xs text-gray-500">
+                  Bank Verification Number (11 digits)
+                </p>
               </div>
               <div className="col-span-2">
                 <label className="block text-sm font-medium">Address</label>

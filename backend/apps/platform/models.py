@@ -91,6 +91,10 @@ class Agent(models.Model):
     risk_score = models.IntegerField(default=0)
     credit_limit = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     
+    # KYC/Identity fields for virtual account generation
+    nin = models.CharField(max_length=11, null=True, blank=True, help_text="National Identification Number (11 digits)")
+    bvn = models.CharField(max_length=11, null=True, blank=True, help_text="Bank Verification Number (11 digits)")
+    
     # Monnify (agent-owned)
     monnify_public_key = models.TextField()
     monnify_secret_key_encrypted = models.TextField()
