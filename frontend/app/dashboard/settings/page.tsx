@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import apiClient from '@/lib/api';
 
 interface AgentProfile {
@@ -19,6 +20,8 @@ export default function SettingsPage() {
   const [profile, setProfile] = useState<AgentProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [showSecretKey, setShowSecretKey] = useState(false);
+  const [showWebhookSecret, setShowWebhookSecret] = useState(false);
   const [formData, setFormData] = useState({
     business_name: '',
     business_address: '',
@@ -217,15 +220,25 @@ export default function SettingsPage() {
                 <label className="block text-sm font-medium">
                   Monnify Secret Key
                 </label>
-                <input
-                  type="password"
-                  placeholder={profile?.has_monnify_configured ? '••••••••••••••••' : 'Enter your secret key'}
-                  value={formData.monnify_secret_key}
-                  onChange={(e) =>
-                    setFormData({ ...formData, monnify_secret_key: e.target.value })
-                  }
-                  className="mt-1 w-full rounded border px-3 py-2"
-                />
+                <div className="relative">
+                  <input
+                    type={showSecretKey ? 'text' : 'password'}
+                    placeholder={profile?.has_monnify_configured ? '••••••••••••••••' : 'Enter your secret key'}
+                    value={formData.monnify_secret_key}
+                    onChange={(e) =>
+                      setFormData({ ...formData, monnify_secret_key: e.target.value })
+                    }
+                    className="mt-1 w-full rounded border px-3 py-2 pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowSecretKey(!showSecretKey)}
+                    aria-label={showSecretKey ? 'Hide secret key' : 'Show secret key'}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+                  >
+                    {showSecretKey ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
                 <p className="mt-1 text-xs text-gray-500">
                   Your secret key is encrypted and stored securely. Leave blank to keep existing key.
                 </p>
@@ -253,15 +266,25 @@ export default function SettingsPage() {
                 <label className="block text-sm font-medium">
                   Webhook Secret
                 </label>
-                <input
-                  type="password"
-                  placeholder="Enter webhook secret"
-                  value={formData.monnify_webhook_secret}
-                  onChange={(e) =>
-                    setFormData({ ...formData, monnify_webhook_secret: e.target.value })
-                  }
-                  className="mt-1 w-full rounded border px-3 py-2"
-                />
+                <div className="relative">
+                  <input
+                    type={showWebhookSecret ? 'text' : 'password'}
+                    placeholder="Enter webhook secret"
+                    value={formData.monnify_webhook_secret}
+                    onChange={(e) =>
+                      setFormData({ ...formData, monnify_webhook_secret: e.target.value })
+                    }
+                    className="mt-1 w-full rounded border px-3 py-2 pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowWebhookSecret(!showWebhookSecret)}
+                    aria-label={showWebhookSecret ? 'Hide webhook secret' : 'Show webhook secret'}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+                  >
+                    {showWebhookSecret ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
                 <p className="mt-1 text-xs text-gray-500">
                   Used to verify webhook requests from Monnify
                 </p>
