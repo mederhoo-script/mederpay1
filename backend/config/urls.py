@@ -19,4 +19,8 @@ urlpatterns = [
     path('api/enforcement/', include('apps.enforcement.urls.enforcement')),
     path('api/audit/', include('apps.audit.urls')),
     path('api/webhooks/', include('apps.payments.urls_webhooks')),
+    
+    # Monnify integration endpoints
+    path('api/', include('apps.payments.monnify_urls')),
+    path('webhooks/', include('apps.payments.monnify_webhook_urls')),
 ]

@@ -14,3 +14,7 @@ class InstallmentScheduleAdmin(admin.ModelAdmin):
     list_display = ['sale', 'amount_due', 'due_date', 'paid_amount', 'status']
     list_filter = ['status', 'due_date']
     search_fields = ['sale__customer__full_name']
+
+
+# Import Monnify admin configurations
+from .monnify_admin import *  # noqa: F401, F403
