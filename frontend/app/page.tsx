@@ -410,7 +410,7 @@ export default function Home() {
           </div>
           <p className="mt-6 text-sm text-gray-500">
             Questions? Contact us at{' '}
-            <a href="mailto:support@mederpay.com" className="text-blue-600 hover:underline">
+            <a href="mailto:support@mederpay.com" className="text-blue-600 hover:underline" rel="noopener noreferrer">
               support@mederpay.com
             </a>
           </p>
@@ -425,9 +425,9 @@ export default function Home() {
               © {new Date().getFullYear()} MederPay. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm text-gray-600">
-              <a href="#" className="hover:text-gray-900">Terms of Service</a>
-              <a href="#" className="hover:text-gray-900">Privacy Policy</a>
-              <a href="#" className="hover:text-gray-900">Documentation</a>
+              <span className="text-gray-400">Terms of Service</span>
+              <span className="text-gray-400">Privacy Policy</span>
+              <span className="text-gray-400">Documentation</span>
             </div>
           </div>
         </div>
