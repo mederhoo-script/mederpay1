@@ -12,8 +12,13 @@ class AgentStaffSerializer(serializers.ModelSerializer):
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ['id', 'full_name', 'phone_number', 'email', 'address', 'created_at']
+        fields = ['id', 'full_name', 'phone_number', 'email', 'address', 
+                  'nin', 'bvn', 'created_at']
         read_only_fields = ['id', 'created_at']
+        extra_kwargs = {
+            'nin': {'required': False, 'allow_blank': True},
+            'bvn': {'required': False, 'allow_blank': True},
+        }
 
 
 class PhoneSerializer(serializers.ModelSerializer):

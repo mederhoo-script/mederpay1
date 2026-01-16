@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.audit.middleware.AuditLoggingMiddleware',  # Auto-audit all API changes
 ]
 
 ROOT_URLCONF = 'config.urls'

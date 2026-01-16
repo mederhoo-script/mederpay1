@@ -54,6 +54,10 @@ class Customer(models.Model):
     email = models.EmailField(null=True, blank=True)
     address = models.TextField()
     
+    # KYC/Identity fields (optional) for virtual account generation
+    nin = models.CharField(max_length=11, null=True, blank=True, help_text="National Identification Number (11 digits) - Optional")
+    bvn = models.CharField(max_length=11, null=True, blank=True, help_text="Bank Verification Number (11 digits) - Optional")
+    
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
