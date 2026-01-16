@@ -32,6 +32,16 @@
 -keep class com.mederpay.enforcera.ConfirmSettlementPaymentResponse { *; }
 -keep class com.mederpay.enforcera.CompanionHealth { *; }
 -keep class com.mederpay.enforcera.OverlayState { *; }
+-keep class com.mederpay.enforcera.ReservedAccountResponse { *; }
+
+# OkHttp
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+
+# JSON (org.json)
+-keep class org.json.** { *; }
 
 # Keep Device Admin Receiver
 -keep class com.mederpay.enforcera.DeviceAdminReceiver { *; }
