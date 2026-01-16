@@ -146,3 +146,49 @@ SPECTACULAR_SETTINGS = {
 
 # Encryption key for Monnify credentials
 ENCRYPTION_KEY = config('ENCRYPTION_KEY', default=None)
+
+# ========================================
+# MONNIFY PAYMENT GATEWAY SETTINGS
+# ========================================
+
+# Monnify API Credentials (stored in environment variables)
+MONNIFY_API_KEY = config('MONNIFY_API_KEY', default='MK_TEST_7M5NZ5HX39')
+MONNIFY_SECRET_KEY = config('MONNIFY_SECRET_KEY', default='0VCQQYWR4GLTLYDX1WYZDJABANLX6RVB')
+MONNIFY_CONTRACT_CODE = config('MONNIFY_CONTRACT_CODE', default='2570907178')
+MONNIFY_BASE_URL = config('MONNIFY_BASE_URL', default='https://sandbox.monnify.com')
+
+# Monnify Webhook Secret (for signature verification)
+MONNIFY_WEBHOOK_SECRET = config('MONNIFY_WEBHOOK_SECRET', default='')
+
+# Logging configuration for Monnify integration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs' / 'monnify.log',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'apps.payments.monnify_service': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+        },
+        'apps.payments.monnify_views': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+        },
+    },
+}

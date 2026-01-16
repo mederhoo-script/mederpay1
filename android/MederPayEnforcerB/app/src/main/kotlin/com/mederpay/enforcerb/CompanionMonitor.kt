@@ -1,4 +1,4 @@
-package com.mederpay.enforcera
+package com.mederpay.enforcerb
 
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
@@ -13,15 +13,11 @@ import java.security.MessageDigest
 
 /**
  * CompanionMonitor provides comprehensive monitoring and health checking
- * for the companion app (Enforcer B).
+ * for the companion app (Enforcer A).
  */
 object CompanionMonitor {
     private const val COMPANION_PACKAGE = "com.mederpay.enforcera"
     private const val TAG = "CompanionMonitor"
-    
-    // Expected SHA-256 signature hash of the companion app
-    // In production, this should be configured securely or fetched from backend
-    private const val EXPECTED_SIGNATURE_HASH = ""  // Set during build/deployment
 
     /**
      * Comprehensive health check of companion app
@@ -111,21 +107,27 @@ object CompanionMonitor {
                 return false
             }
 
-            // If expected hash is configured, perform cryptographic verification
-            if (EXPECTED_SIGNATURE_HASH.isNotEmpty()) {
-                val actualHash = computeSignatureHash(signatures[0].toByteArray())
-                val isValid = actualHash.equals(EXPECTED_SIGNATURE_HASH, ignoreCase = true)
-                
-                if (!isValid) {
-                    Log.e(TAG, "Signature hash mismatch! Expected: $EXPECTED_SIGNATURE_HASH, Got: $actualHash")
-                }
-                
-                return isValid
+            // Compute actual hash
+            val actualHash = computeSignatureHash(signatures[0].toByteArray())
+            
+            // Get expected hash from secure storage
+            val expectedHash = SecureStorage.getCompanionSignatureHash(context)
+            
+            if (expectedHash.isNullOrEmpty()) {
+                // First time - store the signature hash
+                Log.i(TAG, "First signature verification - storing hash: $actualHash")
+                SecureStorage.storeCompanionSignatureHash(context, actualHash)
+                return true
             }
             
-            // Fallback: basic signature existence check
-            Log.w(TAG, "Expected signature hash not configured, using basic verification")
-            return true
+            // Verify hash matches
+            val isValid = actualHash.equals(expectedHash, ignoreCase = true)
+            
+            if (!isValid) {
+                Log.e(TAG, "Signature hash mismatch! Expected: $expectedHash, Got: $actualHash")
+            }
+            
+            return isValid
             
         } catch (e: Exception) {
             Log.e(TAG, "Signature verification failed", e)

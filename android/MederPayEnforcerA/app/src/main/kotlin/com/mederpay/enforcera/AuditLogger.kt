@@ -222,4 +222,15 @@ object AuditLogger {
         getPrefs(context).edit().remove(KEY_QUEUED_LOGS).apply()
         Log.i(TAG, "Audit log queue cleared")
     }
+
+    /**
+     * Convenience method for logging events (shorthand for logEvent)
+     */
+    fun log(context: Context, eventType: String, eventData: Map<String, String> = emptyMap()) {
+        val imei = android.provider.Settings.Secure.getString(
+            context.contentResolver,
+            android.provider.Settings.Secure.ANDROID_ID
+        )
+        logEvent(context, imei, eventType, eventData)
+    }
 }
