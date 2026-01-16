@@ -9,6 +9,12 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
+    <!-- Android 15: Package Visibility - Required to query companion app -->
+    <queries>
+        <package android:name="com.mederpay.enforcerb" />
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -53,7 +59,7 @@
                 android:value="Device enforcement and payment monitoring" />
         </service>
 
-        <!-- Boot Receiver -->
+        <!-- Boot Receiver: Exported to receive system BOOT_COMPLETED broadcast -->
         <receiver
             android:name=".BootReceiver"
             android:enabled="true"
@@ -64,7 +70,7 @@
             </intent-filter>
         </receiver>
 
-        <!-- Device Admin Receiver -->
+        <!-- Device Admin Receiver: Exported as required by Device Admin framework -->
         <receiver
             android:name=".DeviceAdminReceiver"
             android:exported="true"
@@ -78,7 +84,7 @@
             </intent-filter>
         </receiver>
 
-        <!-- Package Change Receiver for companion monitoring -->
+        <!-- Package Change Receiver: Exported to receive system package change broadcasts for companion monitoring -->
         <receiver
             android:name=".PackageChangeReceiver"
             android:enabled="true"
