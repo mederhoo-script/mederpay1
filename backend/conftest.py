@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
-from apps.platform.models import Agent
+from apps.platform.models import Agent, PlatformPhoneRegistry
 from apps.agents.models import Phone, Customer, Sale, AgentStaff
 from apps.payments.monnify_models import WeeklySettlement
 
@@ -24,6 +24,16 @@ def user(db):
 
 
 @pytest.fixture
+def user2(db):
+    """Create a second test user"""
+    return User.objects.create_user(
+        username='testagent2',
+        email='agent2@test.com',
+        password='testpass123'
+    )
+
+
+@pytest.fixture
 def agent(db, user):
     """Create a test agent"""
     return Agent.objects.create(
@@ -32,6 +42,29 @@ def agent(db, user):
         phone_number='+2348012345678',
         nin='12345678901',
         is_active=True
+    )
+
+
+@pytest.fixture
+def agent2(db, user2):
+    """Create a second test agent"""
+    return Agent.objects.create(
+        user=user2,
+        business_name='Test Agent Business 2',
+        phone_number='+2348087654321',
+        nin='98765432109',
+        is_active=True
+    )
+
+
+@pytest.fixture
+def platform_phone_registry(db, agent):
+    """Create a platform phone registry entry"""
+    return PlatformPhoneRegistry.objects.create(
+        imei='999888777666555',
+        first_registered_agent=agent,
+        current_agent=agent,
+        status='active'
     )
 
 
@@ -51,6 +84,21 @@ def phone(db, agent):
 
 
 @pytest.fixture
+def phone2(db, agent):
+    """Create a second test phone"""
+    return Phone.objects.create(
+        agent=agent,
+        imei='555666777888999',
+        model='Samsung Galaxy A54',
+        brand='Samsung',
+        color='Blue',
+        storage='256GB',
+        purchase_price=400000.00,
+        lifecycle_status='in_stock'
+    )
+
+
+@pytest.fixture
 def customer(db, agent):
     """Create a test customer"""
     return Customer.objects.create(
@@ -58,6 +106,17 @@ def customer(db, agent):
         full_name='Test Customer',
         phone_number='+2348098765432',
         email='customer@test.com'
+    )
+
+
+@pytest.fixture
+def customer2(db, agent):
+    """Create a second test customer"""
+    return Customer.objects.create(
+        agent=agent,
+        full_name='Test Customer 2',
+        phone_number='+2348011112222',
+        email='customer2@test.com'
     )
 
 
