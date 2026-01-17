@@ -179,8 +179,18 @@ object SecurityChecker {
     }
     
     private fun checkRootAccess(): Boolean {
-        // Check for su binary, Magisk, Xposed
-        val rootPaths = listOf("/su/bin/su", "/system/xbin/su", ...)
+        // Check for su binary, Magisk, Xposed, and other root indicators
+        val rootPaths = listOf(
+            "/su/bin/su", 
+            "/system/xbin/su",
+            "/system/bin/su",
+            "/sbin/su",
+            "/system/sd/xbin/su",
+            "/data/local/xbin/su",
+            "/data/local/bin/su",
+            "/system/app/Superuser.apk",
+            "/system/app/SuperSU.apk"
+        )
         return rootPaths.any { File(it).exists() }
     }
     
@@ -261,9 +271,10 @@ fun verifyCompanionSignature(context: Context): Boolean {
 ```kotlin
 // Constants.kt - COMPILE TIME
 object SecurityConstants {
-    // Generated at build time, embedded in APK
+    // EXAMPLE PLACEHOLDER - Replace with actual signature hash during build
+    // Generated at build time by build-dual-apps.sh script
     const val EXPECTED_COMPANION_SIGNATURE_SHA256 = 
-        "a3f5b1c8d9e2f4a7b6c3d8e1f9a2b5c4d7e0f3a6b9c2d5e8f1a4b7c0d3e6f9a2"
+        "a3f5b1c8d9e2f4a7b6c3d8e1f9a2b5c4d7e0f3a6b9c2d5e8f1a4b7c0d3e6f9a2"  // PLACEHOLDER
 }
 
 // CompanionMonitor.kt - STRICT ENFORCEMENT
