@@ -7,6 +7,8 @@ from .serializers import (
     PhoneSerializer, SaleSerializer
 )
 from apps.platform.models import Agent
+# Android 15+ Hardening: Settlement enforcement decorator
+from apps.payments.decorators import require_settlement_paid
 
 
 class AgentStaffViewSet(viewsets.ModelViewSet):
@@ -32,6 +34,8 @@ class CustomerViewSet(viewsets.ModelViewSet):
         agent = Agent.objects.get(user=self.request.user)
         return Customer.objects.filter(agent=agent)
     
+    # Android 15+ Hardening: Enforce settlement payment before customer operations
+    @require_settlement_paid
     def perform_create(self, serializer):
         agent = Agent.objects.get(user=self.request.user)
         serializer.save(agent=agent)
@@ -48,6 +52,8 @@ class PhoneViewSet(viewsets.ModelViewSet):
         agent = Agent.objects.get(user=self.request.user)
         return Phone.objects.filter(agent=agent)
     
+    # Android 15+ Hardening: Enforce settlement payment before phone registration
+    @require_settlement_paid
     def perform_create(self, serializer):
         agent = Agent.objects.get(user=self.request.user)
         serializer.save(agent=agent)
@@ -82,6 +88,8 @@ class SaleViewSet(viewsets.ModelViewSet):
         agent = Agent.objects.get(user=self.request.user)
         return Sale.objects.filter(agent=agent).select_related('customer', 'phone', 'staff')
     
+    # Android 15+ Hardening: Enforce settlement payment before sale creation
+    @require_settlement_paid
     def perform_create(self, serializer):
         agent = Agent.objects.get(user=self.request.user)
         sale = serializer.save(agent=agent)
