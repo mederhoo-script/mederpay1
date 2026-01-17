@@ -9,7 +9,7 @@ import { auth } from '@/lib/auth';
 export default function LoginPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +22,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await auth.login(formData.username, formData.password);
+      await auth.login(formData.email, formData.password);
       router.push('/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
@@ -48,15 +48,15 @@ export default function LoginPage() {
 
           <div className="space-y-4">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium">
-                Username
+              <label htmlFor="email" className="block text-sm font-medium">
+                Email
               </label>
               <input
-                id="username"
-                type="text"
+                id="email"
+                type="email"
                 required
-                value={formData.username}
-                onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="mt-1 w-full rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
               />
             </div>
