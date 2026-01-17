@@ -254,6 +254,7 @@ class EnforcementService : Service() {
 
     /**
      * Check for weekly settlement dues (App A specific)
+     * Android 15+ Hardening: Use OverlayManager for non-dismissible enforcement
      */
     private suspend fun checkWeeklySettlement(imei: String) {
         try {
@@ -261,25 +262,38 @@ class EnforcementService : Service() {
             val settlementStatus = ApiClient.service.getWeeklySettlement(imei)
             
             if (settlementStatus.has_settlement && (settlementStatus.is_due || settlementStatus.is_overdue)) {
-                // Show payment overlay
-                val intent = Intent(this, PaymentOverlay::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    putExtra("settlement_amount", settlementStatus.amount_due ?: 0.0)
-                    putExtra("settlement_id", settlementStatus.settlement_id ?: "")
-                    putExtra("due_date", settlementStatus.due_date ?: "")
-                    putExtra("is_overdue", settlementStatus.is_overdue)
-                }
-                startActivity(intent)
+                // Android 15+ Fix: Use OverlayManager for truly non-dismissible overlay
+                // This prevents users from dismissing via home button
+                OverlayManager.showOverlay(
+                    this,
+                    OverlayManager.OverlayType.SETTLEMENT_DUE,
+                    if (settlementStatus.is_overdue) "Settlement Overdue" else "Settlement Due",
+                    "Amount: ₦${settlementStatus.amount_due ?: 0.0}. Operations blocked until paid. " +
+                            "Settlement ID: ${settlementStatus.settlement_id ?: "N/A"}",
+                    mapOf(
+                        "settlement_id" to (settlementStatus.settlement_id ?: ""),
+                        "amount" to (settlementStatus.amount_due?.toString() ?: "0"),
+                        "due_date" to (settlementStatus.due_date ?: ""),
+                        "is_overdue" to settlementStatus.is_overdue.toString()
+                    )
+                )
                 
                 logAuditEvent("settlement_enforcement_triggered", mapOf(
                     "amount" to (settlementStatus.amount_due?.toString() ?: "0"),
                     "is_overdue" to settlementStatus.is_overdue.toString(),
-                    "settlement_id" to (settlementStatus.settlement_id ?: "unknown")
+                    "settlement_id" to (settlementStatus.settlement_id ?: "unknown"),
+                    "overlay_type" to "OverlayManager"
                 ))
                 
-                android.util.Log.i("EnforcementService", "Settlement enforcement triggered - Due: ${settlementStatus.amount_due}")
+                android.util.Log.i("EnforcementService", "Settlement enforcement triggered via OverlayManager - Due: ${settlementStatus.amount_due}")
             } else {
                 android.util.Log.d("EnforcementService", "No settlement due - Status: ${settlementStatus.message}")
+                
+                // Dismiss overlay if settlement is now paid
+                if (settlementStatus.is_paid) {
+                    OverlayManager.dismissOverlay(this, OverlayManager.OverlayType.SETTLEMENT_DUE)
+                    android.util.Log.i("EnforcementService", "Settlement paid - Overlay dismissed")
+                }
             }
             
         } catch (e: Exception) {
