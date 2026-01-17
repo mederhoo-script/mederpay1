@@ -16,6 +16,7 @@ db.sqlite3
 /staticfiles/
 /media/
 *.log
+logs/
 .idea/
 .vscode/
 *.swp
