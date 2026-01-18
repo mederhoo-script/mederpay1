@@ -1,0 +1,23 @@
+# Production-specific requirements
+# Install with: pip install -r requirements-production.txt
+
+# Monitoring and error tracking
+sentry-sdk==1.39.2  # Error tracking and performance monitoring
+
+# Performance and caching
+redis==5.0.1        # Redis client for caching
+hiredis==2.3.2      # C parser for Redis (faster)
+
+# Production web server
+gunicorn==21.2.0    # WSGI HTTP server
+gevent==23.9.1      # Async worker for Gunicorn
+
+# Security
+django-cors-headers==4.3.1  # CORS handling for frontend
+django-ratelimit==4.1.0     # API rate limiting
+
+# Database optimizations
+psycopg2-binary==2.9.9     # PostgreSQL adapter
+
+# Monitoring and health checks
+django-health-check==3.18.1  # Health check endpoints

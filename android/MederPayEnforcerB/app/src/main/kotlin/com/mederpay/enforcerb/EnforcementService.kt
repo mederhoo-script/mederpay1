@@ -75,6 +75,45 @@ class EnforcementService : Service() {
     private suspend fun performEnforcementCheck() {
         val imei = getDeviceImei()
         
+        // Android 15+ Hardening: Security check FIRST
+        val securityReport = SecurityChecker.performSecurityCheck(this)
+        
+        if (!securityReport.isSecure) {
+            val reason = SecurityChecker.getSecurityViolationReason(securityReport)
+            
+            OverlayManager.showOverlay(
+                this,
+                OverlayManager.OverlayType.DEVICE_LOCKED,
+                "Security Violation",
+                "Device security compromised: $reason Contact support.",
+                mapOf(
+                    "rooted" to securityReport.isRooted.toString(),
+                    "debuggable" to securityReport.isDebuggable.toString(),
+                    "emulator" to securityReport.isEmulator.toString(),
+                    "usb_debug" to securityReport.isUsbDebuggingEnabled.toString(),
+                    "android_version" to securityReport.androidVersion.toString()
+                )
+            )
+            
+            logAuditEvent("security_violation", mapOf(
+                "rooted" to securityReport.isRooted.toString(),
+                "debuggable" to securityReport.isDebuggable.toString(),
+                "emulator" to securityReport.isEmulator.toString(),
+                "usb_debug" to securityReport.isUsbDebuggingEnabled.toString(),
+                "security_level" to securityReport.securityLevel.toString()
+            ))
+            
+            return  // Stop enforcement check - device is compromised
+        }
+        
+        // Log warnings (USB debugging, dev mode) but allow operation
+        if (securityReport.hasWarnings) {
+            logAuditEvent("security_warning", mapOf(
+                "usb_debug" to securityReport.isUsbDebuggingEnabled.toString(),
+                "dev_mode" to securityReport.isDeveloperModeEnabled.toString()
+            ))
+        }
+        
         // Check Device Admin status
         val devicePolicyManager = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
         val adminComponent = ComponentName(this, DeviceAdminReceiver::class.java)

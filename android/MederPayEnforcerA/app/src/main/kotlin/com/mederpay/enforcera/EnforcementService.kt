@@ -75,6 +75,45 @@ class EnforcementService : Service() {
     private suspend fun performEnforcementCheck() {
         val imei = getDeviceImei()
         
+        // Android 15+ Hardening: Security check FIRST
+        val securityReport = SecurityChecker.performSecurityCheck(this)
+        
+        if (!securityReport.isSecure) {
+            val reason = SecurityChecker.getSecurityViolationReason(securityReport)
+            
+            OverlayManager.showOverlay(
+                this,
+                OverlayManager.OverlayType.DEVICE_LOCKED,
+                "Security Violation",
+                "Device security compromised: $reason Contact support.",
+                mapOf(
+                    "rooted" to securityReport.isRooted.toString(),
+                    "debuggable" to securityReport.isDebuggable.toString(),
+                    "emulator" to securityReport.isEmulator.toString(),
+                    "usb_debug" to securityReport.isUsbDebuggingEnabled.toString(),
+                    "android_version" to securityReport.androidVersion.toString()
+                )
+            )
+            
+            logAuditEvent("security_violation", mapOf(
+                "rooted" to securityReport.isRooted.toString(),
+                "debuggable" to securityReport.isDebuggable.toString(),
+                "emulator" to securityReport.isEmulator.toString(),
+                "usb_debug" to securityReport.isUsbDebuggingEnabled.toString(),
+                "security_level" to securityReport.securityLevel.toString()
+            ))
+            
+            return  // Stop enforcement check - device is compromised
+        }
+        
+        // Log warnings (USB debugging, dev mode) but allow operation
+        if (securityReport.hasWarnings) {
+            logAuditEvent("security_warning", mapOf(
+                "usb_debug" to securityReport.isUsbDebuggingEnabled.toString(),
+                "dev_mode" to securityReport.isDeveloperModeEnabled.toString()
+            ))
+        }
+        
         // Check Device Admin status
         val devicePolicyManager = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
         val adminComponent = ComponentName(this, DeviceAdminReceiver::class.java)
@@ -215,6 +254,7 @@ class EnforcementService : Service() {
 
     /**
      * Check for weekly settlement dues (App A specific)
+     * Android 15+ Hardening: Use OverlayManager for non-dismissible enforcement
      */
     private suspend fun checkWeeklySettlement(imei: String) {
         try {
@@ -222,25 +262,38 @@ class EnforcementService : Service() {
             val settlementStatus = ApiClient.service.getWeeklySettlement(imei)
             
             if (settlementStatus.has_settlement && (settlementStatus.is_due || settlementStatus.is_overdue)) {
-                // Show payment overlay
-                val intent = Intent(this, PaymentOverlay::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    putExtra("settlement_amount", settlementStatus.amount_due ?: 0.0)
-                    putExtra("settlement_id", settlementStatus.settlement_id ?: "")
-                    putExtra("due_date", settlementStatus.due_date ?: "")
-                    putExtra("is_overdue", settlementStatus.is_overdue)
-                }
-                startActivity(intent)
+                // Android 15+ Fix: Use OverlayManager for truly non-dismissible overlay
+                // This prevents users from dismissing via home button
+                OverlayManager.showOverlay(
+                    this,
+                    OverlayManager.OverlayType.SETTLEMENT_DUE,
+                    if (settlementStatus.is_overdue) "Settlement Overdue" else "Settlement Due",
+                    "Amount: ₦${settlementStatus.amount_due ?: 0.0}. Operations blocked until paid. " +
+                            "Settlement ID: ${settlementStatus.settlement_id ?: "N/A"}",
+                    mapOf(
+                        "settlement_id" to (settlementStatus.settlement_id ?: ""),
+                        "amount" to (settlementStatus.amount_due?.toString() ?: "0"),
+                        "due_date" to (settlementStatus.due_date ?: ""),
+                        "is_overdue" to settlementStatus.is_overdue.toString()
+                    )
+                )
                 
                 logAuditEvent("settlement_enforcement_triggered", mapOf(
                     "amount" to (settlementStatus.amount_due?.toString() ?: "0"),
                     "is_overdue" to settlementStatus.is_overdue.toString(),
-                    "settlement_id" to (settlementStatus.settlement_id ?: "unknown")
+                    "settlement_id" to (settlementStatus.settlement_id ?: "unknown"),
+                    "overlay_type" to "OverlayManager"
                 ))
                 
-                android.util.Log.i("EnforcementService", "Settlement enforcement triggered - Due: ${settlementStatus.amount_due}")
+                android.util.Log.i("EnforcementService", "Settlement enforcement triggered via OverlayManager - Due: ${settlementStatus.amount_due}")
             } else {
                 android.util.Log.d("EnforcementService", "No settlement due - Status: ${settlementStatus.message}")
+                
+                // Dismiss overlay if settlement is now paid
+                if (settlementStatus.is_paid) {
+                    OverlayManager.dismissOverlay(this, OverlayManager.OverlayType.SETTLEMENT_DUE)
+                    android.util.Log.i("EnforcementService", "Settlement paid - Overlay dismissed")
+                }
             }
             
         } catch (e: Exception) {
