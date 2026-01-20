@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MederPayEnforcerA"
+rootProject.name = "MederPayEnforcerA_Legacy"
 include(":app")
