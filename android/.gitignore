@@ -12,6 +12,8 @@
 *.aab
 /MederPayEnforcerA/app/src/main/assets/*.apk
 /MederPayEnforcerB/app/src/main/assets/*.apk
+/MederPayEnforcerA_Legacy/app/src/main/assets/*.apk
+/MederPayEnforcerB_Legacy/app/src/main/assets/*.apk
 gradle/
 !gradle/wrapper/
 .gradle/

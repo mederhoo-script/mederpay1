@@ -4,6 +4,22 @@
 
 This directory contains two interdependent Android applications that form a tamper-resistant enforcement system for the MederPay platform.
 
+## 📱 Version Availability
+
+### Standard Version (Android 12+)
+**For devices running Android 12 and above (API 31+)**
+- MederPayEnforcerA
+- MederPayEnforcerB
+
+### Legacy Version (Android 5.0-11)
+**For devices running Android 5.0 through 11 (API 21-30)**
+- MederPayEnforcerA_Legacy
+- MederPayEnforcerB_Legacy
+
+📖 **See [LEGACY_VERSION_README.md](./LEGACY_VERSION_README.md) for legacy version documentation**
+
+---
+
 ## 📱 Applications
 
 ### App A - MederPay Enforcer A
@@ -421,10 +437,39 @@ POST /api/device-commands/{id}/execute/
 
 ## 📚 Additional Documentation
 
+- [`LEGACY_VERSION_README.md`](./LEGACY_VERSION_README.md) - **Legacy version (Android 5.0-11)**
+- [`LEGACY_IMPLEMENTATION_SUMMARY.md`](./LEGACY_IMPLEMENTATION_SUMMARY.md) - Legacy version technical details
 - [`IMPLEMENTATION_STATUS.md`](./IMPLEMENTATION_STATUS.md) - Detailed implementation status
+- [`BUILD_APK_INSTRUCTIONS.md`](./BUILD_APK_INSTRUCTIONS.md) - Build instructions for both versions
 - [`../README.md`](../README.md) - Overall project documentation
 - [`../DEPLOYMENT.md`](../DEPLOYMENT.md) - Production deployment guide
 - [`../backend/README.md`](../backend/README.md) - Backend API documentation
+
+## 🔄 Legacy Version (Android 5.0-11)
+
+For devices running Android versions below 12, a legacy version is available with full feature parity:
+
+### Key Differences
+- **Package Names:** `com.mederpay.enforcer[a|b].legacy`
+- **Min SDK:** 21 (Android 5.0) instead of 31 (Android 12)
+- **App Names:** Include "(Legacy)" suffix
+- **Compatible:** All features work on older Android versions
+
+### Build Legacy Version
+```bash
+cd android
+./build-dual-apps-legacy.sh release
+```
+
+### Documentation
+See [LEGACY_VERSION_README.md](./LEGACY_VERSION_README.md) for complete documentation including:
+- Build instructions
+- Installation guide
+- Testing procedures
+- OEM-specific configurations
+- Compatibility matrix
+
+Both standard and legacy versions can coexist on Android 12+ devices for testing purposes.
 
 ## 🤝 Contributing
 
