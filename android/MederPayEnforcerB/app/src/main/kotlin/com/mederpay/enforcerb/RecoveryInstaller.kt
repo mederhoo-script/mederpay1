@@ -73,17 +73,8 @@ object RecoveryInstaller {
                 )
             }
             
-            // Get signatures
-            val signatures = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                packageInfo.signingInfo?.apkContentsSigners
-            } else {
-                @Suppress("DEPRECATION")
-                packageInfo.signatures
-            }
-            
-            // In production, verify against expected signature
-            // For now, just check that signatures exist
-            signatures != null && signatures.isNotEmpty()
+            // Use SignatureVerifier to validate companion app signature
+            return SignatureVerifier.verifyCompanionSignature(context)
         } catch (e: Exception) {
             android.util.Log.e(TAG, "Signature verification failed", e)
             false

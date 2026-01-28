@@ -1,7 +1,20 @@
 # MederPay Enforcer A ProGuard Rules
 
-# Keep application class
--keep class com.mederpay.enforcera.** { *; }
+# Keep only essential application classes from obfuscation
+# Allow obfuscation of internal implementation details for better security
+
+# Keep main entry points (Activities)
+-keep class com.mederpay.enforcera.MainActivity { *; }
+-keep class com.mederpay.enforcera.OverlayActivity { *; }
+-keep class com.mederpay.enforcera.PaymentOverlay { *; }
+
+# Keep Device Admin and Broadcast Receivers (required by Android)
+-keep class com.mederpay.enforcera.DeviceAdminReceiver { *; }
+-keep class com.mederpay.enforcera.BootReceiver { *; }
+-keep class com.mederpay.enforcera.PackageChangeReceiver { *; }
+
+# Keep Services
+-keep class com.mederpay.enforcera.EnforcementService { *; }
 
 # Retrofit
 -dontwarn retrofit2.**
@@ -21,7 +34,7 @@
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
 
-# Data classes
+# Data classes (used by Retrofit/Gson)
 -keep class com.mederpay.enforcera.EnforcementStatus { *; }
 -keep class com.mederpay.enforcera.HealthCheckRequest { *; }
 -keep class com.mederpay.enforcera.DeviceCommand { *; }
@@ -35,30 +48,7 @@
 -keep class com.mederpay.enforcera.ReservedAccountInfo { *; }
 -keep class com.mederpay.enforcera.ReservedAccountResponse { *; }
 
-# Keep Device Admin Receiver
--keep class com.mederpay.enforcera.DeviceAdminReceiver { *; }
--keep class com.mederpay.enforcera.BootReceiver { *; }
--keep class com.mederpay.enforcera.PackageChangeReceiver { *; }
-
-# Keep Activities
--keep class com.mederpay.enforcera.MainActivity { *; }
--keep class com.mederpay.enforcera.OverlayActivity { *; }
--keep class com.mederpay.enforcera.PaymentOverlay { *; }
-
-# Keep Services
--keep class com.mederpay.enforcera.EnforcementService { *; }
-
-# Keep critical security classes from obfuscation
--keep class com.mederpay.enforcera.CompanionMonitor { *; }
--keep class com.mederpay.enforcera.RecoveryInstaller { *; }
--keep class com.mederpay.enforcera.SecureStorage { *; }
--keep class com.mederpay.enforcera.OverlayManager { *; }
--keep class com.mederpay.enforcera.AuditLogger { *; }
--keep class com.mederpay.enforcera.ApiClient { *; }
--keep class com.mederpay.enforcera.MonnifyPaymentManager { *; }
-
 # Coroutines
--keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
 -keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
 -keepclassmembernames class kotlinx.** {
     volatile <fields>;
