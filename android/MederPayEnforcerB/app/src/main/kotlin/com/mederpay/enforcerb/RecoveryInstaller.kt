@@ -81,9 +81,14 @@ object RecoveryInstaller {
                 packageInfo.signatures
             }
             
-            // In production, verify against expected signature
-            // For now, just check that signatures exist
-            signatures != null && signatures.isNotEmpty()
+            // Verify signatures using SignatureVerifier
+            if (signatures == null || signatures.isEmpty()) {
+                android.util.Log.e(TAG, "No signatures found for companion app")
+                return false
+            }
+            
+            // Use SignatureVerifier to validate companion app signature
+            return SignatureVerifier.verifyCompanionSignature(context)
         } catch (e: Exception) {
             android.util.Log.e(TAG, "Signature verification failed", e)
             false
