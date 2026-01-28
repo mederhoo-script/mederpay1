@@ -65,7 +65,7 @@ class EnforcementService : Service() {
                     // Process queued audit logs periodically
                     AuditLogger.processQueuedLogs(this@EnforcementService)
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    android.util.Log.e("EnforcementService", "Error in enforcement loop", e)
                 }
                 delay(5 * 60 * 1000) // Check every 5 minutes
             }
