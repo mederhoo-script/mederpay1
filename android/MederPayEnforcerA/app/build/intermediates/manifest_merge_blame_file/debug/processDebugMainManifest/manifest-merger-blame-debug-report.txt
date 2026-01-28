@@ -10,491 +10,491 @@
 10
 11    <!-- Permissions -->
 12    <uses-permission android:name="android.permission.INTERNET" />
-12-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:5:5-67
-12-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:5:22-64
+12-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:5:5-67
+12-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:5:22-64
 13    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-13-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:6:5-77
-13-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:6:22-74
+13-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:6:5-77
+13-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:6:22-74
 14    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
-14-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:7:5-89
-14-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:7:22-86
+14-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:7:5-89
+14-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:7:22-86
 15    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-15-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:8:5-81
-15-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:8:22-78
+15-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:8:5-81
+15-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:8:22-78
 16    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-16-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:9:5-78
-16-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:9:22-75
+16-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:9:5-78
+16-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:9:22-75
 17    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-17-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:10:5-83
-17-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:10:22-80
+17-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:10:5-83
+17-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:10:22-80
 18    <uses-permission android:name="android.permission.WAKE_LOCK" />
-18-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:11:5-68
-18-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:11:22-65
+18-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:11:5-68
+18-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:11:22-65
 19    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
-19-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:12:5-81
-19-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:12:22-78
+19-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:12:5-81
+19-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:12:22-78
 20
 21    <!-- Android 15: Package Visibility - Required to query companion app -->
 22    <queries>
-22-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:15:5-17:15
+22-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:15:5-17:15
 23        <package android:name="com.mederpay.enforcerb" />
-23-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:16:9-58
-23-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:16:18-55
+23-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:16:9-58
+23-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:16:18-55
 24    </queries>
 25
 26    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-26-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:24:5-79
-26-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:24:22-76
+26-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:24:5-79
+26-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:24:22-76
 27
 28    <permission
-28-->[androidx.core:core:1.15.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/483e1b5b4743ea38747c33264435a1a5/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
+28-->[androidx.core:core:1.15.0] /home/codespace/.gradle/caches/transforms-4/483e1b5b4743ea38747c33264435a1a5/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
 29        android:name="com.mederpay.enforcera.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-29-->[androidx.core:core:1.15.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/483e1b5b4743ea38747c33264435a1a5/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
+29-->[androidx.core:core:1.15.0] /home/codespace/.gradle/caches/transforms-4/483e1b5b4743ea38747c33264435a1a5/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
 30        android:protectionLevel="signature" />
-30-->[androidx.core:core:1.15.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/483e1b5b4743ea38747c33264435a1a5/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
+30-->[androidx.core:core:1.15.0] /home/codespace/.gradle/caches/transforms-4/483e1b5b4743ea38747c33264435a1a5/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
 31
 32    <uses-permission android:name="com.mederpay.enforcera.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-32-->[androidx.core:core:1.15.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/483e1b5b4743ea38747c33264435a1a5/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
-32-->[androidx.core:core:1.15.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/483e1b5b4743ea38747c33264435a1a5/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
+32-->[androidx.core:core:1.15.0] /home/codespace/.gradle/caches/transforms-4/483e1b5b4743ea38747c33264435a1a5/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
+32-->[androidx.core:core:1.15.0] /home/codespace/.gradle/caches/transforms-4/483e1b5b4743ea38747c33264435a1a5/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
 33
 34    <application
-34-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:19:5-111:19
+34-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:19:5-111:19
 35        android:allowBackup="true"
-35-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:20:9-35
+35-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:20:9-35
 36        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-36-->[androidx.core:core:1.15.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/483e1b5b4743ea38747c33264435a1a5/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
+36-->[androidx.core:core:1.15.0] /home/codespace/.gradle/caches/transforms-4/483e1b5b4743ea38747c33264435a1a5/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
 37        android:debuggable="true"
 38        android:extractNativeLibs="false"
 39        android:icon="@mipmap/ic_launcher"
-39-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:21:9-43
+39-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:21:9-43
 40        android:label="@string/app_name"
-40-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:22:9-41
+40-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:22:9-41
 41        android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-41-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:23:9-65
+41-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:23:9-65
 42
 43        <!-- Main Activity -->
 44        <activity
-44-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:26:9-33:20
+44-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:26:9-33:20
 45            android:name="com.mederpay.enforcera.MainActivity"
-45-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:27:13-41
+45-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:27:13-41
 46            android:exported="true" >
-46-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:28:13-36
+46-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:28:13-36
 47            <intent-filter>
-47-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:29:13-32:29
+47-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:29:13-32:29
 48                <action android:name="android.intent.action.MAIN" />
-48-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:30:17-69
-48-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:30:25-66
+48-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:30:17-69
+48-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:30:25-66
 49
 50                <category android:name="android.intent.category.LAUNCHER" />
-50-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:31:17-77
-50-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:31:27-74
+50-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:31:17-77
+50-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:31:27-74
 51            </intent-filter>
 52        </activity>
 53
 54        <!-- Overlay Activity -->
 55        <activity
-55-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:36:9-41:74
+55-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:36:9-41:74
 56            android:name="com.mederpay.enforcera.OverlayActivity"
-56-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:37:13-44
+56-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:37:13-44
 57            android:excludeFromRecents="true"
-57-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:38:13-46
+57-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:38:13-46
 58            android:exported="false"
-58-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:39:13-37
+58-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:39:13-37
 59            android:launchMode="singleInstance"
-59-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:40:13-48
+59-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:40:13-48
 60            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-60-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:41:13-71
+60-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:41:13-71
 61
 62        <!-- Payment Overlay Activity -->
 63        <activity
-63-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:44:9-49:74
+63-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:44:9-49:74
 64            android:name="com.mederpay.enforcera.PaymentOverlay"
-64-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:45:13-43
+64-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:45:13-43
 65            android:excludeFromRecents="true"
-65-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:46:13-46
+65-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:46:13-46
 66            android:exported="false"
-66-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:47:13-37
+66-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:47:13-37
 67            android:launchMode="singleInstance"
-67-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:48:13-48
+67-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:48:13-48
 68            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-68-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:49:13-71
+68-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:49:13-71
 69
 70        <!-- Enforcement Service -->
 71        <service
-71-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:52:9-60:19
+71-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:52:9-60:19
 72            android:name="com.mederpay.enforcera.EnforcementService"
-72-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:53:13-47
+72-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:53:13-47
 73            android:enabled="true"
-73-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:54:13-35
+73-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:54:13-35
 74            android:exported="false"
-74-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:55:13-37
+74-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:55:13-37
 75            android:foregroundServiceType="specialUse" >
-75-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:56:13-55
+75-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:56:13-55
 76            <property
-76-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:57:13-59:77
+76-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:57:13-59:77
 77                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-77-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:58:17-76
+77-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:58:17-76
 78                android:value="Device enforcement and payment monitoring" />
-78-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:59:17-74
+78-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:59:17-74
 79        </service>
 80
 81        <!-- Boot Receiver: Exported to receive system BOOT_COMPLETED broadcast -->
 82        <receiver
-82-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:63:9-71:20
+82-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:63:9-71:20
 83            android:name="com.mederpay.enforcera.BootReceiver"
-83-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:64:13-41
+83-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:64:13-41
 84            android:enabled="true"
-84-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:65:13-35
+84-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:65:13-35
 85            android:exported="true" >
-85-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:66:13-36
+85-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:66:13-36
 86            <intent-filter>
-86-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:67:13-70:29
+86-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:67:13-70:29
 87                <action android:name="android.intent.action.BOOT_COMPLETED" />
-87-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:68:17-79
-87-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:68:25-76
+87-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:68:17-79
+87-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:68:25-76
 88                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-88-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:69:17-82
-88-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:69:25-79
+88-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:69:17-82
+88-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:69:25-79
 89            </intent-filter>
 90        </receiver>
 91
 92        <!-- Device Admin Receiver: Exported as required by Device Admin framework -->
 93        <receiver
-93-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:74:9-85:20
+93-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:74:9-85:20
 94            android:name="com.mederpay.enforcera.DeviceAdminReceiver"
-94-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:75:13-48
+94-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:75:13-48
 95            android:exported="true"
-95-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:76:13-36
+95-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:76:13-36
 96            android:permission="android.permission.BIND_DEVICE_ADMIN" >
-96-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:77:13-70
+96-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:77:13-70
 97            <meta-data
-97-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:78:13-80:56
+97-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:78:13-80:56
 98                android:name="android.app.device_admin"
-98-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:79:17-56
+98-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:79:17-56
 99                android:resource="@xml/device_admin" />
-99-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:80:17-53
+99-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:80:17-53
 100
 101            <intent-filter>
-101-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:81:13-84:29
+101-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:81:13-84:29
 102                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
-102-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:82:17-82
-102-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:82:25-79
+102-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:82:17-82
+102-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:82:25-79
 103                <action android:name="android.app.action.DEVICE_ADMIN_DISABLED" />
-103-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:83:17-83
-103-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:83:25-80
+103-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:83:17-83
+103-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:83:25-80
 104            </intent-filter>
 105        </receiver>
 106
 107        <!-- Package Change Receiver: Exported to receive system package change broadcasts for companion monitoring -->
 108        <receiver
-108-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:88:9-98:20
+108-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:88:9-98:20
 109            android:name="com.mederpay.enforcera.PackageChangeReceiver"
-109-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:89:13-50
+109-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:89:13-50
 110            android:enabled="true"
-110-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:90:13-35
+110-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:90:13-35
 111            android:exported="true" >
-111-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:91:13-36
+111-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:91:13-36
 112            <intent-filter>
-112-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:92:13-97:29
+112-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:92:13-97:29
 113                <action android:name="android.intent.action.PACKAGE_ADDED" />
-113-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:93:17-78
-113-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:93:25-75
+113-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:93:17-78
+113-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:93:25-75
 114                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-114-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:94:17-80
-114-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:94:25-77
+114-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:94:17-80
+114-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:94:25-77
 115                <action android:name="android.intent.action.PACKAGE_REPLACED" />
-115-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:95:17-81
-115-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:95:25-78
+115-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:95:17-81
+115-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:95:25-78
 116
 117                <data android:scheme="package" />
-117-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:96:17-50
-117-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:96:23-47
+117-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:96:17-50
+117-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:96:23-47
 118            </intent-filter>
 119        </receiver>
 120
 121        <!-- FileProvider for APK installation -->
 122        <provider
 123            android:name="androidx.core.content.FileProvider"
-123-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:102:13-62
+123-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:102:13-62
 124            android:authorities="com.mederpay.enforcera.fileprovider"
-124-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:103:13-64
+124-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:103:13-64
 125            android:exported="false"
-125-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:104:13-37
+125-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:104:13-37
 126            android:grantUriPermissions="true" >
-126-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:105:13-47
+126-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:105:13-47
 127            <meta-data
-127-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:106:13-108:54
+127-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:106:13-108:54
 128                android:name="android.support.FILE_PROVIDER_PATHS"
-128-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:107:17-67
+128-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:107:17-67
 129                android:resource="@xml/file_paths" />
-129-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:108:17-51
+129-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:108:17-51
 130        </provider>
 131
 132        <activity
-132-->[androidx.compose.ui:ui-tooling-android:1.7.6] /data/data/com.termux/files/home/.gradle/caches/transforms-4/4d295f314e92188f2f80d93aaf38ebba/transformed/jetified-ui-tooling-release/AndroidManifest.xml:23:9-25:39
+132-->[androidx.compose.ui:ui-tooling-android:1.7.6] /home/codespace/.gradle/caches/transforms-4/4d295f314e92188f2f80d93aaf38ebba/transformed/jetified-ui-tooling-release/AndroidManifest.xml:23:9-25:39
 133            android:name="androidx.compose.ui.tooling.PreviewActivity"
-133-->[androidx.compose.ui:ui-tooling-android:1.7.6] /data/data/com.termux/files/home/.gradle/caches/transforms-4/4d295f314e92188f2f80d93aaf38ebba/transformed/jetified-ui-tooling-release/AndroidManifest.xml:24:13-71
+133-->[androidx.compose.ui:ui-tooling-android:1.7.6] /home/codespace/.gradle/caches/transforms-4/4d295f314e92188f2f80d93aaf38ebba/transformed/jetified-ui-tooling-release/AndroidManifest.xml:24:13-71
 134            android:exported="true" />
-134-->[androidx.compose.ui:ui-tooling-android:1.7.6] /data/data/com.termux/files/home/.gradle/caches/transforms-4/4d295f314e92188f2f80d93aaf38ebba/transformed/jetified-ui-tooling-release/AndroidManifest.xml:25:13-36
+134-->[androidx.compose.ui:ui-tooling-android:1.7.6] /home/codespace/.gradle/caches/transforms-4/4d295f314e92188f2f80d93aaf38ebba/transformed/jetified-ui-tooling-release/AndroidManifest.xml:25:13-36
 135
 136        <provider
-136-->[androidx.emoji2:emoji2:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+136-->[androidx.emoji2:emoji2:1.3.0] /home/codespace/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
 137            android:name="androidx.startup.InitializationProvider"
-137-->[androidx.emoji2:emoji2:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:25:13-67
+137-->[androidx.emoji2:emoji2:1.3.0] /home/codespace/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:25:13-67
 138            android:authorities="com.mederpay.enforcera.androidx-startup"
-138-->[androidx.emoji2:emoji2:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:26:13-68
+138-->[androidx.emoji2:emoji2:1.3.0] /home/codespace/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:26:13-68
 139            android:exported="false" >
-139-->[androidx.emoji2:emoji2:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:27:13-37
+139-->[androidx.emoji2:emoji2:1.3.0] /home/codespace/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:27:13-37
 140            <meta-data
-140-->[androidx.emoji2:emoji2:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+140-->[androidx.emoji2:emoji2:1.3.0] /home/codespace/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
 141                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-141-->[androidx.emoji2:emoji2:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:30:17-75
+141-->[androidx.emoji2:emoji2:1.3.0] /home/codespace/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:30:17-75
 142                android:value="androidx.startup" />
-142-->[androidx.emoji2:emoji2:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:31:17-49
+142-->[androidx.emoji2:emoji2:1.3.0] /home/codespace/.gradle/caches/transforms-4/95ace6f7bd1b9239c50180c82d1c38e1/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:31:17-49
 143            <meta-data
-143-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:34:13-36:52
+143-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:34:13-36:52
 144                android:name="androidx.work.WorkManagerInitializer"
-144-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:35:17-68
+144-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:35:17-68
 145                android:value="androidx.startup" />
-145-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:36:17-49
+145-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:36:17-49
 146            <meta-data
-146-->[androidx.lifecycle:lifecycle-process:2.8.3] /data/data/com.termux/files/home/.gradle/caches/transforms-4/cb5bd2ee7e17de0e399a39bf5da656ad/transformed/jetified-lifecycle-process-2.8.3/AndroidManifest.xml:29:13-31:52
+146-->[androidx.lifecycle:lifecycle-process:2.8.3] /home/codespace/.gradle/caches/transforms-4/cb5bd2ee7e17de0e399a39bf5da656ad/transformed/jetified-lifecycle-process-2.8.3/AndroidManifest.xml:29:13-31:52
 147                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-147-->[androidx.lifecycle:lifecycle-process:2.8.3] /data/data/com.termux/files/home/.gradle/caches/transforms-4/cb5bd2ee7e17de0e399a39bf5da656ad/transformed/jetified-lifecycle-process-2.8.3/AndroidManifest.xml:30:17-78
+147-->[androidx.lifecycle:lifecycle-process:2.8.3] /home/codespace/.gradle/caches/transforms-4/cb5bd2ee7e17de0e399a39bf5da656ad/transformed/jetified-lifecycle-process-2.8.3/AndroidManifest.xml:30:17-78
 148                android:value="androidx.startup" />
-148-->[androidx.lifecycle:lifecycle-process:2.8.3] /data/data/com.termux/files/home/.gradle/caches/transforms-4/cb5bd2ee7e17de0e399a39bf5da656ad/transformed/jetified-lifecycle-process-2.8.3/AndroidManifest.xml:31:17-49
+148-->[androidx.lifecycle:lifecycle-process:2.8.3] /home/codespace/.gradle/caches/transforms-4/cb5bd2ee7e17de0e399a39bf5da656ad/transformed/jetified-lifecycle-process-2.8.3/AndroidManifest.xml:31:17-49
 149            <meta-data
-149-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+149-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
 150                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-150-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+150-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
 151                android:value="androidx.startup" />
-151-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+151-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
 152        </provider>
 153
 154        <service
-154-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:39:9-45:35
+154-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:39:9-45:35
 155            android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"
-155-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:40:13-88
+155-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:40:13-88
 156            android:directBootAware="false"
-156-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:41:13-44
+156-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:41:13-44
 157            android:enabled="@bool/enable_system_alarm_service_default"
-157-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:42:13-72
+157-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:42:13-72
 158            android:exported="false" />
-158-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:43:13-37
+158-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:43:13-37
 159        <service
-159-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:46:9-52:35
+159-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:46:9-52:35
 160            android:name="androidx.work.impl.background.systemjob.SystemJobService"
-160-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:47:13-84
+160-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:47:13-84
 161            android:directBootAware="false"
-161-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:48:13-44
+161-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:48:13-44
 162            android:enabled="@bool/enable_system_job_service_default"
-162-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:49:13-70
+162-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:49:13-70
 163            android:exported="true"
-163-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:50:13-36
+163-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:50:13-36
 164            android:permission="android.permission.BIND_JOB_SERVICE" />
-164-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:51:13-69
+164-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:51:13-69
 165        <service
-165-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:53:9-59:35
+165-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:53:9-59:35
 166            android:name="androidx.work.impl.foreground.SystemForegroundService"
-166-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:54:13-81
+166-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:54:13-81
 167            android:directBootAware="false"
-167-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:55:13-44
+167-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:55:13-44
 168            android:enabled="@bool/enable_system_foreground_service_default"
-168-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:56:13-77
+168-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:56:13-77
 169            android:exported="false" />
-169-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:57:13-37
+169-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:57:13-37
 170
 171        <receiver
-171-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:61:9-66:35
+171-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:61:9-66:35
 172            android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
-172-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:62:13-88
+172-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:62:13-88
 173            android:directBootAware="false"
-173-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:63:13-44
+173-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:63:13-44
 174            android:enabled="true"
-174-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:64:13-35
+174-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:64:13-35
 175            android:exported="false" />
-175-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:65:13-37
+175-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:65:13-37
 176        <receiver
-176-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:67:9-77:20
+176-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:67:9-77:20
 177            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy"
-177-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:68:13-106
+177-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:68:13-106
 178            android:directBootAware="false"
-178-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:69:13-44
+178-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:69:13-44
 179            android:enabled="false"
-179-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:70:13-36
+179-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:70:13-36
 180            android:exported="false" >
-180-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:71:13-37
+180-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:71:13-37
 181            <intent-filter>
-181-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:73:13-76:29
+181-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:73:13-76:29
 182                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-182-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:74:17-87
-182-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:74:25-84
+182-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:74:17-87
+182-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:74:25-84
 183                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-183-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:75:17-90
-183-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:75:25-87
+183-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:75:17-90
+183-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:75:25-87
 184            </intent-filter>
 185        </receiver>
 186        <receiver
-186-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:78:9-88:20
+186-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:78:9-88:20
 187            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy"
-187-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:79:13-104
+187-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:79:13-104
 188            android:directBootAware="false"
-188-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:80:13-44
+188-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:80:13-44
 189            android:enabled="false"
-189-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:81:13-36
+189-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:81:13-36
 190            android:exported="false" >
-190-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:82:13-37
+190-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:82:13-37
 191            <intent-filter>
-191-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:84:13-87:29
+191-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:84:13-87:29
 192                <action android:name="android.intent.action.BATTERY_OKAY" />
-192-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:85:17-77
-192-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:85:25-74
+192-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:85:17-77
+192-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:85:25-74
 193                <action android:name="android.intent.action.BATTERY_LOW" />
-193-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:86:17-76
-193-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:86:25-73
+193-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:86:17-76
+193-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:86:25-73
 194            </intent-filter>
 195        </receiver>
 196        <receiver
-196-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:89:9-99:20
+196-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:89:9-99:20
 197            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy"
-197-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:90:13-104
+197-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:90:13-104
 198            android:directBootAware="false"
-198-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:91:13-44
+198-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:91:13-44
 199            android:enabled="false"
-199-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:92:13-36
+199-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:92:13-36
 200            android:exported="false" >
-200-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:93:13-37
+200-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:93:13-37
 201            <intent-filter>
-201-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:95:13-98:29
+201-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:95:13-98:29
 202                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
-202-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:96:17-83
-202-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:96:25-80
+202-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:96:17-83
+202-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:96:25-80
 203                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
-203-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:97:17-82
-203-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:97:25-79
+203-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:97:17-82
+203-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:97:25-79
 204            </intent-filter>
 205        </receiver>
 206        <receiver
-206-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:100:9-109:20
+206-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:100:9-109:20
 207            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy"
-207-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:101:13-103
+207-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:101:13-103
 208            android:directBootAware="false"
-208-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:102:13-44
+208-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:102:13-44
 209            android:enabled="false"
-209-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:103:13-36
+209-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:103:13-36
 210            android:exported="false" >
-210-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:104:13-37
+210-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:104:13-37
 211            <intent-filter>
-211-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:106:13-108:29
+211-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:106:13-108:29
 212                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-212-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:107:17-79
-212-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:107:25-76
+212-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:107:17-79
+212-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:107:25-76
 213            </intent-filter>
 214        </receiver>
 215        <receiver
-215-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:110:9-121:20
+215-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:110:9-121:20
 216            android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver"
-216-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:111:13-88
+216-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:111:13-88
 217            android:directBootAware="false"
-217-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:112:13-44
+217-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:112:13-44
 218            android:enabled="false"
-218-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:113:13-36
+218-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:113:13-36
 219            android:exported="false" >
-219-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:114:13-37
+219-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:114:13-37
 220            <intent-filter>
-220-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:116:13-120:29
+220-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:116:13-120:29
 221                <action android:name="android.intent.action.BOOT_COMPLETED" />
-221-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:68:17-79
-221-->/data/data/com.termux/files/home/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:68:25-76
+221-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:68:17-79
+221-->/workspaces/mederpay1/android/MederPayEnforcerA/app/src/main/AndroidManifest.xml:68:25-76
 222                <action android:name="android.intent.action.TIME_SET" />
-222-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:118:17-73
-222-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:118:25-70
+222-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:118:17-73
+222-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:118:25-70
 223                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-223-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:119:17-81
-223-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:119:25-78
+223-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:119:17-81
+223-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:119:25-78
 224            </intent-filter>
 225        </receiver>
 226        <receiver
-226-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:122:9-131:20
+226-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:122:9-131:20
 227            android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver"
-227-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:123:13-99
+227-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:123:13-99
 228            android:directBootAware="false"
-228-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:124:13-44
+228-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:124:13-44
 229            android:enabled="@bool/enable_system_alarm_service_default"
-229-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:125:13-72
+229-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:125:13-72
 230            android:exported="false" >
-230-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:126:13-37
+230-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:126:13-37
 231            <intent-filter>
-231-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:128:13-130:29
+231-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:128:13-130:29
 232                <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies" />
-232-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:129:17-98
-232-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:129:25-95
+232-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:129:17-98
+232-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:129:25-95
 233            </intent-filter>
 234        </receiver>
 235        <receiver
-235-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:132:9-142:20
+235-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:132:9-142:20
 236            android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver"
-236-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:133:13-78
+236-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:133:13-78
 237            android:directBootAware="false"
-237-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:134:13-44
+237-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:134:13-44
 238            android:enabled="true"
-238-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:135:13-35
+238-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:135:13-35
 239            android:exported="true"
-239-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:136:13-36
+239-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:136:13-36
 240            android:permission="android.permission.DUMP" >
-240-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:137:13-57
+240-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:137:13-57
 241            <intent-filter>
-241-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:139:13-141:29
+241-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:139:13-141:29
 242                <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />
-242-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:140:17-88
-242-->[androidx.work:work-runtime:2.10.0] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:140:25-85
+242-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:140:17-88
+242-->[androidx.work:work-runtime:2.10.0] /home/codespace/.gradle/caches/transforms-4/f55eb62483d735b35d065206436b99d4/transformed/work-runtime-2.10.0/AndroidManifest.xml:140:25-85
 243            </intent-filter>
 244        </receiver>
 245
 246        <service
-246-->[androidx.room:room-runtime:2.6.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/649d076527de941bd1d3001db80b3afe/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
+246-->[androidx.room:room-runtime:2.6.1] /home/codespace/.gradle/caches/transforms-4/649d076527de941bd1d3001db80b3afe/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
 247            android:name="androidx.room.MultiInstanceInvalidationService"
-247-->[androidx.room:room-runtime:2.6.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/649d076527de941bd1d3001db80b3afe/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
+247-->[androidx.room:room-runtime:2.6.1] /home/codespace/.gradle/caches/transforms-4/649d076527de941bd1d3001db80b3afe/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
 248            android:directBootAware="true"
-248-->[androidx.room:room-runtime:2.6.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/649d076527de941bd1d3001db80b3afe/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
+248-->[androidx.room:room-runtime:2.6.1] /home/codespace/.gradle/caches/transforms-4/649d076527de941bd1d3001db80b3afe/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
 249            android:exported="false" />
-249-->[androidx.room:room-runtime:2.6.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/649d076527de941bd1d3001db80b3afe/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
+249-->[androidx.room:room-runtime:2.6.1] /home/codespace/.gradle/caches/transforms-4/649d076527de941bd1d3001db80b3afe/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
 250
 251        <receiver
-251-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+251-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
 252            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-252-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+252-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
 253            android:directBootAware="false"
-253-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+253-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
 254            android:enabled="true"
-254-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+254-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
 255            android:exported="true"
-255-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+255-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
 256            android:permission="android.permission.DUMP" >
-256-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+256-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
 257            <intent-filter>
-257-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+257-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
 258                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-258-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
-258-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+258-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+258-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
 259            </intent-filter>
 260            <intent-filter>
-260-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+260-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
 261                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-261-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
-261-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+261-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+261-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
 262            </intent-filter>
 263            <intent-filter>
-263-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+263-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
 264                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-264-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
-264-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+264-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+264-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
 265            </intent-filter>
 266            <intent-filter>
-266-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+266-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
 267                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-267-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
-267-->[androidx.profileinstaller:profileinstaller:1.3.1] /data/data/com.termux/files/home/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+267-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+267-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/codespace/.gradle/caches/transforms-4/f23bdcf21651b3490950a0d97d7622e0/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
 268            </intent-filter>
 269        </receiver>
 270    </application>

@@ -49,7 +49,7 @@ object RecoveryInstaller {
         return try {
             val packageInfo = context.packageManager.getPackageInfo(COMPANION_PACKAGE, 0)
             val appInfo = packageInfo.applicationInfo
-            appInfo.enabled
+            appInfo?.enabled ?: false
         } catch (e: Exception) {
             false
         }

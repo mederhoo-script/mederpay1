@@ -15,6 +15,9 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.util.Log
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class OverlayActivity : Activity() {
     private val TAG = "OverlayActivity"
@@ -193,14 +196,14 @@ class OverlayActivity : Activity() {
 
     private fun launchRecovery() {
         Log.i(TAG, "Launching recovery process")
-        // Trigger recovery via RecoveryInstaller
-        Thread {
+        // Trigger recovery via RecoveryInstaller using coroutine
+        lifecycleScope.launch (Dispatchers.IO) {
             try {
-                RecoveryInstaller.triggerRecovery(this)
+                RecoveryInstaller.triggerRecovery(this@OverlayActivity)
             } catch (e: Exception) {
                 Log.e(TAG, "Recovery failed", e)
             }
-        }.start()
+        }
     }
 
     private fun checkStatus() {

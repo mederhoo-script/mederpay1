@@ -108,21 +108,21 @@ object AuditLogUploader {
      * Build JSON payload for batch upload
      */
     private fun buildBatchPayload(context: Context, logs: List<AuditLogEntry>): JSONObject {
-        val deviceId = SecureStorage.getDeviceId(context)
+        val deviceId = DeviceManager.getIMEI(context)
         val appVersion = context.packageManager.getPackageInfo(context.packageName, 0).versionName
         
         val logsArray = JSONArray()
         for (log in logs) {
             val logObj = JSONObject().apply {
-                put("event", log.event)
-                put("timestamp", dateFormat.format(log.timestamp))
-                put("data", JSONObject(log.data))
+                put("event_type", log.event_type)
+                put("timestamp", log.timestamp)
+                put("event_data", JSONObject(log.event_data as Any))
             }
             logsArray.put(logObj)
         }
         
         return JSONObject().apply {
-            put("device_id", deviceId)
+            put("imei", deviceId)
             put("app_version", appVersion)
             put("logs", logsArray)
         }
@@ -140,7 +140,20 @@ object AuditLogUploader {
             if (file.name.endsWith(".json")) {
                 try {
                     val content = file.readText()
-                    val entry = AuditLogEntry.fromJson(content)
+                    val obj = JSONObject(content)
+                    val eventDataObj = obj.getJSONObject("event_data")
+                    val eventData = mutableMapOf<String, String>()
+                    eventDataObj.keys().forEach { key ->
+                        eventData[key] = eventDataObj.getString(key)
+                    }
+                    
+                    val entry = AuditLogEntry(
+                        imei = obj.getString("imei"),
+                        event_type = obj.getString("event_type"),
+                        event_data = eventData,
+                        timestamp = obj.getString("timestamp"),
+                        app_version = obj.getString("app_version")
+                    )
                     logs.add(entry)
                 } catch (e: Exception) {
                     Log.e(TAG, "Failed to read log file: ${file.name}", e)
@@ -156,9 +169,9 @@ object AuditLogUploader {
      */
     private fun markLogsUploaded(context: Context, logs: List<AuditLogEntry>) {
         val logsDir = File(context.filesDir, "audit_logs")
-        logs.forEach { log ->
-            val file = File(logsDir, "${log.id}.json")
-            if (file.exists()) {
+        // Delete all uploaded logs
+        logsDir.listFiles()?.forEach { file ->
+            if (file.name.endsWith(".json")) {
                 file.delete()
             }
         }
@@ -167,22 +180,24 @@ object AuditLogUploader {
     /**
      * Store log locally for later upload
      */
-    fun queueLog(context: Context, event: String, data: Map<String, Any>) {
+    fun queueLog(context: Context, event_type: String, event_data: Map<String, String>, imei: String, appVersion: String) {
         try {
+            val timestamp = dateFormat.format(Date())
             val entry = AuditLogEntry(
-                id = UUID.randomUUID().toString(),
-                event = event,
-                timestamp = Date(),
-                data = data
+                imei = imei,
+                event_type = event_type,
+                event_data = event_data,
+                timestamp = timestamp,
+                app_version = appVersion
             )
             
             val logsDir = File(context.filesDir, "audit_logs")
             logsDir.mkdirs()
             
-            val file = File(logsDir, "${entry.id}.json")
+            val file = File(logsDir, "${imei}_${System.currentTimeMillis()}.json")
             file.writeText(entry.toJson())
             
-            Log.d(TAG, "Queued log: $event")
+            Log.d(TAG, "Queued log: $event_type")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to queue log", e)
         }
@@ -190,39 +205,15 @@ object AuditLogUploader {
 }
 
 /**
- * Audit log entry data class
+ * Extension function to serialize AuditLogEntry
  */
-data class AuditLogEntry(
-    val id: String,
-    val event: String,
-    val timestamp: Date,
-    val data: Map<String, Any>
-) {
-    fun toJson(): String {
-        val obj = JSONObject().apply {
-            put("id", id)
-            put("event", event)
-            put("timestamp", timestamp.time)
-            put("data", JSONObject(data))
-        }
-        return obj.toString()
+fun AuditLogEntry.toJson(): String {
+    val obj = JSONObject().apply {
+        put("imei", this@toJson.imei)
+        put("event_type", this@toJson.event_type)
+        put("timestamp", this@toJson.timestamp)
+        put("event_data", JSONObject(this@toJson.event_data as Any))
+        put("app_version", this@toJson.app_version)
     }
-    
-    companion object {
-        fun fromJson(json: String): AuditLogEntry {
-            val obj = JSONObject(json)
-            val dataObj = obj.getJSONObject("data")
-            val data = mutableMapOf<String, Any>()
-            dataObj.keys().forEach { key ->
-                data[key] = dataObj.get(key)
-            }
-            
-            return AuditLogEntry(
-                id = obj.getString("id"),
-                event = obj.getString("event"),
-                timestamp = Date(obj.getLong("timestamp")),
-                data = data
-            )
-        }
-    }
+    return obj.toString()
 }
