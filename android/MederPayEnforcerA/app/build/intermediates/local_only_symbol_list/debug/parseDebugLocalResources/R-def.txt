@@ -1,0 +1,9 @@
+R_DEF: Internal format may change without notice
+local
+mipmap ic_launcher
+string app_name
+string device_admin_description
+string enforcement_message
+string enforcement_title
+xml device_admin
+xml file_paths

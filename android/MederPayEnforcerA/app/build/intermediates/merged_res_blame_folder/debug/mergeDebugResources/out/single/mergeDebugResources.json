@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "com.mederpay.enforcera.app-debug-68:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.mederpay.enforcera.app-main-70:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.mederpay.enforcera.app-debug-68:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.mederpay.enforcera.app-main-70:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.mederpay.enforcera.app-debug-68:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.mederpay.enforcera.app-main-70:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.mederpay.enforcera.app-debug-68:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.mederpay.enforcera.app-main-70:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.mederpay.enforcera.app-debug-68:/xml_file_paths.xml.flat",
+        "source": "com.mederpay.enforcera.app-main-70:/xml/file_paths.xml"
+    },
+    {
+        "merged": "com.mederpay.enforcera.app-debug-68:/xml_device_admin.xml.flat",
+        "source": "com.mederpay.enforcera.app-main-70:/xml/device_admin.xml"
+    },
+    {
+        "merged": "com.mederpay.enforcera.app-debug-68:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.mederpay.enforcera.app-main-70:/mipmap-xxhdpi/ic_launcher.png"
+    }
+]
