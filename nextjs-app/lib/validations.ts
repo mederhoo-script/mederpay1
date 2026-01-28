@@ -65,6 +65,7 @@ export const paymentSchema = z.object({
   amount: z.number().min(0, 'Amount must be positive'),
   payment_method: z.enum(['CASH', 'TRANSFER', 'MONNIFY']),
   monnify_reference: z.string().optional(),
+  installment_id: z.string().uuid('Invalid installment ID').optional(),
 })
 
 // Agent settings schema
