@@ -78,16 +78,16 @@ object AuditLogUploader {
             try {
                 Log.d(TAG, "Uploading batch $batchNumber/$totalBatches (attempt ${attempt + 1})")
                 
-                val payload = buildBatchPayload(context, logs)
-                val response = ApiClient.service.uploadAuditLogsBatch(payload)
+                val payload = logs
+                val response = ApiClient.service.sendAuditLogBatch(payload)
                 
-                if (response.isSuccessful) {
+                if (response.success) {
                     // Mark logs as uploaded
                     markLogsUploaded(context, logs)
                     Log.i(TAG, "Batch $batchNumber uploaded successfully")
                     return
                 } else {
-                    Log.w(TAG, "Upload failed with HTTP ${response.code()}: ${response.message()}")
+                    Log.w(TAG, "Upload failed: ${response.message}")
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Upload attempt ${attempt + 1} failed", e)
@@ -105,27 +105,13 @@ object AuditLogUploader {
     }
     
     /**
-     * Build JSON payload for batch upload
+     * Get device IMEI/Android ID
      */
-    private fun buildBatchPayload(context: Context, logs: List<AuditLogEntry>): JSONObject {
-        val deviceId = DeviceManager.getIMEI(context)
-        val appVersion = context.packageManager.getPackageInfo(context.packageName, 0).versionName
-        
-        val logsArray = JSONArray()
-        for (log in logs) {
-            val logObj = JSONObject().apply {
-                put("event_type", log.event_type)
-                put("timestamp", log.timestamp)
-                put("event_data", JSONObject(log.event_data as Any))
-            }
-            logsArray.put(logObj)
-        }
-        
-        return JSONObject().apply {
-            put("imei", deviceId)
-            put("app_version", appVersion)
-            put("logs", logsArray)
-        }
+    private fun getDeviceId(context: Context): String {
+        return android.provider.Settings.Secure.getString(
+            context.contentResolver, 
+            android.provider.Settings.Secure.ANDROID_ID
+        )
     }
     
     /**
@@ -212,7 +198,7 @@ fun AuditLogEntry.toJson(): String {
         put("imei", this@toJson.imei)
         put("event_type", this@toJson.event_type)
         put("timestamp", this@toJson.timestamp)
-        put("event_data", JSONObject(this@toJson.event_data as Any))
+        put("event_data", JSONObject(this@toJson.event_data as Map<*, *>))
         put("app_version", this@toJson.app_version)
     }
     return obj.toString()

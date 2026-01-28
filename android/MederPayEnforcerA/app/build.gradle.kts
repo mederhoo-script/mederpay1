@@ -52,6 +52,9 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
     
+    // Lifecycle for lifecycleScope
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
+    
     // Compose
     implementation(platform("androidx.compose:compose-bom:2024.12.01"))
     implementation("androidx.compose.ui:ui")

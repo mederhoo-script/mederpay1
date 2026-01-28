@@ -1,6 +1,6 @@
 package com.mederpay.enforcera
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.app.admin.DevicePolicyManager
 import android.content.BroadcastReceiver
 import android.content.ComponentName
@@ -19,7 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class OverlayActivity : Activity() {
+class OverlayActivity : AppCompatActivity() {
     private val TAG = "OverlayActivity"
     private var overlayType: OverlayManager.OverlayType? = null
     private val dismissReceiver = object : BroadcastReceiver() {
