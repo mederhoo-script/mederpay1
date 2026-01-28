@@ -1,7 +1,19 @@
-# MederPay Enforcer A ProGuard Rules
+# MederPay Enforcer B ProGuard Rules
 
-# Keep application class
--keep class com.mederpay.enforcerb.** { *; }
+# Keep only essential application classes from obfuscation
+# Allow obfuscation of internal implementation details for better security
+
+# Keep main entry points
+-keep class com.mederpay.enforcerb.MainActivity { *; }
+-keep class com.mederpay.enforcerb.OverlayActivity { *; }
+
+# Keep Device Admin and Broadcast Receivers (required by Android)
+-keep class com.mederpay.enforcerb.DeviceAdminReceiver { *; }
+-keep class com.mederpay.enforcerb.BootReceiver { *; }
+-keep class com.mederpay.enforcerb.PackageChangeReceiver { *; }
+
+# Keep Services
+-keep class com.mederpay.enforcerb.EnforcementService { *; }
 
 # Retrofit
 -dontwarn retrofit2.**

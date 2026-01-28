@@ -1,7 +1,20 @@
 # MederPay Enforcer A ProGuard Rules
 
-# Keep application class
--keep class com.mederpay.enforcera.** { *; }
+# Keep only essential application classes from obfuscation
+# Allow obfuscation of internal implementation details for better security
+
+# Keep main entry points
+-keep class com.mederpay.enforcera.MainActivity { *; }
+-keep class com.mederpay.enforcera.OverlayActivity { *; }
+-keep class com.mederpay.enforcera.PaymentOverlay { *; }
+
+# Keep Device Admin and Broadcast Receivers (required by Android)
+-keep class com.mederpay.enforcera.DeviceAdminReceiver { *; }
+-keep class com.mederpay.enforcera.BootReceiver { *; }
+-keep class com.mederpay.enforcera.PackageChangeReceiver { *; }
+
+# Keep Services
+-keep class com.mederpay.enforcera.EnforcementService { *; }
 
 # Retrofit
 -dontwarn retrofit2.**
@@ -56,8 +69,6 @@
 -keep class com.mederpay.enforcera.AuditLogger { *; }
 -keep class com.mederpay.enforcera.ApiClient { *; }
 -keep class com.mederpay.enforcera.MonnifyPaymentManager { *; }
-
-# Coroutines
 -keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
 -keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
 -keepclassmembernames class kotlinx.** {
