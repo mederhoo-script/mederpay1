@@ -23,9 +23,9 @@
     <domain-config>
         <domain includeSubdomains="true">api.mederpay.com</domain>
         <pin-set expiration="2027-01-01">
-            <!- Replace with your actual certificate SHA-256 pins ->
+            <!-- Replace with your actual certificate SHA-256 pins -->
             <pin digest="SHA-256">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</pin>
-            <!- Backup pin ->
+            <!-- Backup pin -->
             <pin digest="SHA-256">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=</pin>
         </pin-set>
         <trust-anchors>
