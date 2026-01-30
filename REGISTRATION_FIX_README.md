@@ -42,7 +42,7 @@ Created the environment variables file with the Supabase credentials and Monnify
 
 ### Step 1: Apply Database Changes
 1. Log into your Supabase dashboard at https://supabase.com
-2. Navigate to your project: https://tjtaczthnqidbmoqbtfu.supabase.co
+2. Navigate to your project dashboard
 3. Go to the SQL Editor (left sidebar)
 4. Open the file `FIX_REGISTRATION.sql` from the project root
 5. Copy its contents and paste into the SQL Editor
@@ -52,9 +52,9 @@ Created the environment variables file with the Supabase credentials and Monnify
 ### Step 2: Verify Environment Variables
 The `.env.local` file has been created in the `nextjs-app` directory with your credentials. Verify it contains:
 ```
-NEXT_PUBLIC_SUPABASE_URL=https://tjtaczthnqidbmoqbtfu.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
 ```
 
 ### Step 3: Run the Application

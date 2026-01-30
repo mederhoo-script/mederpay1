@@ -3,13 +3,13 @@
 ## 🚀 Quick Setup (3 Steps)
 
 ### Step 1: Apply Database Changes (REQUIRED)
-1. Open Supabase SQL Editor: https://supabase.com/dashboard/project/tjtaczthnqidbmoqbtfu/sql
+1. Open Supabase SQL Editor in your project dashboard
 2. Copy the contents of `FIX_REGISTRATION.sql`
 3. Paste and run in SQL Editor
 4. Verify: You should see "Success. No rows returned" or similar
 
 ### Step 2: Disable Email Confirmation (RECOMMENDED for testing)
-1. Go to: https://supabase.com/dashboard/project/tjtaczthnqidbmoqbtfu/auth/settings
+1. Go to your Supabase project dashboard → Authentication → Settings
 2. Find "Email Auth" section
 3. **Disable** "Confirm email" option
 4. Save changes
@@ -17,20 +17,22 @@
 > **Why?** By default, Supabase requires users to confirm their email before they can log in. Disabling this allows immediate login after registration.
 
 ### Step 3: Create .env.local File
-Copy this into `nextjs-app/.env.local`:
+Copy this template into `nextjs-app/.env.local` and replace with your actual credentials:
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=https://tjtaczthnqidbmoqbtfu.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqdGFjenRobnFpZGJtb3FidGZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk3Mjc5MzEsImV4cCI6MjA4NTMwMzkzMX0.5Un48Jul1EYg0PCsUAqHQzEtIKbqCBN1RR4tnayeNVw
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqdGFjenRobnFpZGJtb3FidGZ1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2OTcyNzkzMSwiZXhwIjoyMDg1MzAzOTMxfQ.Y8Alq4-V74yqXVN3IBz1nRrdWJdyy6wIm8d1c4kv8L4
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
 
 # Monnify API Credentials
-MONNIFY_API_KEY=MK_TEST_7M5NZ5HX39
-MONNIFY_SECRET_KEY=0VCQQYWR4GLTLYDX1WYZDJABANLX6RVB
-MONNIFY_CONTRACT_CODE=2570907178
+MONNIFY_API_KEY=your-monnify-api-key
+MONNIFY_SECRET_KEY=your-monnify-secret-key
+MONNIFY_CONTRACT_CODE=your-contract-code
 MONNIFY_BASE_URL=https://sandbox.monnify.com
 MONNIFY_WEBHOOK_SECRET=your-webhook-secret-here
 ```
+
+**Note:** The actual `.env.local` file with your credentials has already been created in the `nextjs-app` directory. The above is just a template for reference.
 
 ## 🧪 Testing
 
