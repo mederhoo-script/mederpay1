@@ -13,11 +13,18 @@ export async function POST(request: NextRequest) {
     const validatedData = registerSchema.parse(body)
     
     const supabase = await createClient()
-    const serviceClient = createServiceClient()
     
     // 1. Check if user already exists to avoid rate limit issues
-    const { data: existingUser } = await serviceClient.auth.admin.listUsers()
-    const emailExists = existingUser?.users?.some(
+    const serviceClient = createServiceClient()
+    
+    // Check if email already exists - use listUsers with pagination to limit results
+    // Note: This is still needed as a pre-check to avoid triggering signUp rate limits
+    const { data: userList } = await serviceClient.auth.admin.listUsers({
+      page: 1,
+      perPage: 1000
+    })
+    
+    const emailExists = userList?.users?.some(
       user => user.email?.toLowerCase() === validatedData.email.toLowerCase()
     )
     
@@ -28,12 +35,12 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // Check if username is already taken
+    // Check if username is already taken using maybeSingle to avoid errors
     const { data: existingProfile } = await serviceClient
       .from('profiles')
       .select('username')
       .eq('username', validatedData.username)
-      .single()
+      .maybeSingle()
     
     if (existingProfile) {
       return NextResponse.json(
