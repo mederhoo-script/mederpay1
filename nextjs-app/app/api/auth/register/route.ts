@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createServiceClient } from '@/lib/supabase/service'
 import { registerSchema } from '@/lib/validations'
 
 const DEFAULT_AGENT_ROLE = 'agent_owner' as const
@@ -44,6 +45,9 @@ export async function POST(request: NextRequest) {
       })
     
     if (profileError) {
+      // Clean up: Delete the auth user if profile creation fails
+      const serviceClient = createServiceClient()
+      await serviceClient.auth.admin.deleteUser(authData.user.id)
       return NextResponse.json(
         { error: 'Failed to create profile: ' + profileError.message },
         { status: 500 }
@@ -60,6 +64,9 @@ export async function POST(request: NextRequest) {
       })
     
     if (agentError) {
+      // Clean up: Delete the auth user and profile if agent creation fails
+      const serviceClient = createServiceClient()
+      await serviceClient.auth.admin.deleteUser(authData.user.id)
       return NextResponse.json(
         { error: 'Failed to create agent: ' + agentError.message },
         { status: 500 }
