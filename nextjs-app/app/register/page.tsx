@@ -36,7 +36,7 @@ export default function RegisterPage() {
     
     if (!validation.success) {
       const errors: Partial<Record<keyof RegisterInput, string>> = {};
-      validation.error.errors.forEach((err) => {
+      validation.error.issues.forEach((err) => {
         if (err.path[0]) {
           errors[err.path[0] as keyof RegisterInput] = err.message;
         }
