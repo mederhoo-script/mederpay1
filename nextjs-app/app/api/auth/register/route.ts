@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createServiceClient } from '@/lib/supabase/service'
 import { registerSchema } from '@/lib/validations'
 
 const DEFAULT_AGENT_ROLE = 'agent_owner' as const
@@ -20,13 +21,31 @@ export async function POST(request: NextRequest) {
       options: {
         data: {
           username: validatedData.username,
-        }
+        },
+        // Disable email confirmation to avoid rate limiting issues
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_SUPABASE_URL || ''}/auth/callback`,
       }
     })
     
-    if (authError || !authData.user) {
+    if (authError) {
+      // Handle rate limit errors with a more user-friendly message
+      if (authError.message.toLowerCase().includes('rate limit') || 
+          authError.message.toLowerCase().includes('email rate') ||
+          authError.status === 429) {
+        return NextResponse.json(
+          { error: 'Too many registration attempts. Please wait a few minutes before trying again.' },
+          { status: 429 }
+        )
+      }
       return NextResponse.json(
         { error: authError?.message || 'Failed to create user' },
+        { status: 400 }
+      )
+    }
+    
+    if (!authData.user) {
+      return NextResponse.json(
+        { error: 'Failed to create user' },
         { status: 400 }
       )
     }
@@ -44,6 +63,9 @@ export async function POST(request: NextRequest) {
       })
     
     if (profileError) {
+      // Clean up: Delete the auth user if profile creation fails
+      const serviceClient = createServiceClient()
+      await serviceClient.auth.admin.deleteUser(authData.user.id)
       return NextResponse.json(
         { error: 'Failed to create profile: ' + profileError.message },
         { status: 500 }
@@ -60,6 +82,9 @@ export async function POST(request: NextRequest) {
       })
     
     if (agentError) {
+      // Clean up: Delete the auth user and profile if agent creation fails
+      const serviceClient = createServiceClient()
+      await serviceClient.auth.admin.deleteUser(authData.user.id)
       return NextResponse.json(
         { error: 'Failed to create agent: ' + agentError.message },
         { status: 500 }
