@@ -1,8 +1,30 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Prerequisites
+
+Before running the application, you need to set up the required environment variables:
+
+1. Copy the `.env.example` file to `.env.local`:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. Update the environment variables in `.env.local` with your Supabase project credentials:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+   You can find these values in your [Supabase project settings](https://supabase.com/dashboard/project/_/settings/api).
+
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
 ## Getting Started
 
-First, run the development server:
+After completing the prerequisites, run the development server:
 
 ```bash
 npm run dev
