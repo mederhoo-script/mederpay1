@@ -13,8 +13,36 @@ export async function POST(request: NextRequest) {
     const validatedData = registerSchema.parse(body)
     
     const supabase = await createClient()
+    const serviceClient = createServiceClient()
     
-    // 1. Create user in Supabase Auth
+    // 1. Check if user already exists to avoid rate limit issues
+    const { data: existingUser } = await serviceClient.auth.admin.listUsers()
+    const emailExists = existingUser?.users?.some(
+      user => user.email?.toLowerCase() === validatedData.email.toLowerCase()
+    )
+    
+    if (emailExists) {
+      return NextResponse.json(
+        { error: 'An account with this email already exists. Please try logging in or use a different email.' },
+        { status: 400 }
+      )
+    }
+    
+    // Check if username is already taken
+    const { data: existingProfile } = await serviceClient
+      .from('profiles')
+      .select('username')
+      .eq('username', validatedData.username)
+      .single()
+    
+    if (existingProfile) {
+      return NextResponse.json(
+        { error: 'This username is already taken. Please choose a different username.' },
+        { status: 400 }
+      )
+    }
+    
+    // 2. Create user in Supabase Auth
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email: validatedData.email,
       password: validatedData.password,
@@ -33,8 +61,16 @@ export async function POST(request: NextRequest) {
           authError.message.toLowerCase().includes('email rate') ||
           authError.status === 429) {
         return NextResponse.json(
-          { error: 'Too many registration attempts. Please wait a few minutes before trying again.' },
+          { error: 'Too many registration attempts detected. This email may have been used in recent failed attempts. Please wait 10-15 minutes before trying again, or try using a different email address.' },
           { status: 429 }
+        )
+      }
+      // Handle duplicate user error
+      if (authError.message.toLowerCase().includes('user already registered') ||
+          authError.message.toLowerCase().includes('already exists')) {
+        return NextResponse.json(
+          { error: 'An account with this email already exists. Please try logging in or use the password reset feature.' },
+          { status: 400 }
         )
       }
       return NextResponse.json(
@@ -50,8 +86,7 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // 2. Create profile record using service role client (bypasses RLS)
-    const serviceClient = createServiceClient()
+    // 3. Create profile record using service role client (bypasses RLS)
     const { error: profileError } = await serviceClient
       .from('profiles')
       .insert({
@@ -72,7 +107,7 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // 3. Create agent record using service role client (bypasses RLS)
+    // 4. Create agent record using service role client (bypasses RLS)
     const { error: agentError } = await serviceClient
       .from('agents')
       .insert({
@@ -94,7 +129,7 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // 4. Return user data and session
+    // 5. Return user data and session
     return NextResponse.json({
       user: {
         id: authData.user.id,
