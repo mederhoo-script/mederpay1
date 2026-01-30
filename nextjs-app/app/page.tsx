@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Shield, TrendingUp, Users, Lock, FileText, CheckCircle, BarChart3, Smartphone } from 'lucide-react';
+import { Shield, Users, Lock, FileText, CheckCircle, BarChart3, Smartphone } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
       }
     };
     checkAuth();
-  }, [router, supabase]);
+  }, [router]);
 
   if (isChecking) {
     return (
@@ -415,7 +415,7 @@ export default function Home() {
           </div>
           <p className="mt-6 text-sm text-gray-500">
             Questions? Contact us at{' '}
-            <a href="mailto:support@mederpay.com" className="text-blue-600 hover:underline" rel="noopener noreferrer">
+            <a href="mailto:support@mederpay.com" className="text-blue-600 hover:underline">
               support@mederpay.com
             </a>
           </p>
@@ -429,10 +429,10 @@ export default function Home() {
             <p className="text-sm text-gray-600">
               © {new Date().getFullYear()} MederPay. All rights reserved.
             </p>
-            <div className="flex gap-6 text-sm text-gray-600">
-              <span className="text-gray-400">Terms of Service</span>
-              <span className="text-gray-400">Privacy Policy</span>
-              <span className="text-gray-400">Documentation</span>
+            <div className="flex gap-6 text-sm text-gray-500">
+              <span>Terms of Service</span>
+              <span>Privacy Policy</span>
+              <span>Documentation</span>
             </div>
           </div>
         </div>
