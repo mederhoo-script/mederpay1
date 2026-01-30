@@ -14,7 +14,42 @@ export async function POST(request: NextRequest) {
     
     const supabase = await createClient()
     
-    // 1. Create user in Supabase Auth
+    // 1. Check if user already exists to avoid rate limit issues
+    const serviceClient = createServiceClient()
+    
+    // Check if email already exists - use listUsers with pagination to limit results
+    // Note: This is still needed as a pre-check to avoid triggering signUp rate limits
+    const { data: userList } = await serviceClient.auth.admin.listUsers({
+      page: 1,
+      perPage: 1000
+    })
+    
+    const emailExists = userList?.users?.some(
+      user => user.email?.toLowerCase() === validatedData.email.toLowerCase()
+    )
+    
+    if (emailExists) {
+      return NextResponse.json(
+        { error: 'An account with this email already exists. Please try logging in or use a different email.' },
+        { status: 400 }
+      )
+    }
+    
+    // Check if username is already taken using maybeSingle to avoid errors
+    const { data: existingProfile } = await serviceClient
+      .from('profiles')
+      .select('username')
+      .eq('username', validatedData.username)
+      .maybeSingle()
+    
+    if (existingProfile) {
+      return NextResponse.json(
+        { error: 'This username is already taken. Please choose a different username.' },
+        { status: 400 }
+      )
+    }
+    
+    // 2. Create user in Supabase Auth
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email: validatedData.email,
       password: validatedData.password,
@@ -33,8 +68,16 @@ export async function POST(request: NextRequest) {
           authError.message.toLowerCase().includes('email rate') ||
           authError.status === 429) {
         return NextResponse.json(
-          { error: 'Too many registration attempts. Please wait a few minutes before trying again.' },
+          { error: 'Too many registration attempts detected. This email may have been used in recent failed attempts. Please wait 10-15 minutes before trying again, or try using a different email address.' },
           { status: 429 }
+        )
+      }
+      // Handle duplicate user error
+      if (authError.message.toLowerCase().includes('user already registered') ||
+          authError.message.toLowerCase().includes('already exists')) {
+        return NextResponse.json(
+          { error: 'An account with this email already exists. Please try logging in or use the password reset feature.' },
+          { status: 400 }
         )
       }
       return NextResponse.json(
@@ -50,8 +93,8 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // 2. Create profile record
-    const { error: profileError } = await supabase
+    // 3. Create profile record using service role client (bypasses RLS)
+    const { error: profileError } = await serviceClient
       .from('profiles')
       .insert({
         id: authData.user.id,
@@ -64,7 +107,6 @@ export async function POST(request: NextRequest) {
     
     if (profileError) {
       // Clean up: Delete the auth user if profile creation fails
-      const serviceClient = createServiceClient()
       await serviceClient.auth.admin.deleteUser(authData.user.id)
       return NextResponse.json(
         { error: 'Failed to create profile: ' + profileError.message },
@@ -72,8 +114,8 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // 3. Create agent record
-    const { error: agentError } = await supabase
+    // 4. Create agent record using service role client (bypasses RLS)
+    const { error: agentError } = await serviceClient
       .from('agents')
       .insert({
         user_id: authData.user.id,
@@ -82,16 +124,19 @@ export async function POST(request: NextRequest) {
       })
     
     if (agentError) {
-      // Clean up: Delete the auth user and profile if agent creation fails
-      const serviceClient = createServiceClient()
-      await serviceClient.auth.admin.deleteUser(authData.user.id)
+      // Clean up: Delete the profile and auth user if agent creation fails
+      // Use Promise.allSettled to ensure both operations are attempted
+      await Promise.allSettled([
+        serviceClient.from('profiles').delete().eq('id', authData.user.id),
+        serviceClient.auth.admin.deleteUser(authData.user.id)
+      ])
       return NextResponse.json(
         { error: 'Failed to create agent: ' + agentError.message },
         { status: 500 }
       )
     }
     
-    // 4. Return user data and session
+    // 5. Return user data and session
     return NextResponse.json({
       user: {
         id: authData.user.id,
