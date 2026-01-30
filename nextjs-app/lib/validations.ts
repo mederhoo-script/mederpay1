@@ -95,7 +95,7 @@ export const healthCheckSchema = z.object({
 export const auditLogEntrySchema = z.object({
   imei: z.string(),
   event_type: z.string(),
-  event_data: z.record(z.any()),
+  event_data: z.record(z.string(), z.any()),
   timestamp: z.string(),
   app_version: z.string(),
 })

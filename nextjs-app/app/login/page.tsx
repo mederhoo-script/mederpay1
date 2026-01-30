@@ -26,7 +26,7 @@ export default function LoginPage() {
     const validation = loginSchema.safeParse(formData);
     if (!validation.success) {
       const errors: Partial<Record<keyof LoginInput, string>> = {};
-      validation.error.errors.forEach((err) => {
+      validation.error.issues.forEach((err) => {
         if (err.path[0]) {
           errors[err.path[0] as keyof LoginInput] = err.message;
         }

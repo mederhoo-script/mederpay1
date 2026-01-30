@@ -16,22 +16,26 @@ export function formatCurrency(amount: number): string {
 
 // Date formatter
 export function formatDate(date: string | Date): string {
-  return new Intl.DateFormat('en-US', {
+  const d = new Date(date);
+  const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
-  }).format(new Date(date))
+  };
+  return d.toLocaleDateString('en-US', options);
 }
 
 // Date time formatter
 export function formatDateTime(date: string | Date): string {
-  return new Intl.DateFormat('en-US', {
+  const d = new Date(date);
+  const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-  }).format(new Date(date))
+  };
+  return d.toLocaleDateString('en-US', options);
 }
 
 // Calculate days overdue
