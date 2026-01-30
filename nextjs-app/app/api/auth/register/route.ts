@@ -50,8 +50,9 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // 2. Create profile record
-    const { error: profileError } = await supabase
+    // 2. Create profile record using service role client (bypasses RLS)
+    const serviceClient = createServiceClient()
+    const { error: profileError } = await serviceClient
       .from('profiles')
       .insert({
         id: authData.user.id,
@@ -64,7 +65,6 @@ export async function POST(request: NextRequest) {
     
     if (profileError) {
       // Clean up: Delete the auth user if profile creation fails
-      const serviceClient = createServiceClient()
       await serviceClient.auth.admin.deleteUser(authData.user.id)
       return NextResponse.json(
         { error: 'Failed to create profile: ' + profileError.message },
@@ -72,8 +72,8 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // 3. Create agent record
-    const { error: agentError } = await supabase
+    // 3. Create agent record using service role client (bypasses RLS)
+    const { error: agentError } = await serviceClient
       .from('agents')
       .insert({
         user_id: authData.user.id,
@@ -83,7 +83,6 @@ export async function POST(request: NextRequest) {
     
     if (agentError) {
       // Clean up: Delete the auth user and profile if agent creation fails
-      const serviceClient = createServiceClient()
       await serviceClient.auth.admin.deleteUser(authData.user.id)
       return NextResponse.json(
         { error: 'Failed to create agent: ' + agentError.message },
