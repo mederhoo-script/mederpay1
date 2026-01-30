@@ -35,7 +35,7 @@ export function formatDateTime(date: string | Date): string {
     hour: '2-digit',
     minute: '2-digit',
   };
-  return d.toLocaleDateString('en-US', options);
+  return d.toLocaleString('en-US', options);
 }
 
 // Calculate days overdue
