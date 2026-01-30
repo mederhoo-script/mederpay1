@@ -82,7 +82,8 @@ export async function POST(request: NextRequest) {
       })
     
     if (agentError) {
-      // Clean up: Delete the auth user and profile if agent creation fails
+      // Clean up: Delete the profile and auth user if agent creation fails
+      await serviceClient.from('profiles').delete().eq('id', authData.user.id)
       await serviceClient.auth.admin.deleteUser(authData.user.id)
       return NextResponse.json(
         { error: 'Failed to create agent: ' + agentError.message },
