@@ -133,10 +133,8 @@ CREATE TABLE public.sales (
   completion_date TIMESTAMPTZ,
   
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-  
-  -- Constraint: One active sale per phone
-  CONSTRAINT unique_active_sale_per_phone UNIQUE (phone_id) WHERE (status = 'active')
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+  -- Note: Partial unique constraint for active sales is created as an index below
 );
 
 -- Installment schedules table
@@ -257,6 +255,9 @@ CREATE INDEX idx_device_commands_imei ON public.device_commands(imei);
 CREATE INDEX idx_device_commands_status ON public.device_commands(status);
 CREATE INDEX idx_audit_logs_imei ON public.audit_logs(imei);
 CREATE INDEX idx_audit_logs_timestamp ON public.audit_logs(timestamp);
+
+-- Partial unique index: One active sale per phone
+CREATE UNIQUE INDEX idx_unique_active_sale_per_phone ON public.sales(phone_id) WHERE (status = 'active');
 
 -- Create updated_at trigger function
 CREATE OR REPLACE FUNCTION update_updated_at_column()
