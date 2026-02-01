@@ -32,7 +32,6 @@ build/
 */build/
 **/build/
 .gradle/
-*/gradle/
 !gradle/wrapper/
 
 # Local configuration files
@@ -91,7 +90,6 @@ next-env.d.ts
 *.com
 *.exe
 *.dll
-*.so
 *.dylib
 
 # Temporary files
