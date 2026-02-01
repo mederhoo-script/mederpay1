@@ -112,8 +112,10 @@ export default function CustomersPage() {
       }
 
       const data = await response.json();
-      setCustomers(data);
-      setFilteredCustomers(data);
+      // API returns { customers: [...] }, extract the array
+      const customersArray = data.customers || [];
+      setCustomers(customersArray);
+      setFilteredCustomers(customersArray);
     } catch (err) {
       console.error('Failed to fetch customers:', err);
       setError(err instanceof Error ? err.message : 'Failed to load customers');

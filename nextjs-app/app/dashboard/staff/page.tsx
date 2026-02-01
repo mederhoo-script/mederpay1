@@ -102,8 +102,10 @@ export default function StaffPage() {
       }
 
       const data = await response.json();
-      setStaff(data);
-      setFilteredStaff(data);
+      // API returns { staff: [...] }, extract the array
+      const staffArray = data.staff || [];
+      setStaff(staffArray);
+      setFilteredStaff(staffArray);
     } catch (err) {
       console.error('Failed to fetch staff:', err);
       setError(err instanceof Error ? err.message : 'Failed to load staff');
