@@ -1,0 +1,139 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+
+# IDE and Editor Files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+*.iml
+
+# Android Build Files
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+
+# Build directories (should never be committed)
+build/
+*/build/
+**/build/
+.gradle/
+!gradle/wrapper/
+
+# Local configuration files
+local.properties
+.env
+.env.local
+.env*.local
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Python
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+*.egg-info/
+dist/
+*.egg
+
+# Next.js
+/.next/
+/out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Coverage
+/coverage
+*.cover
+.coverage
+.hypothesis/
+
+# Compiled files
+*.com
+*.exe
+*.dll
+*.dylib
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+temp/
+
+# Database
+*.sqlite3
+db.sqlite3
+*.db
+
+# Static and Media files (for Django/backend)
+/static/
+/staticfiles/
+/media/
+
+# Testing
+.pytest_cache/
+.tox/
+junit.xml
+
+# Package managers
+*.tgz
+.npm
+
+# Vercel
+.vercel
+
+# Android specific
+*.jks
+*.keystore
+.externalNativeBuild
+.cxx
+/captures
+/MederPayEnforcerA/app/src/main/assets/*.apk
+/MederPayEnforcerB/app/src/main/assets/*.apk
+/MederPayEnforcerA_Legacy/app/src/main/assets/*.apk
+/MederPayEnforcerB_Legacy/app/src/main/assets/*.apk
+
+# Certificates
+*.pem
+
+# Documentation build outputs (if any)
+docs/_build/
+site/
