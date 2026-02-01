@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { formatCurrency } from '@/lib/utils';
 import {
@@ -235,27 +236,27 @@ export default function DashboardPage() {
       <div className="rounded-lg bg-white p-6 shadow">
         <h3 className="mb-4 text-lg font-semibold text-gray-900">Quick Actions</h3>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <a
+          <Link
             href="/dashboard/phones"
             className="flex items-center justify-center space-x-2 rounded-lg bg-blue-600 px-6 py-4 text-white transition-colors hover:bg-blue-700"
           >
             <Smartphone className="h-5 w-5" />
             <span className="font-medium">Add New Phone</span>
-          </a>
-          <a
+          </Link>
+          <Link
             href="/dashboard/sales"
             className="flex items-center justify-center space-x-2 rounded-lg bg-green-600 px-6 py-4 text-white transition-colors hover:bg-green-700"
           >
             <ShoppingCart className="h-5 w-5" />
             <span className="font-medium">Create Sale</span>
-          </a>
-          <a
+          </Link>
+          <Link
             href="/dashboard/payments"
             className="flex items-center justify-center space-x-2 rounded-lg bg-purple-600 px-6 py-4 text-white transition-colors hover:bg-purple-700"
           >
             <DollarSign className="h-5 w-5" />
             <span className="font-medium">Record Payment</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
