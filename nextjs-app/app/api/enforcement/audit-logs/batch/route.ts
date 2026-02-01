@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     const supabase = createServiceClient()
 
     // Get unique IMEIs from logs
-    const uniqueImeis = [...new Set(logs.map(log => log.imei))]
+    const uniqueImeis = [...new Set(logs.map((log: any) => log.imei))]
 
     // Fetch agent_ids for all IMEIs in one query
     const { data: phones } = await supabase
@@ -29,11 +29,11 @@ export async function POST(request: NextRequest) {
 
     // Create a map of IMEI to agent_id
     const imeiToAgentMap = new Map(
-      phones?.map(phone => [phone.imei, phone.agent_id]) || []
+      phones?.map((phone: any) => [phone.imei, phone.agent_id]) || []
     )
 
     // Prepare log entries for bulk insert
-    const logEntries = logs.map(log => ({
+    const logEntries = logs.map((log: any) => ({
       imei: log.imei,
       agent_id: imeiToAgentMap.get(log.imei) || null,
       event_type: log.event_type,

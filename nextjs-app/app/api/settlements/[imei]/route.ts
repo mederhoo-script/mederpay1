@@ -58,15 +58,15 @@ export async function GET(
       console.error('Error fetching billing records:', billingError)
     }
 
-    const totalDue = billingRecords?.reduce((sum, record) => {
+    const totalDue = billingRecords?.reduce((sum: number, record: any) => {
       return sum + (parseFloat(record.amount_due.toString()) - parseFloat(record.amount_paid.toString()))
     }, 0) || 0
 
     const hasPendingBills = billingRecords?.some(
-      record => record.status === 'pending' || record.status === 'overdue'
+      (record: any) => record.status === 'pending' || record.status === 'overdue'
     ) || false
 
-    const overdueAmount = billingRecords?.reduce((sum, record) => {
+    const overdueAmount = billingRecords?.reduce((sum: number, record: any) => {
       if (record.status === 'overdue') {
         return sum + (parseFloat(record.amount_due.toString()) - parseFloat(record.amount_paid.toString()))
       }
@@ -82,7 +82,7 @@ export async function GET(
       totalDue,
       overdueAmount,
       hasPendingBills,
-      billingRecords: billingRecords?.map(record => ({
+      billingRecords: billingRecords?.map((record: any) => ({
         id: record.id,
         billingPeriodStart: record.billing_period_start,
         billingPeriodEnd: record.billing_period_end,
