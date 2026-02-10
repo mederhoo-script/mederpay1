@@ -162,9 +162,14 @@ export default function SalesPage() {
       const phonesData = await phonesRes.json();
       const customersData = await customersRes.json();
 
-      setSales(salesData);
-      setPhones(phonesData.filter((p: Phone) => p.status === 'in_stock'));
-      setCustomers(customersData);
+      // API returns wrapped objects, extract the arrays
+      const salesArray = salesData.sales || [];
+      const phonesArray = phonesData.phones || [];
+      const customersArray = customersData.customers || [];
+
+      setSales(salesArray);
+      setPhones(phonesArray.filter((p: Phone) => p.status === 'in_stock'));
+      setCustomers(customersArray);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {

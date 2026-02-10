@@ -106,7 +106,8 @@ export default function PaymentsPage() {
       throw new Error('Failed to fetch payments');
     }
     const data = await response.json();
-    setPayments(data);
+    // API returns { payments: [...] }, extract the array
+    setPayments(data.payments || []);
   };
 
   const fetchActiveSales = async () => {
@@ -115,7 +116,8 @@ export default function PaymentsPage() {
       throw new Error('Failed to fetch active sales');
     }
     const data = await response.json();
-    setActiveSales(data);
+    // API returns { sales: [...] }, extract the array
+    setActiveSales(data.sales || []);
   };
 
   const fetchOverduePayments = async () => {
@@ -124,7 +126,8 @@ export default function PaymentsPage() {
       throw new Error('Failed to fetch overdue payments');
     }
     const data = await response.json();
-    setOverduePayments(data);
+    // API returns { overdue_installments: [...] }, extract the array
+    setOverduePayments(data.overdue_installments || []);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

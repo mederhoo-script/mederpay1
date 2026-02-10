@@ -114,8 +114,10 @@ export default function PhonesPage() {
       }
 
       const data = await response.json();
-      setPhones(data);
-      setFilteredPhones(data);
+      // API returns { phones: [...] }, extract the array
+      const phonesArray = data.phones || [];
+      setPhones(phonesArray);
+      setFilteredPhones(phonesArray);
     } catch (err) {
       console.error('Failed to fetch phones:', err);
       setError(err instanceof Error ? err.message : 'Failed to load phones');

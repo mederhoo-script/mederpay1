@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import apiClient from '@/lib/api';
 import { formatCurrency } from '@/lib/utils';
 
@@ -109,24 +110,24 @@ export default function DashboardPage() {
       <div className="rounded-lg bg-white p-6 shadow">
         <h3 className="mb-4 text-lg font-semibold">Quick Actions</h3>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <a
+          <Link
             href="/dashboard/phones"
             className="rounded bg-blue-600 px-4 py-3 text-center text-white hover:bg-blue-700"
           >
             Add New Phone
-          </a>
-          <a
+          </Link>
+          <Link
             href="/dashboard/sales"
             className="rounded bg-green-600 px-4 py-3 text-center text-white hover:bg-green-700"
           >
             Create Sale
-          </a>
-          <a
+          </Link>
+          <Link
             href="/dashboard/payments"
             className="rounded bg-purple-600 px-4 py-3 text-center text-white hover:bg-purple-700"
           >
             Record Payment
-          </a>
+          </Link>
         </div>
       </div>
     </div>

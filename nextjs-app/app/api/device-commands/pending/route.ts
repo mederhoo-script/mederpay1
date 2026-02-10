@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Update commands to 'sent' status
-    const commandIds = commands.map(cmd => cmd.id)
+    const commandIds = commands.map((cmd: any) => cmd.id)
     const { error: updateError } = await supabase
       .from('device_commands')
       .update({
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Return commands with auth_token (not hash)
-    const commandsToReturn = commands.map(cmd => ({
+    const commandsToReturn = commands.map((cmd: any) => ({
       id: cmd.id,
       command_type: cmd.command_type,
       reason: cmd.reason,

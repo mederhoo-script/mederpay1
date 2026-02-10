@@ -63,7 +63,7 @@ export async function GET() {
     }
     
     const outstandingBalance = salesData?.reduce(
-      (sum, sale) => sum + (sale.balance_remaining || 0),
+      (sum: number, sale: { balance_remaining: number | null }) => sum + (sale.balance_remaining || 0),
       0
     ) || 0
     
@@ -80,7 +80,7 @@ export async function GET() {
       throw new Error('Failed to fetch agent sales')
     }
     
-    const saleIds = agentSales?.map(sale => sale.id) || []
+    const saleIds = agentSales?.map((sale: { id: string }) => sale.id) || []
     
     let overduePayments = 0
     if (saleIds.length > 0) {

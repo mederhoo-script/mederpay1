@@ -67,7 +67,7 @@ export async function GET() {
     }
     
     // Calculate days overdue for each installment
-    const overdueWithDays = overdueInstallments?.map(installment => {
+    const overdueWithDays = overdueInstallments?.map((installment: any) => {
       const dueDate = new Date(installment.due_date)
       const todayDate = new Date(today)
       const daysOverdue = Math.floor((todayDate.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24))
